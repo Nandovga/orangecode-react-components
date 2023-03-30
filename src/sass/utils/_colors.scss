@@ -1,0 +1,119 @@
+@function tint-color($color, $weight) {
+  @return mix(white, $color, $weight);
+}
+
+@function shade-color($color, $weight) {
+  @return mix(black, $color, $weight);
+}
+
+$map-colors: 'primary';
+@if map-has-key($theme-colors, $map-colors){
+  $color: map-get($theme-colors, '#{$map-colors}');
+  $theme-colors: map-merge((
+          '#{$map-colors}-100': tint-color($color, 80%),
+          '#{$map-colors}-200': tint-color($color, 60%),
+          '#{$map-colors}-300': tint-color($color, 40%),
+          '#{$map-colors}-400': tint-color($color, 20%),
+          '#{$map-colors}-500': tint-color($color, 5%),
+          '#{$map-colors}-600': shade-color($color, 20%),
+          '#{$map-colors}-700': shade-color($color, 40%),
+          '#{$map-colors}-800': shade-color($color, 60%),
+          '#{$map-colors}-900': shade-color($color, 80%),
+  ), $theme-colors);
+}
+
+$map-colors: 'secondary';
+@if map-has-key($theme-colors, $map-colors){
+  $color: map-get($theme-colors, 'secondary');
+  $theme-colors: map-merge((
+          '#{$map-colors}-100': tint-color($color, 80%),
+          '#{$map-colors}-200': tint-color($color, 60%),
+          '#{$map-colors}-300': tint-color($color, 40%),
+          '#{$map-colors}-400': tint-color($color, 20%),
+          '#{$map-colors}-500': tint-color($color, 5%),
+          '#{$map-colors}-600': shade-color($color, 20%),
+          '#{$map-colors}-700': shade-color($color, 40%),
+          '#{$map-colors}-800': shade-color($color, 60%),
+          '#{$map-colors}-900': shade-color($color, 80%),
+  ), $theme-colors);
+}
+
+$map-colors: 'success';
+@if map-has-key($theme-colors, $map-colors){
+  $color: map-get($theme-colors, 'success');
+  $theme-colors: map-merge((
+          '#{$map-colors}-100': tint-color($color, 80%),
+          '#{$map-colors}-200': tint-color($color, 60%),
+          '#{$map-colors}-300': tint-color($color, 40%),
+          '#{$map-colors}-400': tint-color($color, 20%),
+          '#{$map-colors}-500': tint-color($color, 5%),
+          '#{$map-colors}-600': shade-color($color, 20%),
+          '#{$map-colors}-700': shade-color($color, 40%),
+          '#{$map-colors}-800': shade-color($color, 60%),
+          '#{$map-colors}-900': shade-color($color, 80%),
+  ), $theme-colors);
+}
+
+$map-colors: 'info';
+@if map-has-key($theme-colors, $map-colors){
+  $color: map-get($theme-colors, 'info');
+  $theme-colors: map-merge((
+          '#{$map-colors}-100': tint-color($color, 80%),
+          '#{$map-colors}-200': tint-color($color, 60%),
+          '#{$map-colors}-300': tint-color($color, 40%),
+          '#{$map-colors}-400': tint-color($color, 20%),
+          '#{$map-colors}-500': tint-color($color, 5%),
+          '#{$map-colors}-600': shade-color($color, 20%),
+          '#{$map-colors}-700': shade-color($color, 40%),
+          '#{$map-colors}-800': shade-color($color, 60%),
+          '#{$map-colors}-900': shade-color($color, 80%),
+  ), $theme-colors);
+}
+
+$map-colors: 'danger';
+@if map-has-key($theme-colors, $map-colors){
+  $color: map-get($theme-colors, 'danger');
+  $theme-colors: map-merge((
+          '#{$map-colors}-100': tint-color($color, 80%),
+          '#{$map-colors}-200': tint-color($color, 60%),
+          '#{$map-colors}-300': tint-color($color, 40%),
+          '#{$map-colors}-400': tint-color($color, 20%),
+          '#{$map-colors}-500': tint-color($color, 5%),
+          '#{$map-colors}-600': shade-color($color, 20%),
+          '#{$map-colors}-700': shade-color($color, 40%),
+          '#{$map-colors}-800': shade-color($color, 60%),
+          '#{$map-colors}-900': shade-color($color, 80%),
+  ), $theme-colors);
+}
+
+$map-colors: 'warning';
+@if map-has-key($theme-colors, $map-colors){
+  $color: map-get($theme-colors, 'warning');
+  $theme-colors: map-merge((
+          '#{$map-colors}-100': tint-color($color, 80%),
+          '#{$map-colors}-200': tint-color($color, 60%),
+          '#{$map-colors}-300': tint-color($color, 40%),
+          '#{$map-colors}-400': tint-color($color, 20%),
+          '#{$map-colors}-500': tint-color($color, 5%),
+          '#{$map-colors}-600': shade-color($color, 20%),
+          '#{$map-colors}-700': shade-color($color, 40%),
+          '#{$map-colors}-800': shade-color($color, 60%),
+          '#{$map-colors}-900': shade-color($color, 80%),
+  ), $theme-colors);
+}
+
+$map-colors: 'purple';
+@if map-has-key($theme-colors, $map-colors){
+  $color: map-get($theme-colors, 'purple');
+  $theme-colors: map-merge((
+          '#{$map-colors}-100': tint-color($color, 80%),
+          '#{$map-colors}-200': tint-color($color, 60%),
+          '#{$map-colors}-300': tint-color($color, 40%),
+          '#{$map-colors}-400': tint-color($color, 20%),
+          '#{$map-colors}-500': tint-color($color, 5%),
+          '#{$map-colors}-600': shade-color($color, 20%),
+          '#{$map-colors}-700': shade-color($color, 40%),
+          '#{$map-colors}-800': shade-color($color, 60%),
+          '#{$map-colors}-900': shade-color($color, 80%),
+  ), $theme-colors);
+}

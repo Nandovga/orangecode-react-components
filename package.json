@@ -1,0 +1,25 @@
+{
+  "name": "orangecode-react-components",
+  "version": "1.0.0",
+  "description": "Pacote de componentes react estilizados pelos principais framework de mercado como Bootstrap5, Tailwind e Primeflex",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+  },
+  "dependencies": {
+    "bootstrap": "^5.2.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nandovga/orangecode-react-components.git"
+  },
+  "keywords": ["react", "bootstrap", "tailwind", "primeflex"],
+  "author": "Luiz Fernando Bernardes de Paula",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nandovga/orangecode-react-components/issues"
+  },
+  "homepage": "https://github.com/Nandovga/orangecode-react-components#readme"
+}
