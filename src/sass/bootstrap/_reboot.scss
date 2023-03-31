@@ -1,0 +1,36 @@
+:root {
+  @if variable-exists(oc-reboot) {
+    @each $nome in map-keys($oc-reboot) {
+      $value: map-get($oc-reboot, $nome);
+      --oc-reboot-#{$nome}: #{$value};
+    }
+  }
+
+  @if variable-exists(oc-reboot-scroll) {
+    @each $nome in map-keys($oc-reboot-scroll) {
+      $value: map-get($oc-reboot-scroll, $nome);
+      --oc-reboot-scroll-#{$nome}: #{$value};
+    }
+  }
+}
+
+*:not(.fas, .pi, .bi, .fa, .material-icons, .font-alternative) {
+  @if variable-exists(font-family-sans-serif) {
+    font-family: $font-family-sans-serif;
+  }
+}
+
+*:focus {
+  box-shadow: var(--oc-reboot-shadow, initial) !important;
+}
+
+body::-webkit-scrollbar {
+  width: var(--oc-reboot-scroll-width, auto);
+  background: var(--oc-reboot-scroll-background, #e5e5e5);
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: var(--oc-reboot-scroll-thumb-border-radius, 0);
+  background: var(--oc-reboot-scroll-thumb-background, #a1a1a1);
+  border: 2px solid var(--oc-reboot-scroll-background, #e5e5e5);
+}

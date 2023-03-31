@@ -8,4 +8,5 @@ $theme-colors: (
         "gray": #AAB2B4,
         "dark": #211D1C
 );
+@import "variable";
 @import "../../src/sass/bootstrap/bootstrap";
