@@ -1,0 +1,41 @@
+:root {
+  @if variable-exists(oc-button) {
+    @each $nome in map-keys($oc-button) {
+      $value: map-get($oc-button, $nome);
+      --oc-button-#{$nome}: #{$value};
+    }
+  }
+}
+
+.btn {
+  border-radius: var(--oc-button-border-radius, var(--#{$prefix}btn-border-radius));
+  padding: var(--oc-button-padding, var(--#{$prefix}btn-padding-y) var(--#{$prefix}btn-padding-x));
+  font-size: var(--oc-button-font-size, var(--#{$prefix}btn-font-size));
+  font-weight: var(--oc-button-font-weight, var(--#{$prefix}btn-font-weight));
+  text-transform: var(--oc-button-text-transform, initial);
+  color: var(--oc-button-color, var(--#{$prefix}btn-color));
+
+  &:hover {
+    color: var(--oc-button-color-hover, var(--#{$prefix}btn-hover-color));
+    background-color: var(--oc-button-background-hover, var(--#{$prefix}btn-hover-bg));
+    border-color: var(--oc-button-border-color-hover, var(--#{$prefix}btn-hover-border-color));
+  }
+}
+
+.btn-sm {
+  @include button-size(
+        var(--oc-button-padding-sm-y, #{$btn-padding-y-sm}),
+        var(--oc-button-padding-sm-x, #{$btn-padding-x-sm}),
+        var(--oc-button-font-size-sm, #{$input-btn-font-size-sm}),
+        var(--oc-button-border-radius-sm, #{$btn-border-radius-sm}),
+  );
+}
+
+.btn-lg {
+  @include button-size(
+        var(--oc-button-padding-lg-y, #{$btn-padding-y-lg}),
+        var(--oc-button-padding-lg-x, #{$btn-padding-x-lg}),
+        var(--oc-button-font-size-lg, #{$input-btn-font-size-lg}),
+        var(--oc-button-border-radius-lg, #{$btn-border-radius-lg}),
+  );
+}
