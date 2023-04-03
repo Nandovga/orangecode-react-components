@@ -9,7 +9,8 @@
 <div class="container d-flex flex-wrap p-3">
     <?php
     require "view/button.php";
-    require "view/form.php"
+    require "view/form.php";
+    require "view/box.php"
     ?>
 </div>
 </body>

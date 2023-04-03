@@ -1,0 +1,115 @@
+:root {
+  @if variable-exists(oc-box) {
+    @each $nome in map-keys($oc-box) {
+      $value: map-get($oc-box, $nome);
+      --oc-box-#{$nome}: #{$value};
+    }
+  }
+}
+
+@mixin box-margin($box, $marginX, $marginY: .5rem){
+  width: calc(#{$box} - #{$marginX}) !important;
+  margin: #{$marginY} calc(#{$marginX} / 2);
+}
+$marginX: var(--oc-box-marginX, 2%);
+$marginY: var(--oc-box-marginY, .5rem);
+
+.box-100 {
+  @include box-margin(100%, $marginX, $marginY);
+}
+
+.box-75 {
+  @include box-margin(75%, $marginX, $marginY);
+}
+
+.box-65{
+  @include box-margin(65%, $marginX, $marginY);
+}
+
+.box-50 {
+  @include box-margin(50%, $marginX, $marginY);
+}
+
+.box-40{
+  @include box-margin(40%, $marginX, $marginY);
+}
+
+.box-35{
+  @include box-margin(35%, $marginX, $marginY);
+}
+
+.box-33{
+  @include box-margin(calc(100% / 3), $marginX, $marginY);
+}
+
+.box-30{
+  @include box-margin(30%, $marginX, $marginY);
+}
+
+.box-25 {
+  @include box-margin(25%, $marginX, $marginY);
+}
+
+.box-20 {
+  @include box-margin(20%, $marginX, $marginY);
+}
+
+.box-17_5{
+  @include box-margin(17.5%, $marginX, $marginY);
+}
+
+.box-15{
+  @include box-margin(15%, $marginX, $marginY);
+}
+
+.box-12_5{
+  @include box-margin(12.5%, $marginX, $marginY);
+}
+
+.box-10{
+  @include box-margin(10%, $marginX, $marginY);
+}
+
+//DESING RESPONSIVO
+//992px
+@media(max-width: $lg) {
+
+  .box-65,
+  .box-40,
+  .box-35,
+  .box-33,
+  .box-30,
+  .box-20,
+  .box-25,
+  .box-15,
+  .box-12_5,
+  .box-10{
+    @include box-margin(50%, $marginX, $marginY);
+  }
+
+  .box-75,
+  .box-65 {
+    @include box-margin(100%, $marginX, $marginY);
+  }
+}
+
+//568PX
+@media(max-width: $sm) {
+
+  .box-100,
+  .box-75,
+  .box-65,
+  .box-50,
+  .box-40,
+  .box-35,
+  .box-33,
+  .box-30,
+  .box-25,
+  .box-20,
+  .box-17_5,
+  .box-15,
+  .box-12_5,
+  .box-10{
+    @include box-margin(100%, $marginX, $marginY);
+  }
+}

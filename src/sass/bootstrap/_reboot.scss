@@ -34,3 +34,15 @@ body::-webkit-scrollbar-thumb {
   background: var(--oc-reboot-scroll-thumb-background, #a1a1a1);
   border: 2px solid var(--oc-reboot-scroll-background, #e5e5e5);
 }
+
+.debug{
+  border: 1px solid red;
+}
+
+//Desing Responsivo - Breakpoints
+$xm: 380px;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xg: 1200px;
+$xxl: 1400px;
