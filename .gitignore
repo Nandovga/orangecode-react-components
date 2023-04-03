@@ -3,3 +3,5 @@ node_modules
 package-lock.json
 example/css/style.css
 example/css/style.css.map
+dist
+src/ts/index.ts

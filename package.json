@@ -2,15 +2,26 @@
   "name": "orangecode-react-components",
   "version": "1.0.1",
   "description": "Pacote de componentes react estilizados pelos principais framework de mercado como Bootstrap5, Tailwind e Primeflex",
-  "main": "index.js",
+  "main": "src/js/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "webpack build": "npx webpack --config webpack.config.js",
+    "webpack watch": "npx webpack --watch"
   },
+
   "devDependencies": {
+    "@types/jquery": "^3.5.16",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.3",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "bootstrap": "^5.2.3"
+    "axios": "^1.1.2",
+    "bootstrap": "^5.2.3",
+    "date-fns": "^2.29.3",
+    "node-snackbar": "^0.1.16",
+    "jquery": "^3.6.1"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nandovga/orangecode-react-components.git"
