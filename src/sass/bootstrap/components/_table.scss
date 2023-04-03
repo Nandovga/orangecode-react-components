@@ -1,0 +1,45 @@
+:root {
+  @if variable-exists(oc-table) {
+    @each $nome in map-keys($oc-table) {
+      $value: map-get($oc-table, $nome);
+      --oc-table-#{$nome}: #{$value};
+    }
+  }
+
+  @if variable-exists(oc-table-header) {
+    @each $nome in map-keys($oc-table-header) {
+      $value: map-get($oc-table-header, $nome);
+      --oc-table-header-#{$nome}: #{$value};
+    }
+  }
+}
+
+.table{
+  vertical-align: var(--oc-table-vertical-align, #{$table-cell-vertical-align});
+  border-color: var(--oc-table-border-color, #{$table-border-color});
+  color: var(--oc-table-color, #{$table-color});
+
+  > :not(caption) > * > * {
+    padding: var(--oc-table-padding, #{$table-cell-padding-y $table-cell-padding-x}) ;
+    background-color: var(--oc-table-background, --#{$prefix}table-bg);
+  }
+
+  thead > * > * {
+    background: var(--oc-table-header-background,  var(--oc-table-background, --#{$prefix}table-bg));
+    color: var(--oc-table-header-color, var(--oc-table-color, #{$table-color}));
+    font-size: var(--oc-table-header-font-size, .9em);
+    font-weight: var(--oc-table-header-font-weight, bold);
+    border-color: var(--oc-table-header-border-color,  var(--oc-table-border-color, #{$table-border-color}));
+  }
+
+  tbody > * > * {
+    font-size: var(--oc-table-font-size, .9em);
+    font-weight: var(--oc-table-font-weight, normal);
+  }
+}
+
+.table-sm {
+  > :not(caption) > * > * {
+    padding: var(--oc-table-padding-sm, #{$table-cell-padding-y-sm $table-cell-padding-x-sm}) ;
+  }
+}

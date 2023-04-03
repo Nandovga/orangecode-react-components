@@ -1,4 +1,4 @@
-<div class="col-12 col-md-6 col-lg-4 px-3">
+<div class="box-33 px-3">
     <h3>Formulários</h3>
     <p class="m-0"><code class="text-danger fw-bold">$oc-form-label()</code> Personaliza a legenda do campo</p>
     <p class="m-0"><code class="text-danger fw-bold">$oc-form-control()</code> Personaliza o estilo do campo</p>

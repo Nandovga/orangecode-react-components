@@ -10,7 +10,8 @@
     <?php
     require "view/button.php";
     require "view/form.php";
-    require "view/box.php"
+    require "view/box.php";
+    require "view/table.php";
     ?>
 </div>
 </body>

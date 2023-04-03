@@ -1,4 +1,4 @@
-<div class="col-12 col-md-6 col-lg-4 px-3">
+<div class="box-33 px-3">
     <h3>Box</h3>
     <p class="m-0"><code class="text-danger fw-bold">$oc-box()</code> Personaliza as propriedades da box</p>
     <div class="w-100 d-flex flex-wrap m-0 p-0">
