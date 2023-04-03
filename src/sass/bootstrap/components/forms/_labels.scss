@@ -1,0 +1,16 @@
+:root {
+  @if variable-exists(oc-form-label) {
+    @each $nome in map-keys($oc-form-label) {
+      $value: map-get($oc-form-label, $nome);
+      --oc-form-label-#{$nome}: #{$value};
+    }
+  }
+}
+
+.form-label{
+  margin-bottom: var(--oc-form-label-margin-bottom, #{$form-label-margin-bottom});
+  font-size: var(--oc-form-label-font-size, #{$form-label-font-size});
+  font-style: var(--oc-form-label-font-style, #{$form-label-font-style});
+  font-weight: var(--oc-form-label-font-weight, #{$form-label-font-weight});
+  color: var(--oc-form-label-color, #{$form-label-color});
+}

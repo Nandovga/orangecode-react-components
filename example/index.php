@@ -6,9 +6,10 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="container p-3">
+<div class="container d-flex flex-wrap p-3">
     <?php
-    require "view/button.php"
+    require "view/button.php";
+    require "view/form.php"
     ?>
 </div>
 </body>

@@ -1,0 +1,47 @@
+:root {
+  @if variable-exists(oc-form-control) {
+    @each $nome in map-keys($oc-form-control) {
+      $value: map-get($oc-form-control, $nome);
+      --oc-form-control-#{$nome}: #{$value};
+    }
+  }
+}
+
+.form-control {
+  background: var(--oc-form-control-background, #{$input-bg});
+  border: var(--oc-form-control-border, #{$input-border-width solid $input-border-color});
+  border-radius: var(--oc-form-control-border-radius, #{$input-border-radius});
+  color: var(--oc-form-control-color, #{$input-color});
+  font-size: var(--oc-form-control-font-size, #{$input-font-size});
+  padding: var(--oc-form-control-padding, #{$input-padding-y $input-padding-x});
+
+  &:focus {
+    color: var(--oc-form-control-color-focus, #{$input-focus-color});
+    background-color: var(--oc-form-control-background-focus, #{$input-focus-bg});
+    border-color: var(--oc-form-control-border-color-focus, #{$input-focus-border-color});
+  }
+
+  &::placeholder {
+    color: var(--oc-form-control-placeholder, #{$input-placeholder-color});
+  }
+}
+
+.form-control-sm {
+  min-height: var(--oc-form-control-min-height-sm, #{$input-height-sm});
+  padding: var(--oc-form-control-padding-sm, #{$input-padding-y-sm $input-padding-x-sm});
+  font-size: var(--oc-form-control-font-size-sm, #{$input-font-size-sm});
+  border-radius: var(--oc-form-control-border-radius-sm, #{$input-border-radius-sm});
+}
+
+.form-control-lg {
+  min-height: var(--oc-form-control-min-height-lg, #{$input-height-lg});
+  padding: var(--oc-form-control-padding-lg, #{$input-padding-y-lg $input-padding-x-lg});
+  font-size: var(--oc-form-control-font-size-lg, #{$input-font-size-lg});
+  border-radius: var(--oc-form-control-border-radius-lg, #{$input-border-radius-lg});
+}
+
+@each $state, $data in $form-validation-states {
+  .#{$state}-feedback{
+    font-size: var(--oc-form-control-font-size-feedback, #{$form-feedback-font-size});
+  }
+}

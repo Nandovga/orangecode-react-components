@@ -1,6 +1,9 @@
 @import "../utils/colors";
-
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
+//Configurações
 @import "reboot";
+
+//Components & Layout
 @import "components/button";
+@import "components/forms";
