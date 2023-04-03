@@ -5,3 +5,5 @@ example/css/style.css
 example/css/style.css.map
 dist
 src/ts/index.ts
+tsconfig.json
+webpack.config.js

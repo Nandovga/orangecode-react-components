@@ -1,4 +1,4 @@
-import * as $ from "jquery"
+import $ from "jquery"
 import Snackbar from "node-snackbar/dist/snackbar"
 import {ResponseType} from "../@types/response";
 
@@ -14,7 +14,7 @@ export const globalResponse = (response: ResponseType, form: string = ''): void 
 
     //mensagem nos campos
     if (data.field && data.field.message && data.field.messageType)
-        globalMessageFields(data.field.message, form === '' ? null : form, data.field.messageType)
+        globalMessageFields(data.field.message, form.length === 0 ? "" : form, data.field.messageType)
 
     //Exibe mensage no sistema
     if (data.message && data.message.message)
@@ -99,14 +99,17 @@ export const globalTabViewActiveError = (form, errors): void => {
     if (TabView.length === 0)
         return;
     let field = Object.keys(errors)[0]
-    TabView.find(".nav-link").each((index, value) => {
-        let TabViewContent = $(value).attr("data-bs-target").replace("#", "");
-        if ($("body").find(".tab-pane[id=" + TabViewContent + "]").find("*[name=" + field + "]").length === 0) {
-            $("body").find(".tab-pane[id=" + TabViewContent + "]").removeClass("show active")
-            $(value).removeClass("active");
-        } else {
-            $("body").find(".tab-pane[id=" + TabViewContent + "]").addClass("show active")
-            $(value).addClass("active");
+    TabView.find(".nav-link").each(function (value: any): void {
+        if (typeof value !== 'undefined') {
+            // @ts-ignore
+            let TabViewContent = $(value).attr("data-bs-target").replace("#", "");
+            if ($("body").find(".tab-pane[id=" + TabViewContent + "]").find("*[name=" + field + "]").length === 0) {
+                $("body").find(".tab-pane[id=" + TabViewContent + "]").removeClass("show active")
+                $(value).removeClass("active");
+            } else {
+                $("body").find(".tab-pane[id=" + TabViewContent + "]").addClass("show active")
+                $(value).addClass("active");
+            }
         }
     });
 }
@@ -117,7 +120,7 @@ export const globalTabViewActiveError = (form, errors): void => {
  * @param form
  * @param type
  */
-const globalMessageFields = (data, form = null, type = 'is-invalid'): void => {
+const globalMessageFields = (data, form: string = "", type = 'is-invalid'): void => {
     let formulario = $("body").find("#" + form)
     globalTabViewActiveError(form, data)
 
