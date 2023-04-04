@@ -1,1 +1,1 @@
-export type FrameworkStyle = "bootstrap"
+export type IFrameworkStyle = "bootstrap"

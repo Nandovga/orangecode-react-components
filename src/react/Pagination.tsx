@@ -1,12 +1,12 @@
 import React, {ReactNode, useState} from "react";
 import ReactPaginate, {ReactPaginateProps} from "react-paginate";
-import {FrameworkStyle} from "../@types/style";
+import {IFrameworkStyle} from "../@types/style";
 
-export interface PaginationProps<T> extends ReactPaginateProps {
+export interface IPagination<T> extends ReactPaginateProps {
     pageCount: number,
     paginationDTO: Array<T>,
     paginationRender(state: Array<T>): ReactNode<T>
-    frameworkStyle?: FrameworkStyle
+    frameworkStyle?: IFrameworkStyle
 }
 
 /**
@@ -18,7 +18,7 @@ export interface PaginationProps<T> extends ReactPaginateProps {
  * @param rest
  * @constructor
  */
-function Pagination<T> ({paginationDTO, pageCount, paginationRender, frameworkStyle = "bootstrap", ...rest}: PaginationProps<T>) {
+function Pagination<T> ({pageCount, paginationDTO, paginationRender, frameworkStyle = "bootstrap", ...rest}: IPagination<T>) {
 
     //Style
     const classePage = frameworkStyle === "bootstrap" ? "pagination justify-content-center" : "";

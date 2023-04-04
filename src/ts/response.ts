@@ -1,14 +1,14 @@
 import $ from "jquery"
 import Snackbar from "node-snackbar/dist/snackbar"
-import {ResponseType} from "../@types/response";
+import {IResponseType} from "../@types/response";
 
 /**
  * Realzia a gestão resposta da aplicação
  * @param response
  * @param form
  */
-export const globalResponse = (response: ResponseType, form: string = ''): void => {
-    let data: ResponseType = response
+export const globalResponse = (response: IResponseType, form: string = ''): void => {
+    let data: IResponseType = response
     if (!response)
         return;
 

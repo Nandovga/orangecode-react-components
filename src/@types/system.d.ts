@@ -1,4 +1,4 @@
-export type Breakpoint = {
+export interface IBreakpoint {
     xm?: string,
     sm?: string,
     md?: string,

@@ -1,6 +1,7 @@
 import axios from "axios";
 import $ from "jquery"
-import {Breakpoint} from "../@types/system";
+import {IBreakpoint} from "../@types/system";
+import {IIconType} from "../@types/icon";
 
 /**
  * Função responsável por acessar o retorno
@@ -31,11 +32,20 @@ export async function GET_CEP(value: string) {
 }
 
 /**
+ * Função responsável por retorna a classe de icones
+ * @param iconType
+ * @constructor
+ */
+export function GET_ICON(iconType: IIconType): string {
+    return iconType === "bootstrap" ? "bi bi-" : "";
+}
+
+/**
  * Alterna o retorno da string de acordo com tamanho da janela
  * @param breakpoint
  * @constructor
  */
-export function WINDOWS_RESIZE(breakpoint: Breakpoint): string {
+export function WINDOWS_RESIZE(breakpoint: IBreakpoint): string {
     let screen: number | undefined = $(window).width();
     if (screen && screen < 380) {
         return (breakpoint.xm === undefined ? breakpoint.default : breakpoint.xm);

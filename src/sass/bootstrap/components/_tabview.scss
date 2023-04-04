@@ -1,0 +1,41 @@
+:root {
+  @if variable-exists(oc-tabview) {
+    @each $nome in map-keys($oc-tabview) {
+      $value: map-get($oc-tabview, $nome);
+      --oc-tabview-#{$nome}: #{$value};
+    }
+  }
+}
+
+.nav-tabs {
+  $border: var(--oc-tabview-border-width, #{$nav-tabs-border-width}) solid var(--oc-tabview-border-color, #{$nav-tabs-border-color});
+  border-bottom: $border;
+
+  .nav-link {
+    padding: var(--oc-tabview-padding, #{$nav-link-padding-y} #{$nav-link-padding-x});
+    font-size: var(--oc-tabview-font-size, #{$nav-link-font-size});
+    color: var(--oc-tabview-color, #{$nav-link-color});
+    @include border-top-radius(var(--oc-tabview-border-radius, #{$nav-tabs-border-radius}));
+
+    &:hover, &:focus {
+      color: var(--oc-tabview-color-hover, #{$nav-link-hover-color});
+    }
+
+    &.disabled {
+      color: var(--oc-tabview-color-disabled, #{$nav-link-disabled-color});
+    }
+  }
+
+  .nav-link.active,
+  .nav-item.show .nav-link {
+    color: var(--oc-tabview-color-active, #{$nav-tabs-link-active-color});
+    background-color: var(--oc-tabview-background-active, #{$nav-tabs-link-active-bg});
+    border-color: var(--oc-tabview-border-color-active, #{$nav-tabs-link-active-border-color});
+    border-bottom: var(--oc-tabview-border-width, #{$nav-tabs-border-width}) solid transparent;
+  }
+}
+
+.tab-pane{
+  border: var(--oc-tabview-border-width, #{$nav-tabs-border-width}) solid var(--oc-tabview-border-color-active, #{$nav-tabs-link-active-border-color});
+  border-top: var(--oc-tabview-border-width, #{$nav-tabs-border-width}) solid transparent;
+}

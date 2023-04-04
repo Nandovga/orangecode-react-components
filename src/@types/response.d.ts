@@ -1,30 +1,30 @@
 /**
  * Agrupa os tipos de resposta do POST Request.js
  */
-export type ResponseType = {
+export type IResponseType = {
     data: null | any
-    field: null | ResponseField
-    message: null | ResponseMessage
-    modal: null | ResponseModal
+    field: null | IResponseField
+    message: null | IResponseMessage
+    modal: null | IResponseModal
     redirect: null | string
 }
 
 /** Resposta do tipo CAMPO */
-interface ResponseField {
+interface IResponseField {
     field: string,
     messageType: string
     message: object
 }
 
 /** Resposta do tipo MESSAGE */
-interface ResponseMessage {
+interface IResponseMessage {
     icon: string,
     message: string,
     type: string
 }
 
 /** Resposta do tipo MODAL */
-interface ResponseModal {
+interface IResponseModal {
     modal: string,
     action: string
 }
