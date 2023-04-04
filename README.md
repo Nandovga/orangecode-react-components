@@ -4,8 +4,8 @@
 
 <img src="https://img.shields.io/static/v1?label=License&message=MIT&color=success"/>
 <img src="https://img.shields.io/static/v1?label=&message=React&color=blue&logo=react"/>
-<img src="https://scrutinizer-ci.com/g/Nandovga/orangecode-helpers/badges/build.png?b=master"/>
-<img src="https://scrutinizer-ci.com/g/Nandovga/orangecode-helpers/badges/quality-score.png?b=master"/>
+<img src="https://scrutinizer-ci.com/g/Nandovga/orangecode-react-components/badges/build.png?b=main"/>
+<img src="https://scrutinizer-ci.com/g/Nandovga/orangecode-react-components/badges/quality-score.png?b=main"/>
 
 
 ### ✨ Instalação
@@ -20,6 +20,8 @@ npm install orangecode-react-components
 
 O objetivo deste pacote é disponibilizar componentes <a href='https://react.dev/'>React</a> que agilize o desenvolvimento de sua aplicação front-end de forma mais rápida e eficaz. Ele também pode ser utilizado em frameworks populares, como
 o <a href='https://laravel.com/'>Laravel</a> integrado com <a href='https://inertiajs.com/'>InertiaJs</a>, por exemplo.
+
+##### ⚒️ Documentação em breve...
 
 #### 👨‍💻 Desenvolvedor
 

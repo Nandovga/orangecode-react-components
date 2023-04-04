@@ -4,6 +4,7 @@ package-lock.json
 example/css/style.css
 example/css/style.css.map
 dist
-src/ts/index.ts
+src/ts/index.tsx
 tsconfig.json
 webpack.config.js
+example
