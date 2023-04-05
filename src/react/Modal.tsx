@@ -1,8 +1,9 @@
+import React, {useEffect} from "react";
 import $ from "jquery"
-import React, {useEffect, useState} from "react";
+import {GET_ICON} from "../ts/system";
+
+import {IIcon} from "../@types/icon";
 import {IFrameworkStyle} from "../@types/style";
-import {IIcon} from "@/@types/icon";
-import {GET_ICON} from "@/ts/system";
 
 export type IModalVisible = "open" | "closed"
 
@@ -10,12 +11,15 @@ export type IModalSize = "sm" | "lg" | "xl"
 
 export type IModalFullScreen = "sm" | "md" | "lg" | "xl" | "xxl"
 
-type Props = {
+export interface IModal {
     modalTitle: string
     modalVisible: IModalVisible
-    onModalVisible(state: IModalVisible): void
-    children: React.ReactNode
 
+    onModalVisible(state: IModalVisible): void
+}
+
+type Props = IModal & {
+    children: React.ReactNode
     modalCenter?: boolean
     modalSize?: IModalSize
     modalFullScreen?: IModalFullScreen
@@ -36,17 +40,22 @@ const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) 
     const modalSize: string = (!props.modalSize ? "" : "modal-" + props.modalSize);
     const modalFullScreen: string = (!props.modalFullScreen ? "" : "modal-fullscreen-" + props.modalFullScreen + "-down")
 
-    //CORE ≥ Aplica a regra de funcionamento das modais
-    useEffect((): void => {
+    //CORE ≥ Aplica a regra de visibilidade das modal
+    function bsModalVisible(modalVisible: IModalVisible, onModalVisible: (state: IModalVisible) => void, modalId: string) {
         let myModal = document.getElementById(modalId)
-        if (myModal && props.modalVisible === "open") {
+        if (myModal && modalVisible === "open") {
             let openModal = $("body").find("#openModal");
             openModal.trigger("click")
-        } else if (myModal && props.modalVisible === "closed") {
+        } else if (myModal && modalVisible === "closed") {
             myModal.addEventListener('hidden.bs.modal', function () {
-                props.onModalVisible("closed")
+                onModalVisible("closed")
             })
         }
+    }
+
+    //CORE ≥ Aplica a regra de funcionamento das modais
+    useEffect((): void => {
+        bsModalVisible(props.modalVisible, props.onModalVisible, modalId)
     }, [props.modalVisible])
 
     /*
@@ -55,14 +64,10 @@ const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) 
     |--------------------------------------
     */
     return <>
-        <span id="openModal"
-              data-bs-toggle="modal"
-              data-bs-target={"#" + modalId}></span>
-        <div className="modal fade"
+        <span id="openModal" data-bs-toggle="modal" data-bs-target={"#" + modalId}></span>
+        <div className="modal fade" id={modalId} tabIndex="-1"
              data-bs-backdrop={!props.modalBackdrop ? "true" : "static"}
-             data-bs-keyboard="false"
-             id={modalId}
-             tabIndex="-1">
+             data-bs-keyboard="false">
             <div
                 className={"modal-dialog " + modalSize + " " + modalFullScreen + (modalCenter ? " modal-dialog-centered" : "")}>
                 <div className="modal-content">
@@ -87,10 +92,8 @@ const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) 
  * @param props
  * @constructor
  */
-const Modal: React.FC<Props> = ({children, frameworkStyle = "bootstrap", ...props}: Props) => {
+const Modal: React.FC<Props> = ({frameworkStyle = "bootstrap", ...props}: Props) => {
     return frameworkStyle === "bootstrap"
-        ? <ModalBootstrap modalTitle={props.modalTitle}
-                          modalVisible={props.modalVisible}
-                          onModalVisible={props.onModalVisible}>{children}</ModalBootstrap> : <></>
+        ? <ModalBootstrap {...props}>{props.children}</ModalBootstrap> : <></>
 }
 export default Modal
