@@ -1,0 +1,37 @@
+:root {
+  @if variable-exists(oc-modal) {
+    @each $nome in map-keys($oc-modal) {
+      $value: map-get($oc-modal, $nome);
+      --oc-modal-#{$nome}: #{$value};
+    }
+  }
+}
+
+.modal-dialog {
+  margin: var(--oc-modal-margin, auto);
+
+  .modal.fade & {
+    @include transition(var(--oc-modal-transition, #{$modal-transition}));
+    transform: var(--oc-modal-transform-fade, #{$modal-fade-transform});
+  }
+
+  .modal.show & {
+    transform: var(--oc-modal-transform-show, #{$modal-show-transform});
+  }
+}
+
+.modal-content {
+  color: var(--oc-modal-color, #{$modal-content-color});
+  background-color: var(--oc-modal-background, #{$modal-content-bg});
+  border: var(--oc-modal-border-width, #{$modal-content-border-width}) solid var(--oc-modal-border-color, #{$modal-content-border-color});
+  @include border-radius(var(--oc-modal-border-radius, #{$modal-content-border-radius}));
+}
+
+.modal-header {
+  padding: var(--oc-modal-padding, #{$modal-header-padding-y} #{$modal-header-padding-x});
+  border-bottom: var(--oc-modal-border-width-header, #{$modal-header-border-width}) solid var(--oc-modal-border-color-header, #{$modal-header-border-color});
+}
+
+.modal-body {
+  padding: var(--oc-modal-padding, #{$modal-header-padding-y} #{$modal-header-padding-x});
+}

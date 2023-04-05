@@ -1,0 +1,16 @@
+:root {
+  @if variable-exists(oc-close) {
+    @each $nome in map-keys($oc-close) {
+      $value: map-get($oc-close, $nome);
+      --oc-close-#{$nome}: #{$value};
+    }
+  }
+}
+
+.btn-close {
+  opacity: var(--oc-close-opacity, #{$btn-close-opacity});
+
+  &:hover {
+    opacity: var(--oc-close-opacity-hover, #{$btn-close-hover-opacity});
+  }
+}
