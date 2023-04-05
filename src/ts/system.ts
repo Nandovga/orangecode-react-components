@@ -36,8 +36,8 @@ export async function GET_CEP(value: string) {
  * @param iconType
  * @constructor
  */
-export function GET_ICON(iconType: IIconType): string {
-    return iconType === "bootstrap" ? "bi bi-" : "";
+export function GET_ICON(iconType: IIconType = "bootstrap"): string {
+    return iconType === "bootstrap" ? "me-1 bi bi-" : "";
 }
 
 /**

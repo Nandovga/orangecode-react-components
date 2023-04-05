@@ -2,8 +2,6 @@ import React from "react";
 import {GET_ICON} from "../ts/system";
 import {IIconType} from "../@types/icon";
 import {IFrameworkStyle} from "../@types/style";
-import "bootstrap/dist/js/bootstrap.bundle"
-import "bootstrap-icons/font/bootstrap-icons.css"
 
 export interface ITabView {
     tab: string
