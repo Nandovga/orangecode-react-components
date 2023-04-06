@@ -1,7 +1,8 @@
-import React, {useEffect} from "react";
 import $ from "jquery"
-import {GET_ICON} from "../ts/system";
+import React, {useEffect} from "react";
+import Hashids from "hashids";
 
+import {GET_ICON} from "../ts/system";
 import {IIcon} from "../@types/icon";
 import {IFrameworkStyle} from "../@types/style";
 
@@ -14,7 +15,6 @@ export type IModalFullScreen = "sm" | "md" | "lg" | "xl" | "xxl"
 export interface IModal {
     modalTitle: string
     modalVisible: IModalVisible
-
     onModalVisible(state: IModalVisible): void
 }
 
@@ -34,14 +34,15 @@ type Props = IModal & {
  * @constructor
  */
 const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) => {
+    let hash = new Date().getTime();
 
     //STATE ≥ Estado do componente
-    const modalId: string = props.modalTitle.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, '')
+    const modalId: string = props.modalTitle.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, '') + "-" + hash
     const modalSize: string = (!props.modalSize ? "" : "modal-" + props.modalSize);
     const modalFullScreen: string = (!props.modalFullScreen ? "" : "modal-fullscreen-" + props.modalFullScreen + "-down")
 
     //CORE ≥ Aplica a regra de visibilidade das modal
-    function bsModalVisible(modalVisible: IModalVisible, onModalVisible: (state: IModalVisible) => void, modalId: string) {
+    function bsModalVisible(modalVisible: IModalVisible, onModalVisible: (state: IModalVisible) => void, modalId: string): void {
         let myModal = document.getElementById(modalId)
         if (myModal && modalVisible === "open") {
             let openModal = $("body").find("#openModal");
@@ -50,6 +51,8 @@ const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) 
             myModal.addEventListener('hidden.bs.modal', function () {
                 onModalVisible("closed")
             })
+            let closed = $("body").find("#" + modalId + " .btn-close");
+            closed.trigger("click");
         }
     }
 
