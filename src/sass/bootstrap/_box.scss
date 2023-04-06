@@ -8,6 +8,7 @@
 }
 
 @mixin box-margin($box, $marginX, $marginY: .5rem){
+  position: relative;
   width: calc(#{$box} - #{$marginX}) !important;
   margin: #{$marginY} calc(#{$marginX} / 2);
 }
