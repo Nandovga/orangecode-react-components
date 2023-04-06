@@ -1,9 +1,8 @@
 import $ from "jquery"
 import React, {useEffect} from "react";
-import Hashids from "hashids";
 
-import {GET_ICON} from "../ts/system";
 import {IIcon} from "../@types/icon";
+import {GET_ICON} from "../ts/system";
 import {IFrameworkStyle} from "../@types/style";
 
 export type IModalVisible = "open" | "closed"
@@ -15,6 +14,7 @@ export type IModalFullScreen = "sm" | "md" | "lg" | "xl" | "xxl"
 export interface IModal {
     modalTitle: string
     modalVisible: IModalVisible
+    modalId?: string
     onModalVisible(state: IModalVisible): void
 }
 
@@ -34,10 +34,11 @@ type Props = IModal & {
  * @constructor
  */
 const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) => {
-    let hash = new Date().getTime();
 
     //STATE ≥ Estado do componente
-    const modalId: string = props.modalTitle.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, '') + "-" + hash
+    const modalId: string = !props.modalId
+        ? props.modalTitle.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, '')
+        : props.modalId.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, '');
     const modalSize: string = (!props.modalSize ? "" : "modal-" + props.modalSize);
     const modalFullScreen: string = (!props.modalFullScreen ? "" : "modal-fullscreen-" + props.modalFullScreen + "-down")
 
@@ -45,7 +46,7 @@ const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) 
     function bsModalVisible(modalVisible: IModalVisible, onModalVisible: (state: IModalVisible) => void, modalId: string): void {
         let myModal = document.getElementById(modalId)
         if (myModal && modalVisible === "open") {
-            let openModal = $("body").find("#openModal");
+            let openModal = $("body").find("#openModal[data-bs-target='#" + modalId + "']");
             openModal.trigger("click")
         } else if (myModal && modalVisible === "closed") {
             myModal.addEventListener('hidden.bs.modal', function () {
@@ -72,16 +73,17 @@ const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) 
              data-bs-backdrop={!props.modalBackdrop ? "true" : "static"}
              data-bs-keyboard="false">
             <div
-                className={"modal-dialog " + modalSize + " " + modalFullScreen + (modalCenter ? " modal-dialog-centered" : "")}>
+                className={"modal-dialog "
+                    + modalSize + " "
+                    + modalFullScreen
+                    + (modalCenter ? " modal-dialog-centered" : "")}>
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel"><i
-                            className={GET_ICON() + props.icon}/>{props.modalTitle}</h5>
+                        <h5 className="modal-title">
+                            <i className={GET_ICON() + props.icon}/>{props.modalTitle}</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div className="modal-body">
-                        {props.children}
-                    </div>
+                    <div className="modal-body">{props.children}</div>
                 </div>
             </div>
         </div>

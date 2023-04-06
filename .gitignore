@@ -1,10 +1,10 @@
 .idea
 node_modules
-package-lock.json
-example/css/style.css
-example/css/style.css.map
+example
 dist
-src/ts/index.tsx
 tsconfig.json
 webpack.config.js
-example
+package-lock.json
+src/ts/index.tsx
+src/ts/App.tsx
+src/ts/App.tsx
