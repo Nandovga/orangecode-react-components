@@ -12,7 +12,15 @@ export const globalResponse = (response: IResponseType, form: string = ''): void
     if (!response)
         return;
 
-    //mensagem nos campos
+    //mensagem nos campos - ERROR
+    if (data.errors)
+        globalMessageFields(data.errors, form.length === 0 ? "" : form)
+
+    //mensagem nos campos - ACCEPT
+    if (data.accept)
+        globalMessageFields(data.accept, form.length === 0 ? "" : form, "is-valid")
+
+    //mensagem nos campos - ALL
     if (data.field && data.field.message && data.field.messageType)
         globalMessageFields(data.field.message, form.length === 0 ? "" : form, data.field.messageType)
 

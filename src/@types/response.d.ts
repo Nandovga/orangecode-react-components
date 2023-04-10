@@ -3,6 +3,8 @@
  */
 export type IResponseType = {
     data: null | any
+    errors: null | any
+    accept: null | any
     field: null | IResponseField
     message: null | IResponseMessage
     modal: null | IResponseModal
