@@ -1,16 +1,10 @@
 import React from "react";
 import {GET_ICON} from "../../ts/system";
 import {IIcon} from "../../@types/icon";
-import {IInputBase} from "../../@types/form";
-import {IFrameworkStyle} from "../../@types/style";
-
-export type IInputType = 'text' | 'email' | 'number' | 'password' | 'date'
+import {IInputBase, IInputType} from "../../@types/form";
 
 export interface IInput extends IInputBase, IIcon {
     type?: IInputType
-    placeholder?: string
-    frameworkStyle?: IFrameworkStyle
-    onChange?(value: any): void
     onBlur?(value: any): void
 }
 
@@ -20,8 +14,11 @@ export interface IInput extends IInputBase, IIcon {
  * @constructor
  */
 const InputBootstrap = ({...props}: IInput) => {
+
+    //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+
     /*
     |--------------------------------------
     | render() - Renderização do componente
