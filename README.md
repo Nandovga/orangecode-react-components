@@ -2,8 +2,10 @@
 
 <p>🚀 Pacote de componentes react estilizados pelos principais framework de mercado como Bootstrap5, Tailwind e Primeflex.</p>
 
-<img src="https://img.shields.io/static/v1?label=License&message=MIT&color=success"/>
 <img src="https://img.shields.io/static/v1?label=&message=React&color=blue&logo=react"/>
+<img src="https://img.shields.io/static/v1?label=&message=Sass&color=pink&logo=sass"/>
+<img src="https://img.shields.io/static/v1?label=&message=Bootstrap&color=purple&logo=bootstrap"/>
+<img src="https://img.shields.io/static/v1?label=License&message=MIT&color=success"/>
 <img src="https://scrutinizer-ci.com/g/Nandovga/orangecode-react-components/badges/build.png?b=main"/>
 <img src="https://scrutinizer-ci.com/g/Nandovga/orangecode-react-components/badges/quality-score.png?b=main"/>
 
@@ -15,13 +17,28 @@ A instalação do pacote é bem simples, basta executar essa linha de comando no
 ```bash
 npm install orangecode-react-components
 ```
+Crie um arquivo de entrada <b style='color: #abc502'>style.scss</b>, se quiser personalizar o estilo padrão da biblioteca <a href='https://getbootstrap.com/'>Bootstrap 5</a>, importante manter a ordem de importação. 
+```scss
+//Arquivo - style.scss
+
+//Variaveis de personalização
+@import "./variable";
+
+//Path de colors
+@import "node_modules/orangecode-react-components/utils/colors";
+
+//Biblioteca do Bootstrap 5
+@import "node_modules/bootstrap/scss/bootstrap";
+
+//Pacote da Orangecode - Bootstrap 5
+@import "node_modules/orangecode-react-components/src/sass/bootstrap";
+ ```
+
 
 ##### ⚒️ Motivação
 
 O objetivo deste pacote é disponibilizar componentes <a href='https://react.dev/'>React</a> que agilize o desenvolvimento de sua aplicação front-end de forma mais rápida e eficaz. Ele também pode ser utilizado em frameworks populares, como
 o <a href='https://laravel.com/'>Laravel</a> integrado com <a href='https://inertiajs.com/'>InertiaJs</a>, por exemplo.
-
-##### ⚒️ Documentação em breve...
 
 #### 👨‍💻 Desenvolvedor
 

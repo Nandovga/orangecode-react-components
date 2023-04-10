@@ -48,7 +48,7 @@ const LoadingBootstrapButton = ({...props}: Props) => {
  * @param props
  * @constructor
  */
-const Loading = ({frameworkStyle = "bootstrap", loadingType = "box", loadingColor = "primary", ...props}: Props) => {
+const Loading = ({frameworkStyle = "bootstrap", loadingType = "box", loadingColor = "white", ...props}: Props) => {
     return frameworkStyle === "bootstrap"
         ? loadingType === "box"
             ? <LoadingBootstrapBox {...props} loadingColor={loadingColor}/>

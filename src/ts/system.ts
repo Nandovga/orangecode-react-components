@@ -47,19 +47,22 @@ export function GET_ICON(iconType: IIconType = "bootstrap"): string {
  */
 export function WINDOWS_RESIZE(breakpoint: IBreakpoint): string {
     let screen: number | undefined = $(window).width();
-    if (screen && screen < 380) {
-        return (breakpoint.xm === undefined ? breakpoint.default : breakpoint.xm);
-    } else if (screen && screen < 576) {
-        return (breakpoint.sm === undefined ? breakpoint.default : breakpoint.sm);
-    } else if (screen && screen <= 768) {
-        return (breakpoint.md === undefined ? breakpoint.default : breakpoint.md);
-    } else if (screen && screen <= 992) {
-        return (breakpoint.lg === undefined ? breakpoint.default : breakpoint.lg)
-    } else if (screen && screen <= 1200) {
-        return (breakpoint.xg === undefined ? breakpoint.default : breakpoint.xg);
-    } else if (screen && screen <= 1400) {
-        return (breakpoint.xxl === undefined ? breakpoint.default : breakpoint.xxl);
-    } else {
-        return breakpoint.default
+    if (!screen)
+        return breakpoint.default;
+    switch (true){
+        case screen <= 380:
+            return breakpoint.xm === undefined ? breakpoint.default : breakpoint.xm;
+        case screen <= 576:
+            return breakpoint.sm === undefined ? breakpoint.default : breakpoint.sm;
+        case screen <= 768:
+            return breakpoint.md === undefined ? breakpoint.default : breakpoint.md;
+        case screen <= 992:
+            return breakpoint.lg === undefined ? breakpoint.default : breakpoint.lg;
+        case screen <= 1200:
+            return breakpoint.xg === undefined ? breakpoint.default : breakpoint.xg;
+        case screen <= 1400:
+            return breakpoint.xxl === undefined ? breakpoint.default : breakpoint.xxl;
+        default:
+            return breakpoint.default
     }
 }
