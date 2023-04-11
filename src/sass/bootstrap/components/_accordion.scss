@@ -1,0 +1,52 @@
+:root {
+  @if variable-exists(oc-accordion) {
+    @each $nome in map-keys($oc-accordion) {
+      $value: map-get($oc-accordion, $nome);
+      --oc-accordion-#{$nome}: #{$value};
+    }
+  }
+}
+
+.accordion-button {
+  padding: var(--oc-accordion-padding-btn, #{$accordion-button-padding-y} #{$accordion-button-padding-x});
+  @include font-size(var(--oc-accordion-font-size-btn, #{$font-size-base}));
+  color: var(--oc-accordion-color-btn, #{$accordion-button-color});
+  background-color: var(--oc-accordion-background-btn, #{$accordion-button-bg});
+
+  &:not(.collapsed) {
+    color: var(--oc-accordion-color-btn-active, #{$accordion-button-active-color});
+    background-color: var(--oc-accordion-background-btn-active, #{$accordion-button-active-bg});
+  }
+}
+
+.accordion-item {
+  color: var(--oc-accordion-color, #{$accordion-color});
+  background-color: var(--oc-accordion-background, #{$accordion-bg});
+  border: var(--oc-accordion-border-width, #{$accordion-border-width}) solid var(--oc-accordion-border-color, #{$accordion-border-color});
+
+  &:first-of-type {
+    @include border-top-radius(var(--oc-accordion-border-radius, #{$accordion-border-radius}));
+
+    .accordion-button {
+      @include border-top-radius(var(--oc-accordion-border-radius, #{$accordion-inner-border-radius}));
+    }
+  }
+
+  &:last-of-type {
+    @include border-bottom-radius(var(--oc-accordion-border-radius, #{$accordion-border-radius}));
+
+    .accordion-button {
+      &.collapsed {
+        @include border-bottom-radius(var(--oc-accordion-border-radius, #{$accordion-inner-border-radius}));
+      }
+    }
+
+    .accordion-collapse {
+      @include border-bottom-radius(var(--oc-accordion-border-radius, #{$accordion-border-radius}));
+    }
+  }
+}
+
+.accordion-body {
+  padding: var(--oc-accordion-padding, #{$accordion-padding-y} #{$accordion-padding-x});
+}

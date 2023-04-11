@@ -3,7 +3,7 @@ import {IIcon} from "../@types/icon";
 import {GET_ICON} from "../ts/system";
 import {IColor} from "../@types/color";
 import {IInputBase} from "../@types/form";
-import Loading from "@react/Loading";
+import Loading from "./Loading";
 
 export interface IButton extends Omit<IInputBase, "box" | "boxClasses" | "fieldClasses" | "value" | "required" | "name" | "placeholder" | "onChange">, IIcon {
     colors: IColor

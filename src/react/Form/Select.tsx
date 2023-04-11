@@ -1,4 +1,6 @@
 import React from "react";
+import {IIcon} from "../../@types/icon";
+import {GET_ICON} from "../../ts/system";
 import {IInputBase} from "../../@types/form";
 
 export type ISelectData = {
@@ -6,7 +8,7 @@ export type ISelectData = {
     name: any
 }
 
-export interface ISelect extends IInputBase {
+export interface ISelect extends IInputBase, IIcon {
     data: Array<ISelectData>
     init?: boolean | string
 }
@@ -32,7 +34,10 @@ const SelectBootstrap = ({...props}: ISelect) => {
     |--------------------------------------
     */
     return <div className={"box-" + props.box + " " + boxClasses}>
-        <label className="form-label">{props.legend}</label>
+        <label className="form-label">
+            <i className={GET_ICON(props.iconType) + props.icon}/>
+            {props.legend}
+        </label>
         <select className={"form-select " + fieldClasses}
                 id={props.name}
                 name={props.name}
