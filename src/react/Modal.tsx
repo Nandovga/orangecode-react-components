@@ -69,7 +69,7 @@ const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) 
     */
     return <>
         <span id="openModal" data-bs-toggle="modal" data-bs-target={"#" + modalId}></span>
-        <div className="modal fade" id={modalId} tabIndex="-1"
+        <div className="modal fade" id={modalId}
              data-bs-backdrop={!props.modalBackdrop ? "true" : "static"}
              data-bs-keyboard="false">
             <div

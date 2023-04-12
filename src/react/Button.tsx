@@ -10,6 +10,7 @@ export interface IButton extends Omit<IInputBase, "box" | "boxClasses" | "fieldC
     onClick?: () => void
     variant?: "roudend" | "initial"
     load?: boolean
+    classes?: string
 }
 
 /**
@@ -48,11 +49,11 @@ const Button = ({frameworkStyle = "bootstrap", variant = "initial", ...props}: I
             ? <button type="submit"
                       title={props.legend}
                       style={style}
-                      className={disabled + type}>{button()}</button>
+                      className={disabled + type + " " + props.classes}>{button()}</button>
             : <a href="#"
                  title={props.legend}
                  style={style}
-                 className={disabled + type}
+                 className={disabled + type + " " + props.classes}
                  onClick={event => {
                      event.preventDefault();
                      if (!props.disabled && props.onClick) props.onClick()

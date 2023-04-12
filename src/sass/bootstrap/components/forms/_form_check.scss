@@ -1,0 +1,85 @@
+:root {
+  @if variable-exists(oc-form-check) {
+    @each $nome in map-keys($oc-form-check) {
+      $value: map-get($oc-form-check, $nome);
+      --oc-form-check-#{$nome}: #{$value};
+    }
+  }
+}
+
+.form-check {
+  padding-left: var(--oc-form-check-padding-left, #{$form-check-padding-start});
+  margin-bottom: var(--oc-form-check-margin-bottom, #{$form-check-margin-bottom});
+}
+
+.form-check-input {
+  width: var(--oc-form-check-width, #{$form-check-input-width});
+  height: var(--oc-form-check-width, #{$form-check-input-width});
+  background-color: var(--oc-form-check-background, #{$form-check-input-bg});
+  border: var(--oc-form-check-border, #{$form-check-input-border});
+
+  &[type="checkbox"] {
+    @include border-radius(var(--oc-form-check-border-radius, #{$form-check-input-border-radius}));
+  }
+
+  &[type="radio"] {
+    border-radius: var(--oc-form-check-border-radius-radio, #{$form-check-radio-border-radius});
+  }
+
+  &:focus {
+    border-color: var(--oc-form-check-border-color-checked, #{$form-check-input-focus-border});
+  }
+
+  &:checked {
+    background-color: var(--oc-form-check-background-checked, #{$form-check-input-checked-bg-color});
+    border-color: var(--oc-form-check-border-color-checked, #{$form-check-input-checked-border-color});
+
+    &[type="checkbox"] {
+      @if $enable-gradients {
+        background-image: escape-svg($form-check-input-checked-bg-image), var(--#{$prefix}gradient) !important;
+      } @else {
+        background-image: escape-svg($form-check-input-checked-bg-image) !important;
+      }
+    }
+
+    &[type="radio"] {
+      @if $enable-gradients {
+        background-image: escape-svg($form-check-radio-checked-bg-image), var(--#{$prefix}gradient);
+      } @else {
+        background-image: escape-svg($form-check-radio-checked-bg-image);
+      }
+    }
+  }
+
+  &:disabled {
+    opacity: var(--oc-form-check-opacity-disabled, #{$form-check-input-disabled-opacity});
+  }
+
+  &[disabled],
+  &:disabled {
+    ~ .form-check-label {
+      opacity: var(--oc-form-check-opacity-disabled, #{$form-check-label-disabled-opacity});
+    }
+  }
+}
+
+.form-check-label {
+  color: var(--oc-form-check-color-label, #{$form-check-label-color});
+  font-size: var(--oc-form-check-font-size-label, 1em);
+}
+
+//
+// Switch
+//
+
+.form-switch {
+
+  .form-check-input {
+    width: var(--oc-form-check-width-switch, #{$form-switch-width});
+    @include border-radius(var(--oc-form-check-border-radius-switch, #{$form-switch-border-radius}));
+
+    &:focus {
+      background-image: escape-svg($form-switch-bg-image);
+    }
+  }
+}

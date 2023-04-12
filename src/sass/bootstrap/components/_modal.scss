@@ -35,3 +35,8 @@
 .modal-body {
   padding: var(--oc-modal-padding, #{$modal-header-padding-y} #{$modal-header-padding-x});
 }
+
+.modal-title{
+  font-size: var(--oc-modal-font-size-title, 1.25rem);
+  font-weight: var(--oc-modal-font-weight-title, 600);
+}

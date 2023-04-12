@@ -21,6 +21,11 @@
     border-color: var(--oc-button-border-color-hover, var(--#{$prefix}btn-hover-border-color));
   }
 
+  &:focus-visible {
+    color: var(--oc-button-color-hover, var(--#{$prefix}btn-hover-color));
+    border-color: var(--oc-button-border-color-hover, var(--#{$prefix}btn-hover-border-color));
+  }
+
   .btn-check:checked + &,
   :not(.btn-check) + &:active,
   &:first-child:active,

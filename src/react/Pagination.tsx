@@ -5,7 +5,7 @@ import {IFrameworkStyle} from "../@types/style";
 export interface IPagination<T> extends ReactPaginateProps {
     pageCount: number,
     paginationDTO: Array<T>,
-    paginationRender(state: Array<T>): ReactNode<T>
+    paginationRender(state: Array<T>): ReactNode
     frameworkStyle?: IFrameworkStyle
 }
 
