@@ -25,6 +25,7 @@
   }
 
   thead > * > * {
+    vertical-align: var(--oc-table-vertical-align, #{$table-cell-vertical-align});
     background: var(--oc-table-header-background,  var(--oc-table-background, --#{$prefix}table-bg));
     color: var(--oc-table-header-color, var(--oc-table-color, #{$table-color}));
     font-size: var(--oc-table-header-font-size, .9em);
@@ -33,6 +34,7 @@
   }
 
   tbody > * > * {
+    vertical-align: var(--oc-table-vertical-align, #{$table-cell-vertical-align});
     font-size: var(--oc-table-font-size, .9em);
     font-weight: var(--oc-table-font-weight, normal);
   }

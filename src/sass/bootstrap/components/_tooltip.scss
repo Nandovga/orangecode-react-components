@@ -1,0 +1,44 @@
+:root {
+  @if variable-exists(oc-tooltip) {
+    @each $nome in map-keys($oc-tooltip) {
+      $value: map-get($oc-tooltip, $nome);
+      --oc-tooltip-#{$nome}: #{$value};
+    }
+  }
+}
+
+.tooltip{
+  @include font-size(var(--oc-tooltip-font-size, #{$tooltip-font-size}));
+}
+
+.bs-tooltip-top .tooltip-arrow {
+  &::before {
+    border-top-color: var(--oc-tooltip-background, #{$tooltip-bg});
+  }
+}
+
+.bs-tooltip-end .tooltip-arrow {
+  &::before {
+    border-right-color: var(--oc-tooltip-background, #{$tooltip-bg});
+  }
+}
+
+.bs-tooltip-bottom .tooltip-arrow {
+  &::before {
+    border-bottom-color: var(--oc-tooltip-background, #{$tooltip-bg});
+  }
+}
+
+.bs-tooltip-start .tooltip-arrow {
+  &::before {
+    border-left-color: var(--oc-tooltip-background, #{$tooltip-bg});;
+  }
+}
+
+.tooltip-inner {
+  max-width: var(--oc-tooltip-max-width, #{$tooltip-max-width});
+  padding: var(--oc-tooltip-padding, #{$tooltip-padding-y} #{$tooltip-padding-x});
+  color: var(--oc-tooltip-color, #{$tooltip-color});
+  background-color: var(--oc-tooltip-background, #{$tooltip-bg});
+  @include border-radius(var(--oc-tooltip-border-radius, #{$tooltip-border-radius}));
+}
