@@ -1,6 +1,7 @@
 import React, {useRef, useState} from "react";
 import {usePopper} from "react-popper";
-import {IFrameworkStyle} from "src/@types/style";
+
+import {IFrameworkStyle} from "../@types/style";
 
 export interface ITooltip {
     children
