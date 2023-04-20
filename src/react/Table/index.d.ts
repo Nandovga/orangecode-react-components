@@ -21,6 +21,7 @@ export type ITable<T> = {
     tableHeader: Array<ITableHeader<T>>
     tableDTO: Array<T & { id: any }>
 
+    tableEmptyValue?: string
     tableStyle?: "" | "bordered" | "borderless"
     tableSize?: "small" | "normal" | "large"
     tableClasses?: string

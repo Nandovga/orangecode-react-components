@@ -8,18 +8,22 @@ import {
     handlePagination
 } from "./TableHandle";
 
-
 /**
- * Exibe o componente de tabela
+ * Componente de TABELA - Bootstrap5
  * @param tableStyle
- * @param frameworkStyle
  * @param props
  * @constructor
  */
-function Table<T>({tableStyle = "", frameworkStyle = "bootstrap", ...props}: ITable<T>) {
+function TableBootstrap<T>({...props}: ITable<T>) {
 
-    //VARIABLE ≥ Configuração do componente
-    let size = props.tableSize === "small" ? "table-sm" : props.tableSize === "large" ? "table-lg" : "";
+    //CONFIG ≥ Configuração do componente
+    let tableSize = props.tableSize === "small" ? "table-sm" : props.tableSize === "large" ? "table-lg" : "";
+    let tableStyle = props.tableStyle
+    let tableConfig = {
+        classes: `table m-0 ${tableSize} ${}`
+    }
+
+    let emptyValue = !props.tableEmptyValue ? "Não há registros disponíveis no momento." : props.tableEmptyValue
 
     //STATE ≥ Carregamento do componente
     useEffect(() => {
@@ -42,19 +46,29 @@ function Table<T>({tableStyle = "", frameworkStyle = "bootstrap", ...props}: ITa
                 </tr>
                 </thead>
                 <tbody>
-                {props.tableDTO.length > 0 ? props.tableDTO.map(value => handleContent<T>(value, props))
-                    : <tr>
-                        <td className="text-center" colSpan={props.tableHeader.length}>Não há dados para serem exibidos
-                            no
-                            momento!
-                        </td>
-                    </tr>}
+                {props.tableDTO.length > 0
+                    ? props.tableDTO.map(value => handleContent<T>(value, props))
+                    : <tr><td className="text-center" colSpan={props.tableHeader.length}>{emptyValue}</td></tr>
+                }
                 </tbody>
                 {handlePagination<T>(props)}
             </table>
         </div>
         {handleFilter<T>(props)}
     </>
+}
+
+
+/**
+ * Componente TABELA
+ * @param frameworkStyle
+ * @param props
+ * @constructor
+ */
+function Table<T>({frameworkStyle = "bootstrap", ...props}: ITable<T>) {
+    return frameworkStyle === "bootstrap"
+        ? <TableBootstrap<T> {...props}/>
+        : <></>
 }
 
 export default Table
