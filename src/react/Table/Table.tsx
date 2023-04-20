@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {ITable} from "./index";
 import {
     handleContent,
@@ -8,23 +8,30 @@ import {
     handlePagination
 } from "./TableHandle";
 
-
 /**
- * Exibe o componente de tabela
- * @param tableStyle
- * @param frameworkStyle
+ * Componente TABELA - Bootstrap5
+ * @param tablePaginationRow
  * @param props
  * @constructor
  */
-function Table<T>({tableStyle = "", frameworkStyle = "bootstrap", ...props}: ITable<T>) {
+function TableBootstrp<T>(props: ITable<T>) {
 
-    //VARIABLE ≥ Configuração do componente
-    let size = props.tableSize === "small" ? "table-sm" : props.tableSize === "large" ? "table-lg" : "";
+    //STATE ≥ Estado do componente
+    const [tableDTO, setTableDTO] = useState<Array<T & {id: any}>>(props.tableDTO)
+
+    //CONFIG ≥ Configuração do componente
+    let tableSize = props.tableSize === "small" ? "table-sm" : props.tableSize === "large" ? "table-lg" : "";
+    let tableClasse = !props.tableClasses ? "" : props.tableClasses
+    let tableStyle = !props.tableStyle ? "" : "table-" + props.tableStyle
+    let tableEmptyValue = !props.tableEmptyValue ? "Não há informações disponíveis no momento!" : props.tableEmptyValue
+    let tableConfig = {
+        classes: `table m-0 ${tableSize} ${tableClasse} ${tableStyle}`
+    }
 
     //STATE ≥ Carregamento do componente
     useEffect(() => {
-        document.addEventListener("keydown", ev => handleKeyPress(ev, props))
-        return () => document.removeEventListener("keydown", ev => handleKeyPress(ev, props))
+        document.addEventListener("keydown", ev => handleKeyPress(ev, props, tableDTO))
+        return () => document.removeEventListener("keydown", ev => handleKeyPress(ev, props, tableDTO))
     }, [props.tableSelect])
 
     /*
@@ -34,7 +41,7 @@ function Table<T>({tableStyle = "", frameworkStyle = "bootstrap", ...props}: ITa
     */
     return <>
         <div className="w-100 table-responsive-xxl">
-            <table className={"m-0 table " + size + " " + props.tableClasses + " table-" + tableStyle}>
+            <table className={tableConfig.classes}>
                 <thead>
                 <tr>
                     {props.tableOnSelect ? <th className="text-center"><i className="bi bi-filter"/></th> : null}
@@ -42,19 +49,28 @@ function Table<T>({tableStyle = "", frameworkStyle = "bootstrap", ...props}: ITa
                 </tr>
                 </thead>
                 <tbody>
-                {props.tableDTO.length > 0 ? props.tableDTO.map(value => handleContent<T>(value, props))
-                    : <tr>
-                        <td className="text-center" colSpan={props.tableHeader.length}>Não há dados para serem exibidos
-                            no
-                            momento!
-                        </td>
-                    </tr>}
+                {tableDTO.length > 0
+                    ? tableDTO.map(value => handleContent<T>(value, props))
+                    : <tr><td className="text-center" colSpan={props.tableHeader.length}>{tableEmptyValue}</td></tr>
+                }
                 </tbody>
-                {handlePagination<T>(props)}
+                {handlePagination<T>(props, setTableDTO)}
             </table>
         </div>
         {handleFilter<T>(props)}
     </>
+}
+
+
+/**
+ * Componente de TABELA
+ * @param tableStyle
+ * @param frameworkStyle
+ * @param props
+ * @constructor
+ */
+function Table<T>({frameworkStyle = "bootstrap", ...props}: ITable<T>) {
+    return frameworkStyle === "bootstrap" ? <TableBootstrp<T> {...props}/> : <></>
 }
 
 export default Table
