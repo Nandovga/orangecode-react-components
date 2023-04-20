@@ -12,6 +12,13 @@
       --oc-table-header-#{$nome}: #{$value};
     }
   }
+
+  @if variable-exists(oc-table-footer) {
+    @each $nome in map-keys($oc-table-footer) {
+      $value: map-get($oc-table-footer, $nome);
+      --oc-table-footer-#{$nome}: #{$value};
+    }
+  }
 }
 
 .table{
@@ -37,6 +44,15 @@
     vertical-align: var(--oc-table-vertical-align, #{$table-cell-vertical-align});
     font-size: var(--oc-table-font-size, .9em);
     font-weight: var(--oc-table-font-weight, normal);
+  }
+
+  tfoot > * > * {
+    vertical-align: var(--oc-table-vertical-align, #{$table-cell-vertical-align});
+    background: var(--oc-table-footer-background,  var(--oc-table-background, --#{$prefix}table-bg));
+    color: var(--oc-table-footer-color, var(--oc-table-color, #{$table-color}));
+    font-size: var(--oc-table-footer-font-size, .9em);
+    font-weight: var(--oc-table-footer-font-weight, bold);
+    border-color: var(--oc-table-footer-border-color,  var(--oc-table-border-color, #{$table-border-color}));
   }
 }
 

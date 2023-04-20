@@ -33,22 +33,6 @@
   &:checked {
     background-color: var(--oc-form-check-background-checked, #{$form-check-input-checked-bg-color});
     border-color: var(--oc-form-check-border-color-checked, #{$form-check-input-checked-border-color});
-
-    &[type="checkbox"] {
-      @if $enable-gradients {
-        background-image: escape-svg($form-check-input-checked-bg-image), var(--#{$prefix}gradient) !important;
-      } @else {
-        background-image: escape-svg($form-check-input-checked-bg-image) !important;
-      }
-    }
-
-    &[type="radio"] {
-      @if $enable-gradients {
-        background-image: escape-svg($form-check-radio-checked-bg-image), var(--#{$prefix}gradient);
-      } @else {
-        background-image: escape-svg($form-check-radio-checked-bg-image);
-      }
-    }
   }
 
   &:disabled {
@@ -79,7 +63,7 @@
     @include border-radius(var(--oc-form-check-border-radius-switch, #{$form-switch-border-radius}));
 
     &:focus {
-      background-image: escape-svg($form-switch-bg-image);
+      background-image: escape-svg($form-switch-bg-image) !important;
     }
   }
 }
