@@ -14,10 +14,10 @@ import {
  * @param props
  * @constructor
  */
-function TableBootstrp<T>(props: ITable<T>) {
+function TableBootstrap<T>(props: ITable<T>) {
 
     //STATE ≥ Estado do componente
-    const [tableDTO, setTableDTO] = useState<Array<T & {id: any}>>(props.tableDTO)
+    const [tableDTO, setTableDTO] = useState<Array<T & { id: any }>>(props.tableDTO)
 
     //CONFIG ≥ Configuração do componente
     let tableSize = props.tableSize === "small" ? "table-sm" : props.tableSize === "large" ? "table-lg" : "";
@@ -30,8 +30,7 @@ function TableBootstrp<T>(props: ITable<T>) {
 
     //STATE ≥ Carregamento do componente
     useEffect(() => {
-        document.addEventListener("keydown", ev => handleKeyPress(ev, props, tableDTO))
-        return () => document.removeEventListener("keydown", ev => handleKeyPress(ev, props, tableDTO))
+        handleKeyPress(props, tableDTO)
     }, [props.tableSelect])
 
     /*
@@ -51,7 +50,9 @@ function TableBootstrp<T>(props: ITable<T>) {
                 <tbody>
                 {tableDTO.length > 0
                     ? tableDTO.map(value => handleContent<T>(value, props))
-                    : <tr><td className="text-center" colSpan={props.tableHeader.length}>{tableEmptyValue}</td></tr>
+                    : <tr>
+                        <td className="text-center" colSpan={props.tableHeader.length}>{tableEmptyValue}</td>
+                    </tr>
                 }
                 </tbody>
                 {handlePagination<T>(props, setTableDTO)}
@@ -61,7 +62,6 @@ function TableBootstrp<T>(props: ITable<T>) {
     </>
 }
 
-
 /**
  * Componente de TABELA
  * @param tableStyle
@@ -70,7 +70,7 @@ function TableBootstrp<T>(props: ITable<T>) {
  * @constructor
  */
 function Table<T>({frameworkStyle = "bootstrap", ...props}: ITable<T>) {
-    return frameworkStyle === "bootstrap" ? <TableBootstrp<T> {...props}/> : <></>
+    return frameworkStyle === "bootstrap" ? <TableBootstrap<T> {...props}/> : <></>
 }
 
 export default Table

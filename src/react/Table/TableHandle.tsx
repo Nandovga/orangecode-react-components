@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import $ from "jquery"
 import Button from "../Button";
 import Input from "../Form/Input";
 import Select from "../Form/Select";
@@ -63,18 +64,17 @@ export function handleContent<T>(row: T & { id: any }, props: ITable<T>) {
  * @param props
  * @param DTO
  */
-export function handleKeyPress<T>(event, props: ITable<T>, DTO: Array<T & {id: any}>) {
-    if (event.code === "ArrowUp" && props.tableSelect) {
-        console.log("acima", DTO)
-        // let index = DTO.findIndex(value => value.id === props.tableSelect?.id)
-        // if (index > 0 && props.tableOnSelect)
-        //     props.tableOnSelect(props.tableDTO[index - 1])
-    } else if (event.code === "ArrowDown" && props.tableSelect) {
-        console.log("abaixo", DTO)
-        // let index = DTO.findIndex(value => value.id === props.tableSelect?.id)
-        // if (index < DTO.length - 1 && props.tableOnSelect)
-        //     props.tableOnSelect(DTO[index + 1])
-    }
+export function handleKeyPress<T>(props: ITable<T>, DTO: Array<T & { id: any }>) {
+    const index = DTO.findIndex(value => value.id === props.tableSelect?.id);
+    $(document).one("keydown", ev => {
+        if (ev.code === "ArrowUp" && props.tableSelect) {
+            if (index > 0 && props.tableOnSelect)
+                props.tableOnSelect(DTO[index - 1])
+        } else if (ev.code === "ArrowDown" && props.tableSelect) {
+            if (index < DTO.length - 1 && props.tableOnSelect)
+                props.tableOnSelect(DTO[index + 1])
+        }
+    })
 }
 
 /**
