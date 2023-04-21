@@ -1,23 +1,32 @@
 import React, {useState} from "react";
 import $ from "jquery"
+
 import Button from "../Button";
 import Input from "../Form/Input";
 import Select from "../Form/Select";
 import Pagination from "../Pagination";
+
 import {GET_ICON, GET_TYPE} from "../../ts/system";
 import {ITable, ITableHeader, ITablePagination} from "./index";
 
 /**
  * Cabeçalho da TABELA
  * @param row
+ * @param DTO
+ * @param setDTO
  */
 export function handleHeader<T>(row: ITableHeader<T>) {
     const cellProps = {
         key: row.id,
-        className: `${row.align ? `text-${row.align}` : ""} ${row.classes ? `${row.classes}` : ``}`
+        className: `${row.align ? `text-${row.align}` : ""} ${row.classes ? `${row.classes}` : ``}`,
+        style: {cursor: row.sort ? "pointer" : "initial"},
+        onClick: () => {
+            if (row.sort) null
+        }
     }
     return <th {...cellProps}>
         <i className={GET_ICON(row.iconType) + row.icon}/>{row.title}
+        {row.sort ? <i className={GET_ICON(row.iconType) + "arrow-down-up ms-2"}/> : null}
     </th>
 }
 
@@ -60,19 +69,32 @@ export function handleContent<T>(row: T & { id: any }, props: ITable<T>) {
 
 /**
  * Event - Aplica o evento de keypress na TABELA
- * @param event
  * @param props
  * @param DTO
+ * @param paginationRef
  */
-export function handleKeyPress<T>(props: ITable<T>, DTO: Array<T & { id: any }>) {
+export function handleKeyPress<T>(
+    props: ITable<T>,
+    DTO: Array<T & { id: any }>,
+    paginationRef: any
+) {
     const index = DTO.findIndex(value => value.id === props.tableSelect?.id);
-    $(document).one("keydown", ev => {
+    $(document).on("keydown", ev => {
         if (ev.code === "ArrowUp" && props.tableSelect) {
             if (index > 0 && props.tableOnSelect)
                 props.tableOnSelect(DTO[index - 1])
         } else if (ev.code === "ArrowDown" && props.tableSelect) {
             if (index < DTO.length - 1 && props.tableOnSelect)
                 props.tableOnSelect(DTO[index + 1])
+        } else if (ev.code === "ArrowRight"){
+            let page = paginationRef.current.state.selected + 1;
+            let pageCount = paginationRef.current.props.pageCount - 1;
+            paginationRef.current.props.onPageChange({selected: page > pageCount ? pageCount : page})
+            paginationRef.current.setState({selected: page > pageCount ? pageCount : page})
+        } else if (ev.code === "ArrowLeft") {
+            let page = paginationRef.current.state.selected - 1;
+            paginationRef.current.props.onPageChange({selected: page < 0 ? 0 : page})
+            paginationRef.current.setState({selected: page < 0 ? 0 : page})
         }
     })
 }
@@ -118,8 +140,13 @@ export function handleFilter<T>(props: ITable<T>) {
  * Paginação da TABELA
  * @param props
  * @param setDTO
+ * @param paginationRef
  */
-export function handlePagination<T>(props: ITable<T>, setDTO: React.Dispatch<Array<T & { id: any }>>) {
+export function handlePagination<T>(
+    props: ITable<T>,
+    setDTO: React.Dispatch<Array<T & { id: any }>>,
+    paginationRef: React.Ref<any>
+) {
 
     //Manual
     const manual = () => {
@@ -189,7 +216,11 @@ export function handlePagination<T>(props: ITable<T>, setDTO: React.Dispatch<Arr
                 <p className='m-0 mx-2'>Total de {pagination.length} registro</p>
                 <Pagination<T> pageCount={row}
                                paginationDTO={pagination}
-                               paginationState={setDTO}/>
+                               paginationState={value => {
+                                   setDTO(value)
+                                   if (props.tableOnSelect) props.tableOnSelect(value[0])
+                               }}
+                               paginationRef={paginationRef}/>
             </div>
         </td>
     }
@@ -197,9 +228,6 @@ export function handlePagination<T>(props: ITable<T>, setDTO: React.Dispatch<Arr
     //Renderização
     return !!props.tablePagination
         ? <tfoot>
-        <tr>
-            {props.tablePagination === "auto"
-                ? auto() : !props.tableOnPagination ? null : manual()}
-        </tr>
+        <tr>{props.tablePagination === "auto" ? auto() : !props.tableOnPagination ? null : manual()}</tr>
         </tfoot> : null
 }

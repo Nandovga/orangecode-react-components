@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect, useState} from "react";
+import React, {ReactNode, useEffect, useRef, useState} from "react";
 import ReactPaginate, {ReactPaginateProps} from "react-paginate";
 import {IFrameworkStyle} from "../@types/style";
 
@@ -7,6 +7,7 @@ export interface IPagination<T> extends ReactPaginateProps {
     paginationDTO: Array<T & { id: any }>,
     paginationRender?(state: Array<T>): ReactNode
     paginationState?: React.Dispatch<Array<T & { id: any }>>
+    paginationRef?: React.Ref<any>
     frameworkStyle?: IFrameworkStyle
 }
 
@@ -41,7 +42,6 @@ function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>)
         setItemOffset(newOffset);
     };
 
-
     /*
     |--------------------------------------
     | render() - Renderização do componente
@@ -50,6 +50,7 @@ function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>)
     return <>
         {!props.paginationRender ? null : props.paginationRender(currentItem)}
         {itemPerPage > 1 ? <ReactPaginate {...props}
+                                          ref={props.paginationRef}
                                           nextLabel="Próximo"
                                           previousLabel="Anterior"
                                           pageCount={itemPerPage}

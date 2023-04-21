@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {ITable} from "./index";
 import {
     handleContent,
@@ -17,6 +17,7 @@ import {
 function TableBootstrap<T>(props: ITable<T>) {
 
     //STATE ≥ Estado do componente
+    const paginationRef = useRef<any>(null)
     const [tableDTO, setTableDTO] = useState<Array<T & { id: any }>>(props.tableDTO)
 
     //CONFIG ≥ Configuração do componente
@@ -30,7 +31,7 @@ function TableBootstrap<T>(props: ITable<T>) {
 
     //STATE ≥ Carregamento do componente
     useEffect(() => {
-        handleKeyPress(props, tableDTO)
+        handleKeyPress(props, tableDTO, paginationRef)
     }, [props.tableSelect])
 
     /*
@@ -50,12 +51,10 @@ function TableBootstrap<T>(props: ITable<T>) {
                 <tbody>
                 {tableDTO.length > 0
                     ? tableDTO.map(value => handleContent<T>(value, props))
-                    : <tr>
-                        <td className="text-center" colSpan={props.tableHeader.length}>{tableEmptyValue}</td>
-                    </tr>
+                    : <tr><td className="text-center" colSpan={props.tableHeader.length}>{tableEmptyValue}</td></tr>
                 }
                 </tbody>
-                {handlePagination<T>(props, setTableDTO)}
+                {handlePagination<T>(props, setTableDTO, paginationRef)}
             </table>
         </div>
         {handleFilter<T>(props)}

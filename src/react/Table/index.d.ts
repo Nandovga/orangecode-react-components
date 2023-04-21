@@ -1,4 +1,4 @@
-import React, {Dispatch} from "react";
+import React from "react";
 import {IIcon} from "../../@types/icon";
 import {IFrameworkStyle} from "src/@types/style";
 
@@ -9,6 +9,7 @@ export interface ITableHeader<T> extends IIcon {
     classes?: string
     body?: (data: T, id: string) => React.ReactNode
     filter?: boolean
+    sort?: boolean
 }
 
 export type ITable<T> = {
@@ -21,6 +22,7 @@ export type ITable<T> = {
     tableClasses?: string
     tableEmptyValue?: string
     tableOnFilter?(field: string, value: string, setLoad: React.Dispatch<boolean>): void
+    tableOnSort?(field: string, value: string, setLoad: React.Dispatch<boolean>): void
 
     tableSelect?: T & { id: any } | null
     tableOnSelect?(state: T & { id: any }): void
