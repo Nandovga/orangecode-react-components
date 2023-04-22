@@ -25,7 +25,7 @@ export type ITable<T> = {
     tableOnSort?(field: string, value: string, setLoad: React.Dispatch<boolean>): void
 
     tableSelect?: T & { id: any } | null
-    tableOnSelect?(state: T & { id: any }): void
+    tableOnSelect?(state: T & { id: any } | null): void
 
     tablePagination?: "auto" | ITablePagination
     tablePaginationRow?: 5 | 10 | 25 | 50 | 100

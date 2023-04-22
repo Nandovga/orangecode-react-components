@@ -10,12 +10,14 @@ import {GET_ICON, GET_TYPE} from "../../ts/system";
 import {ITable, ITableHeader, ITablePagination} from "./index";
 
 /**
- * Cabeçalho da TABELA
+ * ACTION ≥ Monta o cabeçalho da TABELA
  * @param row
  * @param DTO
  * @param setDTO
  */
-export function handleHeader<T>(row: ITableHeader<T>) {
+export function handleHeader<T>(
+    row: ITableHeader<T>
+) {
     const cellProps = {
         key: row.id,
         className: `${row.align ? `text-${row.align}` : ""} ${row.classes ? `${row.classes}` : ``}`,
@@ -31,11 +33,14 @@ export function handleHeader<T>(row: ITableHeader<T>) {
 }
 
 /**
- * Conteúdo da TABELA
+ * ACTION ≥ Monta o conteúdo da TABELA
  * @param row
  * @param props
  */
-export function handleContent<T>(row: T & { id: any }, props: ITable<T>) {
+export function handleContent<T>(
+    row: T & { id: any },
+    props: ITable<T>
+) {
     let select = !props.tableSelect ? false : props.tableSelect?.id === row.id
 
     let renderSelect = () => {
@@ -68,7 +73,7 @@ export function handleContent<T>(row: T & { id: any }, props: ITable<T>) {
 }
 
 /**
- * Event - Aplica o evento de keypress na TABELA
+ * EVENT ≥ Aplica o evento de keypress na TABELA
  * @param props
  * @param DTO
  * @param paginationRef
@@ -79,31 +84,68 @@ export function handleKeyPress<T>(
     paginationRef: any
 ) {
     const index = DTO.findIndex(value => value.id === props.tableSelect?.id);
-    $(document).on("keydown", ev => {
+
+    //STATE ≥ Realiza a ação de paginação via teclado
+    let handlePagination = (page: number, type: "right" | "left" | "up" | "down") => {
+        let pager;
+        switch (type) {
+            case "left":
+                pager = page < 0 ? 0 : page
+                if (page === -1)
+                    props.tableOnSelect ? props.tableOnSelect(null) : null
+                break;
+            case "right":
+                let pageCount = paginationRef.current.props.pageCount - 1;
+                pager = page > pageCount ? pageCount : page;
+                if(page > pageCount)
+                    props.tableOnSelect ? props.tableOnSelect(null) : null
+                break;
+            case "up":
+                pager = page > 1 ? page - 1 : 0
+                if (page === 0)
+                    props.tableOnSelect ? props.tableOnSelect(null) : null
+                break;
+            case "down":
+                pager = (page + 1) >= paginationRef.current.props.pageCount ? page : page + 1
+                if (pager === page)
+                    props.tableOnSelect ? props.tableOnSelect(null) : null
+                break;
+        }
+        paginationRef.current.props.onPageChange({selected: pager})
+        paginationRef.current.setState({selected: pager})
+    }
+
+    //EVENT ≥ KeyDown
+    $(document).one("keydown", ev => {
         if (ev.code === "ArrowUp" && props.tableSelect) {
             if (index > 0 && props.tableOnSelect)
                 props.tableOnSelect(DTO[index - 1])
+            else if (paginationRef.current !== null && index === 0)
+                handlePagination(paginationRef.current.state.selected, "up")
         } else if (ev.code === "ArrowDown" && props.tableSelect) {
             if (index < DTO.length - 1 && props.tableOnSelect)
                 props.tableOnSelect(DTO[index + 1])
-        } else if (ev.code === "ArrowRight"){
-            let page = paginationRef.current.state.selected + 1;
-            let pageCount = paginationRef.current.props.pageCount - 1;
-            paginationRef.current.props.onPageChange({selected: page > pageCount ? pageCount : page})
-            paginationRef.current.setState({selected: page > pageCount ? pageCount : page})
+            else if (paginationRef.current !== null)
+                handlePagination(paginationRef.current.state.selected, "down")
+        } else if (ev.code === "ArrowRight") {
+            if (paginationRef.current === null)
+                return;
+            handlePagination(paginationRef.current.state.selected + 1, "right")
         } else if (ev.code === "ArrowLeft") {
-            let page = paginationRef.current.state.selected - 1;
-            paginationRef.current.props.onPageChange({selected: page < 0 ? 0 : page})
-            paginationRef.current.setState({selected: page < 0 ? 0 : page})
+            if (paginationRef.current === null)
+                return;
+            handlePagination(paginationRef.current.state.selected - 1, "left");
         }
     })
 }
 
 /**
- * Filtro da TABELA
+ * ACTION ≥ Realiza a filtragem dos dados da TABELA
  * @param props
  */
-export function handleFilter<T>(props: ITable<T>) {
+export function handleFilter<T>(
+    props: ITable<T>
+) {
 
     //STATE ≥ Estado do componente
     let filter = props.tableHeader.filter(row => row.filter);
@@ -137,7 +179,7 @@ export function handleFilter<T>(props: ITable<T>) {
 }
 
 /**
- * Paginação da TABELA
+ * ACTION ≥ Monta a paginação da TABELA
  * @param props
  * @param setDTO
  * @param paginationRef
