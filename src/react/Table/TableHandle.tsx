@@ -20,15 +20,10 @@ export function handleHeader<T>(
 ) {
     const cellProps = {
         key: row.id,
-        className: `${row.align ? `text-${row.align}` : ""} ${row.classes ? `${row.classes}` : ``}`,
-        style: {cursor: row.sort ? "pointer" : "initial"},
-        onClick: () => {
-            if (row.sort) null
-        }
+        className: `${row.align ? `text-${row.align}` : ""} ${row.classes ? `${row.classes}` : ``}`
     }
     return <th {...cellProps}>
         <i className={GET_ICON(row.iconType) + row.icon}/>{row.title}
-        {row.sort ? <i className={GET_ICON(row.iconType) + "arrow-down-up ms-2"}/> : null}
     </th>
 }
 
@@ -97,7 +92,7 @@ export function handleKeyPress<T>(
             case "right":
                 let pageCount = paginationRef.current.props.pageCount - 1;
                 pager = page > pageCount ? pageCount : page;
-                if(page > pageCount)
+                if (page > pageCount)
                     props.tableOnSelect ? props.tableOnSelect(null) : null
                 break;
             case "up":
@@ -201,8 +196,8 @@ export function handlePagination<T>(
 
         //Renderização
         return pageTotal > 1 ? <td className="p-0" colSpan={props.tableHeader.length + 1}>
-            <div className="w-100 p-1 d-flex align-items-center justify-content-end">
-                <p className="fs-7 me-2 text-primary-300">Total de registro {elements}</p>
+            <div className="w-100 d-flex align-items-center justify-content-end">
+                <p className="fs-7 me-2 my-auto text-primary-300">Total de registro {elements}</p>
                 <ul className="pagination pagination-sm m-0">
                     <li className="page-item">
                         <a className="page-link"
@@ -220,7 +215,7 @@ export function handlePagination<T>(
                                href="#"
                                onClick={event => {
                                    event.preventDefault()
-                                   if (props.tableOnPagination) props.tableOnPagination(1)
+                                   if (props.tableOnPagination) props.tableOnPagination(row + 1)
                                }}>{row + 1}</a>
                         </li>
                     })}
@@ -229,7 +224,7 @@ export function handlePagination<T>(
                            href="#"
                            onClick={event => {
                                event.preventDefault()
-                               if (props.tableOnPagination) props.tableOnPagination(1)
+                               if (props.tableOnPagination) props.tableOnPagination(pageTotal)
                            }}><i className="bi bi-chevron-double-right"/></a>
                     </li>
                 </ul>
@@ -240,7 +235,6 @@ export function handlePagination<T>(
     //Automático
     const auto = () => {
         const [row, setRow] = useState<number>(!props.tablePaginationRow ? 10 : props.tablePaginationRow)
-        const [pagination] = useState(props.tableDTO)
 
         //Renderização
         return <td className="p-1" colSpan={props.tableHeader.length + 1}>
@@ -255,9 +249,9 @@ export function handlePagination<T>(
                     <option value={50}>50</option>
                     <option value={100}>100</option>
                 </select>
-                <p className='m-0 mx-2'>Total de {pagination.length} registro</p>
+                <p className='m-0 mx-2'>Total de {props.tableDTO.length} registro</p>
                 <Pagination<T> pageCount={row}
-                               paginationDTO={pagination}
+                               paginationDTO={props.tableDTO}
                                paginationState={value => {
                                    setDTO(value)
                                    if (props.tableOnSelect) props.tableOnSelect(value[0])
@@ -269,7 +263,6 @@ export function handlePagination<T>(
 
     //Renderização
     return !!props.tablePagination
-        ? <tfoot>
-        <tr>{props.tablePagination === "auto" ? auto() : !props.tableOnPagination ? null : manual()}</tr>
-        </tfoot> : null
+        ? <tfoot><tr>{props.tablePagination === "auto" ? auto() : !props.tableOnPagination ? null : manual()}</tr></tfoot>
+        : null
 }

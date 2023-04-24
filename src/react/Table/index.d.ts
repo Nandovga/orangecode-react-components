@@ -1,6 +1,6 @@
 import React from "react";
 import {IIcon} from "../../@types/icon";
-import {IFrameworkStyle} from "src/@types/style";
+import {IFrameworkStyle} from "../../@types/style";
 
 export interface ITableHeader<T> extends IIcon {
     id: string
@@ -9,13 +9,11 @@ export interface ITableHeader<T> extends IIcon {
     classes?: string
     body?: (data: T, id: string) => React.ReactNode
     filter?: boolean
-    sort?: boolean
 }
 
 export type ITable<T> = {
     tableHeader: Array<ITableHeader<T>>
     tableDTO: Array<T & { id: any }>
-    tableSetDTO?: React.Dispatch<Array<T>>
 
     tableStyle?: "bordered" | "borderless"
     tableSize?: "small" | "large"

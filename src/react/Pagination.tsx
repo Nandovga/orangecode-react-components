@@ -34,7 +34,7 @@ function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>)
     //STATE ≥ Efeito de quando muda de página
     useEffect(() => {
         if (props.paginationState) props.paginationState(currentItem)
-    }, [itemOffeset, props.pageCount])
+    }, [itemOffeset, props.pageCount, props.paginationDTO])
 
     //STATE ≥ Ação de paginação
     const handlePageClick = (event): void => {

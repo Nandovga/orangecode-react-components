@@ -31,10 +31,10 @@ function TableBootstrap<T>(props: ITable<T>) {
 
     //STATE ≥ Carregamento do componente
     useEffect(() => {
-        if (props.tableSelect !== null)
-            handleKeyPress(props, tableDTO, paginationRef)
+        if (props.tableSelect !== undefined && props.tableSelect !== null)
+            handleKeyPress(props, props.tablePagination === "auto" ? tableDTO : props.tableDTO, paginationRef)
         else
-            props.tableOnSelect ? props.tableOnSelect(tableDTO[0]) : null
+            props.tableOnSelect ? props.tableOnSelect((props.tablePagination === "auto" ? tableDTO[0] : props.tableDTO[0])) : null
     }, [props.tableSelect])
 
     /*
@@ -52,12 +52,14 @@ function TableBootstrap<T>(props: ITable<T>) {
                 </tr>
                 </thead>
                 <tbody>
-                {tableDTO.length > 0
-                    ? tableDTO.map(value => handleContent<T>(value, props))
-                    : <tr>
-                        <td className="text-center" colSpan={props.tableHeader.length}>{tableEmptyValue}</td>
-                    </tr>
-                }
+                {props.tablePagination === "auto" ?
+                    tableDTO.length > 0
+                        ? tableDTO.map(value => handleContent<T>(value, props))
+                        : <tr><td className="text-center" colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td></tr> : null}
+                {props.tablePagination !== "auto"
+                    ? props.tableDTO.length > 0
+                        ? props.tableDTO.map(value => handleContent<T>(value, props))
+                        : <tr><td className="text-center" colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td></tr> : null}
                 </tbody>
                 {handlePagination<T>(props, setTableDTO, paginationRef)}
             </table>
