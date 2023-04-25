@@ -38,6 +38,7 @@
     font-size: var(--oc-table-header-font-size, .9em);
     font-weight: var(--oc-table-header-font-weight, bold);
     border-color: var(--oc-table-header-border-color,  var(--oc-table-border-color, #{$table-border-color}));
+    text-transform: var(--oc-table-header-text-transform,  initial);
   }
 
   tbody > * > * {

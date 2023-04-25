@@ -8,6 +8,7 @@ export interface ILoading {
     loadingColor?: IColor
     loadingType?: "button" | "box"
     loadingStyle?: "border" | "grow"
+    loadingOpacity?: string
 }
 
 type Props = ILoading & {
@@ -22,7 +23,7 @@ type Props = ILoading & {
  */
 const LoadingBootstrapBox = ({loadingText = "Processando os dados...", ...props}: Props) => {
     return <div className={"flex-column position-absolute justify-content-center align-items-center " + (props.loadingVisible ? "d-flex" : "d-none")}
-                style={{width: "100%", height: "100%", background: "rgba(0,0,0,0.5)", top: 0, left: 0, zIndex: 2000}}>
+                style={{width: "100%", height: "100%", background: "rgba(0,0,0, " + (props.loadingOpacity ? props.loadingOpacity : 0.5) + ")", top: 0, left: 0, zIndex: 2000}}>
         <div className={"spinner-" + (!props.loadingStyle ? "border" : props.loadingStyle) +  " text-" + props.loadingColor} role="status">
             <span className="visually-hidden">Loading...</span>
         </div>

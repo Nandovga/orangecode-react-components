@@ -1,20 +1,17 @@
 import React, {useEffect, useRef, useState} from "react";
-import {ITable} from "./index";
-import {
-    handleContent,
-    handleFilter,
-    handleHeader,
-    handleKeyPress,
-    handlePagination
-} from "./TableHandle";
+import {ITable} from "./types";
+import {handleFilter} from "./bootstrap/HandleFilter";
+import {handleHeader} from "./bootstrap/HandleHeader";
+import {handleContent} from "./bootstrap/HandleContent";
+import {handleKeyPress} from "./bootstrap/HandleKeyPress";
+import {handlePagination} from "./bootstrap/HandlePagination";
 
 /**
- * Componente TABELA - Bootstrap5
- * @param tablePaginationRow
+ * Componente de TABELA - Bootstrap5
  * @param props
  * @constructor
  */
-function TableBootstrap<T>(props: ITable<T>) {
+function Bootstrap<T>(props: ITable<T>) {
 
     //STATE ≥ Estado do componente
     const paginationRef = useRef<any>(null)
@@ -67,16 +64,4 @@ function TableBootstrap<T>(props: ITable<T>) {
         {handleFilter<T>(props)}
     </>
 }
-
-/**
- * Componente de TABELA
- * @param tableStyle
- * @param frameworkStyle
- * @param props
- * @constructor
- */
-function Table<T>({frameworkStyle = "bootstrap", ...props}: ITable<T>) {
-    return frameworkStyle === "bootstrap" ? <TableBootstrap<T> {...props}/> : <></>
-}
-
-export default Table
+export default Bootstrap
