@@ -14,4 +14,9 @@ export interface IInputBase{
     onChange?(value: any): void
 }
 
+export interface IHookForm {
+    register: any
+    errors: object
+}
+
 export type IInputType = 'text' | 'email' | 'number' | 'password' | 'date'

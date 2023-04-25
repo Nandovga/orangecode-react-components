@@ -26,7 +26,7 @@ const SwitchBootstrap = ({...props}: ISwitch) => {
     return <div className={"box-" + props.box + " " + boxClasses}>
         <label className="form-label">
             <i className={GET_ICON(props.iconType) + props.icon}/>
-            {props.legend}
+            {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <div className="form-check form-switch">
             <input className={"form-check-input " + fieldClasses}

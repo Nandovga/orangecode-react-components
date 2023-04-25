@@ -64,9 +64,8 @@ const TooltipBootstrap = ({frameworkStyle = "bootstrap", ...props}: ITooltip) =>
  * @param props
  * @constructor
  */
-const Tooltip = ({frameworkStyle = "bootstrap", ...props}: ITooltip) => {
+export function Tooltip({frameworkStyle = "bootstrap", ...props}: ITooltip){
     return frameworkStyle === "bootstrap" ? <TooltipBootstrap {...props}>
         {props.children}
     </TooltipBootstrap> : <></>
 }
-export default Tooltip

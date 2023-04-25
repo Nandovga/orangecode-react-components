@@ -6,18 +6,14 @@ import {ITable, ITableHeader} from "../types";
  * @param row
  * @param props
  */
-export function handleContent<T>(
-    row: T & { id: any },
-    props: ITable<T>
-) {
+export function handleContent<T>(row: T & { id: any }, props: ITable<T>) {
     let select = !props.tableSelect ? false : props.tableSelect?.id === row.id
 
     let renderSelect = () => {
-        return props.tableOnSelect && props.tableSelect !== undefined
-            ? <td className={"text-center bg-light " + (select ? "bg-light" : "")}
-                  style={{width: "0px"}}>
-                {select ? <i className="bi bi-caret-right-fill"/> : ''}
-            </td> : null
+        if (!props.tableOnSelect || props.tableSelect === undefined)
+            return null;
+        return <td className={"text-center bg-light " + (select ? "bg-light" : "")}
+                   style={{width: "0px"}}>{select ? <i className="bi bi-caret-right-fill"/> : ''}</td>
     }
 
     let renderCell = (header: ITableHeader<T>) => {

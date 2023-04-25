@@ -1,9 +1,9 @@
 import React from "react";
-import {GET_ICON} from "../../ts/system";
-import {IIcon} from "../../@types/icon";
-import {IInputBase, IInputType} from "../../@types/form";
+import {GET_ICON} from "../../../ts/system";
+import {IIcon} from "../../../@types/icon";
+import {IHookForm, IInputBase, IInputType} from "../../../@types/form";
 
-export interface IInput extends IInputBase, IIcon {
+interface IInput extends IInputBase, IHookForm, IIcon {
     type?: IInputType
     onBlur?(value: any): void
 }
@@ -29,31 +29,32 @@ const InputBootstrap = ({...props}: IInput) => {
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
-        <input className={"form-control " + fieldClasses}
-               id={props.name}
+        <input className={"form-control " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
                name={props.name}
                type={props.type}
-               value={props.value}
-               required={props.required}
                disabled={props.disabled}
                placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
-               onChange={event => !props.onChange ? null : props.onChange(event.target.value)}
-               onBlur={event => !props.onBlur ? null : props.onBlur(event.target.value)}/>
-        <div id="j_feedback" data-name={props.name}/>
+               {...props.register(props.name, {
+                   required: !props.required ? false : "Campo obrigatório",
+                   onBlur: (e) => props.onBlur ? props.onBlur(e.target.value) : null ,
+                   onChange: (e) => props.onChange ? props.onChange(e.target.value) : null
+               })}
+        />
+        <div className={(!props.errors[props.name] ? "" : "invalid-feedback")}
+             id="j_feedback" data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
     </div>
 }
 
 /**
- * Componente de Input
+ * Componente Input HookForm
  * @param type
- * @param box
  * @param frameworkStyle
+ * @param box
  * @param props
  * @constructor
  */
-const Input = ({type = "text", box = "100", frameworkStyle = "bootstrap", ...props}: IInput) => {
+const Input = ({type = "text", frameworkStyle = "bootstrap", box = "100", ...props}: IInput) => {
     return frameworkStyle === "bootstrap"
-        ? <InputBootstrap {...props} box={box} type={type}/>
-        : <></>
+        ? <InputBootstrap box={box} type={type} {...props} /> : <></>
 }
 export default Input

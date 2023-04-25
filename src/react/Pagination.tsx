@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect, useRef, useState} from "react";
+import React, {ReactNode, useEffect, useState} from "react";
 import ReactPaginate, {ReactPaginateProps} from "react-paginate";
 import {IFrameworkStyle} from "../@types/style";
 
@@ -20,7 +20,7 @@ export interface IPagination<T> extends ReactPaginateProps {
  * @param rest
  * @constructor
  */
-function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>) {
+export function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>) {
     const classePage = frameworkStyle === "bootstrap" ? "pagination mb-0 justify-content-center" : "";
     const classePageItem = frameworkStyle === "bootstrap" ? "page-item" : "";
     const classePageLink = frameworkStyle === "bootstrap" ? "page-link" : "";
@@ -66,5 +66,3 @@ function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>)
                                           previousLinkClassName={classePageLink}/> : null}
     </>
 }
-
-export default Pagination

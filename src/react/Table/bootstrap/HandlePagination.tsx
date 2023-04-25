@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Pagination from "../../Pagination";
+import {Pagination} from "../../Pagination";
 import {GET_TYPE} from "../../../ts/system";
 import {ITable, ITablePagination} from "../types";
 

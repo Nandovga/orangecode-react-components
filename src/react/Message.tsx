@@ -48,7 +48,7 @@ const Message = (
                  frameworkStyle="bootstrap"
                  icon="cone-striped fs-4">
             <p className="fw-semibold">{props.modalMessage}</p>
-            <div className="w-100 d-flex justify-content-end">
+            <div className="w-100 d-flex justify-content-end mt-3">
                 <a href="#"
                    className={"btn btn-sm me-2 " + rejectColor}
                    onClick={() => props.onModalVisible("closed")}>

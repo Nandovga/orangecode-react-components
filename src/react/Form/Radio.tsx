@@ -35,7 +35,7 @@ const RadioBootstrap = ({radioAlign = "row", ...props}: IRadio) => {
     return <div className={"box-" + props.box + " " + boxClasses + " d-flex flex-wrap " + "flex-" + radioAlign}>
         <label className="form-label w-100">
             <i className={GET_ICON(props.iconType) + props.icon}/>
-            {props.legend}
+            {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         {props.radioValue.map(row =>
             <div key={row.value} className={"form-check " + (radioAlign === "row" ? "me-2" : "mb-2")}>
