@@ -17,10 +17,10 @@ export function handleContent<T>(row: T & { id: any }, props: ITable<T>) {
     }
 
     let renderCell = (header: ITableHeader<T>) => {
-        const {id, body, align} = header
+        const {id, body, align, classes} = header
         const cellProps = {
             key: `${row.id}-${id}`,
-            className: `${!align ? "" : "text-" + align} ${select ? "fw-bold bg-light" : ""}`,
+            className: `${!align ? "" : "text-" + align} ${select ? "fw-bold bg-light" : ""} ${classes}`,
             style: {cursor: !props.tableOnSelect ? "initial" : "pointer"}
         }
         return <td {...cellProps}>{body ? body(row, id) : row[id]}</td>

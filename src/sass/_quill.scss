@@ -1,0 +1,54 @@
+:root {
+  @if variable-exists(oc-editor) {
+    @each $nome in map-keys($oc-editor) {
+      $value: map-get($oc-editor, $nome);
+      --oc-editor-#{$nome}: #{$value};
+    }
+  }
+}
+
+//QuillEditor - Plugin
+.quill-theme {
+  width: 100%;
+
+  //barra de menus
+  .ql-toolbar {
+    margin-top: 10px;
+    margin-bottom: 0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    background: var(--oc-editor-background-header, #fff) !important;
+    border: 1px solid var(--oc-editor-border-color, #ccc) !important;
+    border-bottom: 0 !important;
+
+    .ql-fill {
+      fill: var(--oc-editor-color-header, #333333) !important;
+    }
+
+    .ql-stroke {
+      stroke: var(--oc-editor-color-header, #333333) !important;
+    }
+
+    .ql-picker-label {
+      color: var(--oc-editor-color-header, #333333) !important;
+    }
+
+    .ql-picker-label:hover,
+    .ql-picker-label:hover .ql-stroke,
+    button:hover .ql-fill,
+    button:hover .ql-stroke {
+      color: var(--oc-editor-color-hover, #555) !important;
+      stroke: var(--oc-editor-color-hover, #555) !important;
+      fill: var(--oc-editor-color-hover, #555) !important;
+    }
+  }
+
+  //palco
+  .ql-container {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background: var(--oc-editor-background, #fff) !important;
+    border: 1px solid var(--oc-editor-border-color, #ccc) !important;
+    color: var(--oc-editor-color, #000) !important;
+  }
+}
