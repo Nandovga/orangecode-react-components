@@ -30,7 +30,6 @@ const InputBootstrap = ({...props}: IInput) => {
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <input className={"form-control " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
-               name={props.name}
                type={props.type}
                disabled={props.disabled}
                placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
