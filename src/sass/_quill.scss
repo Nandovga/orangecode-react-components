@@ -50,5 +50,9 @@
     background: var(--oc-editor-background, #fff) !important;
     border: 1px solid var(--oc-editor-border-color, #ccc) !important;
     color: var(--oc-editor-color, #000) !important;
+
+    .ql-editor {
+      min-height: var(--oc-editor-height, 200px) !important;
+    }
   }
 }

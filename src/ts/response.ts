@@ -178,6 +178,11 @@ const globalMessageFields = (data, form: string = "", type = 'is-invalid'): void
             .find("#j_feedback[data-name='" + key + "']")
             .addClass(type === 'is-invalid' ? 'invalid-feedback' : 'valid-feedback')
             .html(text)
+
+        //Default - Feedback
+        formulario.find("#j_feedback[data-name='" + key + "']")
+            .addClass(type)
+            .html(text)
     })
 }
 

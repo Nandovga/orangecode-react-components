@@ -48,12 +48,13 @@ const EditorQuill = ({module = "basic", ...props}: IEditorProps) => {
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
-        <ReactQuill value={props.value}
-                    onChange={value => props.onChange ? props.onChange(value) : null}
-                    readOnly={props.disabled}
+        <ReactQuill className="quill-theme"
+                    modules={editorModules}
                     id={props.name}
-                    className="quill-theme"
-                    modules={editorModules}/>
+                    value={props.value}
+                    readOnly={props.disabled}
+                    placeholder={props.placeholder}
+                    onChange={value => props.onChange ? props.onChange(value) : null}/>
         <div id="j_feedback" data-name={props.name}/>
     </div>
 }
