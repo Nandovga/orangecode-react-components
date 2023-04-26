@@ -1,10 +1,9 @@
 import React from "react";
-import {IInputBase} from "../../@types/form";
-import {GET_ICON} from "../../ts/system";
-import {IIcon} from "../../@types/icon";
+import {IIcon} from "../../../@types/icon";
+import {GET_ICON} from "../../../ts/system";
+import {IHookForm, IInputBase} from "../../../@types/form";
 
-export interface ISwitch extends IInputBase, IIcon {
-    value: boolean
+interface Props extends IInputBase, IHookForm, IIcon {
     label: string
 }
 
@@ -14,7 +13,8 @@ export interface ISwitch extends IInputBase, IIcon {
  * @param props
  * @constructor
  */
-const SwitchBootstrap = ({box = "50", ...props}: ISwitch) => {
+const SwitchBootstrap = ({box = "50", ...props}: Props) => {
+
     //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
@@ -29,18 +29,11 @@ const SwitchBootstrap = ({box = "50", ...props}: ISwitch) => {
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
-        <div className="form-check form-switch">
+        <div className="form-check form-switch ms-3">
             <input className={"form-check-input " + fieldClasses}
                    type="checkbox"
-                   id={props.name}
                    disabled={props.disabled}
-                   required={props.required}
-                   checked={props.value}
-                   name={props.name}
-                   onChange={event => {
-                       if (props.onChange)
-                           props.onChange(event.target.checked)
-                   }}/>
+                   {...props.register(props.name, {})}/>
             <label className="form-check-label" htmlFor={props.name}>{props.label}</label>
         </div>
     </div>
@@ -52,7 +45,8 @@ const SwitchBootstrap = ({box = "50", ...props}: ISwitch) => {
  * @param props
  * @constructor
  */
-const Switch = ({frameworkStyle = "bootstrap", ...props}: ISwitch) => {
-    return frameworkStyle === "bootstrap" ? <SwitchBootstrap {...props}/> : <></>
+const Switch = ({frameworkStyle = "bootstrap", ...props}: Props) => {
+    return frameworkStyle === "bootstrap"
+        ? <SwitchBootstrap {...props}/> : <></>
 }
 export default Switch

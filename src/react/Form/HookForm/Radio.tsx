@@ -4,7 +4,7 @@ import {IIcon} from "../../../@types/icon";
 import {GET_ICON} from "../../../ts/system";
 import {IHookForm, IInputBase} from "../../../@types/form";
 
-export interface IRadio extends IInputBase, IHookForm, IIcon {
+interface Props extends IInputBase, IHookForm, IIcon {
     radioValue: Array<IRadioValue>
     radioAlign?: "row" | "column"
 }
@@ -16,7 +16,7 @@ export interface IRadio extends IInputBase, IHookForm, IIcon {
  * @param props
  * @constructor
  */
-const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => {
+const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: Props) => {
 
     //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
@@ -54,7 +54,7 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => 
  * @param props
  * @constructor
  */
-const Radio = ({frameworkStyle = "bootstrap", ...props}: IRadio) => {
+const Radio = ({frameworkStyle = "bootstrap", ...props}: Props) => {
     return frameworkStyle === "bootstrap"
         ? <RadioBootstrap {...props}/> : <></>
 }

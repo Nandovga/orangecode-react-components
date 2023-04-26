@@ -1,10 +1,10 @@
 import React from "react";
 import {GET_ICON} from "../../../ts/system";
 import {IIcon} from "../../../@types/icon";
-import {IHookForm, IInputBase, IInputType} from "../../../@types/form";
+import {IHookForm, IInputBase} from "../../../@types/form";
 
-interface Props extends IInputBase, IHookForm, IIcon {
-    type?: IInputType
+export interface IInput extends IInputBase, IHookForm, IIcon {
+    rows?: number
     onBlur?(value: any): void
 }
 
@@ -13,7 +13,7 @@ interface Props extends IInputBase, IHookForm, IIcon {
  * @param props
  * @constructor
  */
-const InputBootstrap = ({...props}: Props) => {
+const TextAreaBootstrap = ({...props}: IInput) => {
 
     //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
@@ -29,32 +29,31 @@ const InputBootstrap = ({...props}: Props) => {
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
-        <input className={"form-control " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
-               type={props.type}
-               disabled={props.disabled}
-               placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
-               {...props.register(props.name, {
-                   required: !props.required ? false : "Campo obrigatório",
-                   onBlur: (e) => props.onBlur ? props.onBlur(e.target.value) : null ,
-                   onChange: (e) => props.onChange ? props.onChange(e.target.value) : null
-               })}
-        />
+        <textarea className={"form-control " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
+                  rows={!props.rows ? 3 : props.rows}
+                  disabled={props.disabled}
+                  placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
+                  {...props.register(props.name, {
+                      required: !props.required ? false : "Campo obrigatório",
+                      onBlur: (e) => props.onBlur ? props.onBlur(e.target.value) : null ,
+                      onChange: (e) => props.onChange ? props.onChange(e.target.value) : null
+                  })}/>
         <div className={(!props.errors[props.name] ? "" : "invalid-feedback")}
              id="j_feedback" data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
     </div>
 }
 
 /**
- * Componente Input HookForm
+ * Componente de Input
  * @param type
- * @param frameworkStyle
  * @param box
+ * @param frameworkStyle
  * @param props
  * @constructor
  */
-const Input = ({type = "text", frameworkStyle = "bootstrap", box = "100", ...props}: Props) => {
+const TextArea = ({box = "100", frameworkStyle = "bootstrap", ...props}: IInput) => {
     return frameworkStyle === "bootstrap"
-        ? <InputBootstrap box={box} type={type} {...props} />
+        ? <TextAreaBootstrap {...props} box={box}/>
         : <></>
 }
-export default Input
+export default TextArea

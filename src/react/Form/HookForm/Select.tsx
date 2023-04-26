@@ -4,7 +4,7 @@ import {IIcon} from "../../../@types/icon";
 import {GET_ICON} from "../../../ts/system";
 import {IHookForm, IInputBase} from "../../../@types/form";
 
-export interface ISelect extends IInputBase, IHookForm, IIcon {
+interface Props extends IInputBase, IHookForm, IIcon {
     data: Array<ISelectData>
     init?: boolean | string
 }
@@ -14,7 +14,7 @@ export interface ISelect extends IInputBase, IHookForm, IIcon {
  * @param props
  * @constructor
  */
-const SelectBootstrap = ({...props}: ISelect) => {
+const SelectBootstrap = ({...props}: Props) => {
 
     //Configuração do componente
     let init = !props.init ? null
@@ -57,7 +57,7 @@ const SelectBootstrap = ({...props}: ISelect) => {
  * @param props
  * @constructor
  */
-const Select = ({frameworkStyle = "bootstrap", box = "100", ...props}: ISelect) => {
+const Select = ({frameworkStyle = "bootstrap", box = "100", ...props}: Props) => {
     return frameworkStyle === "bootstrap"
         ? <SelectBootstrap {...props} box={box}/> : <></>
 }
