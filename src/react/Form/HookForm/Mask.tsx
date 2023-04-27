@@ -1,8 +1,9 @@
 import React from "react";
+import InputMask from "react-input-mask";
+
 import {GET_ICON} from "../../../ts/system";
 import {IIcon} from "../../../@types/icon";
 import {IHookForm, IInputBase} from "../../../@types/form";
-import InputMask from "react-input-mask";
 
 interface Props extends IInputBase, IHookForm, IIcon {
     mask: string

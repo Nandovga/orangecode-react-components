@@ -20,7 +20,7 @@ export interface IPagination<T> extends ReactPaginateProps {
  * @param rest
  * @constructor
  */
-export function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>) {
+function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>) {
     const classePage = frameworkStyle === "bootstrap" ? "pagination mb-0 justify-content-center" : "";
     const classePageItem = frameworkStyle === "bootstrap" ? "page-item" : "";
     const classePageLink = frameworkStyle === "bootstrap" ? "page-link" : "";
@@ -66,3 +66,4 @@ export function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPaginat
                                           previousLinkClassName={classePageLink}/> : null}
     </>
 }
+export default Pagination
