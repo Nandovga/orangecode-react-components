@@ -95,6 +95,13 @@ export const globalMessageFieldsClear = (form: string = ''): void => {
             .removeClass('valid-feedback')
             .html('');
     });
+
+    //DEFAULT
+    $.each(formulario.find('#j_feedback'), function () {
+        $(this).removeClass('is-invalid')
+            .removeClass('is-valid')
+            .html('');
+    });
 }
 
 /**

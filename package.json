@@ -1,6 +1,6 @@
 {
   "name": "orangecode-react-components",
-  "version": "1.1.4",
+  "version": "1.1.6-x1",
   "description": "Pacote de componentes react estilizados pelos principais framework de mercado como Bootstrap5, Tailwind e Primeflex",
   "main": "src/js/index.ts",
   "scripts": {
