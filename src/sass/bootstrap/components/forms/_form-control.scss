@@ -26,6 +26,15 @@
   }
 }
 
+.form-control-view{
+  position: absolute;
+  cursor: pointer;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  color: var(--oc-form-control-color, #{$input-color});
+}
+
 .form-control-sm {
   min-height: var(--oc-form-control-min-height-sm, #{$input-height-sm});
   padding: var(--oc-form-control-padding-sm, #{$input-padding-y-sm $input-padding-x-sm});

@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
+import $ from "jquery"
+
 import {GET_ICON} from "../../ts/system";
 import {IIcon} from "../../@types/icon";
 import {IInputBase, IInputType} from "../../@types/form";
 
 export interface IInput extends IInputBase, IIcon {
     type?: IInputType
+    previewPass?: boolean
     onBlur?(value: any): void
 }
 
@@ -16,8 +19,23 @@ export interface IInput extends IInputBase, IIcon {
 const InputBootstrap = ({...props}: IInput) => {
 
     //Configuração do componente
+    const [type, setType] = useState(props.type)
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+
+    //Ajusta posicionamento do View Pass
+    $(document).ready(() => {
+        $.each($("body").find(".form-control[type='password']"), function () {
+            let position = $(this).position()
+            let height = $(this).outerHeight()
+            console.log(height)
+            $(this).parent().find(".form-control-view").css(({
+                "top": position.top,
+                "right": 8,
+                "height": height + "px"
+            }))
+        })
+    })
 
     /*
     |--------------------------------------
@@ -32,13 +50,16 @@ const InputBootstrap = ({...props}: IInput) => {
         <input className={"form-control " + fieldClasses}
                id={props.name}
                name={props.name}
-               type={props.type}
+               type={type}
                value={props.value}
                required={props.required}
                disabled={props.disabled}
                placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
                onChange={event => !props.onChange ? null : props.onChange(event.target.value)}
                onBlur={event => !props.onBlur ? null : props.onBlur(event.target.value)}/>
+        {props.previewPass && props.type === "password"
+            ? <span className={"bi bi-" + (type === "password" ? "eye" : "eye-slash") + " form-control-view"}
+                    onClick={() => setType(type === "password" ? "text" : "password")}/> : null}
         <div id="j_feedback" data-name={props.name}/>
     </div>
 }

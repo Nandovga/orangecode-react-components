@@ -25,7 +25,7 @@ export function handleFilter<T>(props: ITable<T>) {
     const [filterLoad, setFilterLoad] = useState<boolean>(false)
 
     useEffect(() => {
-        if (options[filterField] !== null)
+        if (filterField !== null && options[filterField] !== null)
             setInputDisabled(options[filterField].filter(row => row.id == filterOptions)[0]?.disabled)
     })
 
