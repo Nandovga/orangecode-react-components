@@ -24,7 +24,7 @@ export type ITable<T> = {
     tableClasses?: string
     tableEmptyValue?: string
     tableOnFilter?(field: string, value: string, setLoad: React.Dispatch<boolean>, options?: any): void
-    tableOnSort?(field: string, value: string, setLoad: React.Dispatch<boolean>): void
+    tableOnSort?(field: string, value: "asc" | "desc"): void
 
     tableSelect?: T & { id: any } | null
     tableOnSelect?(state: T & { id: any } | null): void

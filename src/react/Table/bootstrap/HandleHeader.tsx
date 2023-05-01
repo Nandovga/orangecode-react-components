@@ -1,8 +1,7 @@
-import React, {useState} from "react";
-import {ITable, ITableHeader} from "../types";
-import {GET_ICON} from "../../../ts/system";
+import React from "react";
 import {handleSort} from "./HandleSort";
-
+import {GET_ICON} from "../../../ts/system";
+import {ITable, ITableHeader} from "../types";
 /**
  * ACTION ≥ Monta o cabeçalho da TABELA
  * @param row
@@ -34,7 +33,7 @@ export function handleHeader<T>(
                        data-sort=""
                        onClick={event => {
                            event.preventDefault()
-                           handleSort(row.id,props, setDTO, paginationRef)
+                           handleSort(!props.tableOnSort ? "auto" : "manual", row.id, props, setDTO, paginationRef)
                        }}
                        className="ms-1 fs-6"><i className="bi bi-filter"/></a> : null}
     </th>
