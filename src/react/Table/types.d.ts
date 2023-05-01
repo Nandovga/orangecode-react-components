@@ -8,9 +8,11 @@ export interface ITableHeader<T> extends IIcon {
     title: string
     align?: "center" | "start" | "end"
     classes?: string
+    style?: object
     body?: (data: T, id: string) => React.ReactNode
     filter?: boolean
     filterOptions?: Array<ISelectData & {disabled?: boolean}>
+    sort?: boolean
 }
 
 export type ITable<T> = {
@@ -28,6 +30,7 @@ export type ITable<T> = {
     tableOnSelect?(state: T & { id: any } | null): void
 
     tablePagination?: "auto" | ITablePagination
+    tablePaginationAlign?: "end" | "center" | "start"
     tablePaginationRow?: 5 | 10 | 25 | 50 | 100
     tableOnPagination?: (pageNumber: number) => void
 

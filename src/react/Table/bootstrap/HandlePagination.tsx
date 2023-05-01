@@ -25,8 +25,8 @@ export function handlePagination<T>(
 
         //Renderização
         return pageTotal > 1 ? <td className="p-0" colSpan={props.tableHeader.length + 1}>
-            <div className="w-100 d-flex align-items-center justify-content-end">
-                <p className="fs-7 me-2 my-auto text-primary-300">Total de registro {elements}</p>
+            <div className={"w-100 d-flex align-items-center justify-content-" + (!props.tablePaginationAlign ? "end" : props.tablePaginationAlign)}>
+                <p className="fs-7 mx-2 my-auto text-primary-300">Total de registro {elements}</p>
                 <ul className="pagination pagination-sm m-0">
                     <li className="page-item">
                         <a className="page-link"
@@ -66,7 +66,7 @@ export function handlePagination<T>(
 
         //Renderização
         return <td className="p-1" colSpan={props.tableHeader.length + 1}>
-            <div className="w-100 d-flex justify-content-end align-items-center">
+            <div className={"w-100 d-flex align-items-center justify-content-" + (!props.tablePaginationAlign ? "end" : props.tablePaginationAlign)}>
                 <select className="form-select form-select-sm me-2"
                         value={row}
                         onChange={event => setRow(parseInt(event.target.value))}

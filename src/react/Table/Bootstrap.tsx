@@ -40,12 +40,12 @@ function Bootstrap<T>(props: ITable<T>) {
     |------------------------------------------
     */
     return <>
-        <div className="w-100 table-responsive-xxl">
+        <div className="w-100 table-responsive">
             <table className={tableConfig.classes}>
                 <thead>
                 <tr>
                     {props.tableOnSelect ? <th className="text-center"><i className="bi bi-filter"/></th> : null}
-                    {props.tableHeader.map(value => handleHeader<T>(value))}
+                    {props.tableHeader.map(value => handleHeader<T>(value,  props,setTableDTO, paginationRef))}
                 </tr>
                 </thead>
                 <tbody>
