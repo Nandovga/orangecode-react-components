@@ -16,6 +16,7 @@ function Bootstrap<T>(props: ITable<T>) {
     //STATE ≥ Estado do componente
     const paginationRef = useRef<any>(null)
     const [tableDTO, setTableDTO] = useState<Array<T & { id: any }>>(props.tableDTO)
+    const [tablePageSelect, setTablePageSelect] = useState<number>(0)
 
     //CONFIG ≥ Configuração do componente
     let tableSize = props.tableSize === "small" ? "table-sm" : props.tableSize === "large" ? "table-lg" : "";
@@ -26,13 +27,21 @@ function Bootstrap<T>(props: ITable<T>) {
         classes: `table m-0 ${tableSize} ${tableClasse} ${tableStyle}`
     }
 
-    //STATE ≥ Carregamento do componente
+    //EFFECT ≥ Gerencia a ação de select
     useEffect(() => {
         if (props.tableSelect !== undefined && props.tableSelect !== null)
             handleKeyPress(props, props.tablePagination === "auto" ? tableDTO : props.tableDTO, paginationRef)
         else
             props.tableOnSelect ? props.tableOnSelect((props.tablePagination === "auto" ? tableDTO[0] : props.tableDTO[0])) : null
     }, [props.tableSelect])
+
+    //EFFECT - Gerencia a ação de select e paginação
+    useEffect(() => {
+        if (props.tableOnSelect && props.tablePagination === "auto" && paginationRef.current.state.selected !== tablePageSelect){
+            props.tableOnSelect(tableDTO[0])
+            setTablePageSelect(paginationRef.current.state.selected)
+        }
+    }, [tableDTO])
 
     /*
     |------------------------------------------

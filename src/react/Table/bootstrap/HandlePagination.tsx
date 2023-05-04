@@ -80,10 +80,7 @@ export function handlePagination<T>(
                 <p className='m-0 mx-2'>Total de {props.tableDTO.length} registro</p>
                 <Pagination<T> pageCount={row}
                                paginationDTO={props.tableDTO}
-                               paginationState={value => {
-                                   setDTO(value)
-                                   if (props.tableOnSelect) props.tableOnSelect(value[0])
-                               }}
+                               paginationState={value => setDTO(value)}
                                paginationRef={paginationRef}/>
             </div>
         </td>
