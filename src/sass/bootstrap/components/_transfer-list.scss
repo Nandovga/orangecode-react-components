@@ -1,0 +1,47 @@
+:root {
+  @if variable-exists(oc-transfer-list) {
+    @each $nome in map-keys($oc-transfer-list) {
+      $value: map-get($oc-transfer-list, $nome);
+      --oc-transfer-list-#{$nome}: #{$value};
+    }
+  }
+}
+
+.transfer-list {
+  max-width: 600px;
+
+  .transfer-list-box {
+    padding: 10px 0;
+    border: 1px solid var(--oc-transfer-list-border-color, #ccc);
+    background: var(--oc-transfer-list-background, $white);
+    color: var(--oc-transfer-list-color, #181818);
+    width: 45%;
+    border-radius: 10px;
+    max-width: 250px;
+    max-height: 300px;
+    overflow-x: auto;
+
+    .item {
+      font-size: .9em;
+      border-bottom: 1px solid var(--oc-transfer-list-border-color-item, #dedede);
+      padding: .3rem 2.2rem;
+    }
+
+    .item:last-of-type {
+      border-bottom: none;
+    }
+  }
+
+  .transfer-list-options {
+    width: 10%;
+
+    .options{
+      background: var(--oc-transfer-list-background-options, #eae9e9);
+      color: var(--oc-transfer-list-color-options, #000);
+      border: 1px solid var(--oc-transfer-list-border-color-options, #ccc);
+      padding: 4px 8px;
+      border-radius: var(--oc-transfer-list-border-radius-options, 5px);
+      margin-bottom: 10px;
+    }
+  }
+}
