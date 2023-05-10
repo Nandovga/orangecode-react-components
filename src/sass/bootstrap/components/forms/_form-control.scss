@@ -35,6 +35,19 @@
   color: var(--oc-form-control-color, #{$input-color});
 }
 
+.form-control-search {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--oc-form-control-background-search, #{$input-bg});
+  padding: var(--oc-form-control-padding-search, 5px);
+  border-radius: var(--oc-form-control-border-radius-search, #{$input-border-radius});
+  color: var(--oc-form-control-color-search, #{$input-color});
+  border: var(--oc-form-control-border-search, #{$input-border-width solid $input-border-color});
+  font-size: var(--oc-form-control-font-size-search, #{$input-font-size});
+}
+
 .form-control-sm {
   min-height: var(--oc-form-control-min-height-sm, #{$input-height-sm});
   padding: var(--oc-form-control-padding-sm, #{$input-padding-y-sm $input-padding-x-sm});

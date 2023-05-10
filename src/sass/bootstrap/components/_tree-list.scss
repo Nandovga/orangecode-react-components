@@ -1,0 +1,75 @@
+:root {
+  @if variable-exists(oc-tree-list) {
+    @each $nome in map-keys($oc-tree-list) {
+      $value: map-get($oc-tree-list, $nome);
+      --oc-tree-list-#{$nome}: #{$value};
+    }
+  }
+}
+
+.tree {
+  padding: var(--oc-tree-list-padding, .75rem);
+  border: var(--oc-tree-list-border, 1px solid #ccc);
+  border-radius: var(--oc-tree-list-border-radius, 5px);
+  display: flex;
+  position: relative;
+  flex-direction: column;
+
+  &-item {
+    display: flex;
+    align-items: center;
+
+    .link{
+      color: var(--oc-tree-list-color, map-get($theme-colors, "primary"));
+      font-size: var(--oc-tree-list-font-size, .9em);
+      text-decoration: none;
+    }
+
+    &-action {
+      position: relative;
+      width: 13px;
+      height: 13px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      margin-right: 8px;
+      border-radius: var(--oc-tree-list-border-radius-action, 2px);
+      background: var(--oc-tree-list-background-action, #e8e8e8);
+      border: var(--oc-tree-list-border-action, 1px solid #ccc);
+      color: var(--oc-tree-list-color-action, #000);
+    }
+
+    i {
+      margin-right: 5px;
+    }
+  }
+
+  &-item.selected {
+    a:last-of-type{
+      border-radius: 5px;
+      background: rgba(0,0,0,0.1);
+      padding: 0 5px;
+      transition: .3s;
+    }
+  }
+
+  &-line {
+    position: relative;
+  }
+
+  &-line.hide {
+    .tree-view {
+      display: none;
+    }
+  }
+
+  &-line:before {
+    content: "";
+    position: absolute;
+    border-left: 1px dotted var(--oc-tree-list-color-line, #555);
+    top: 8px;
+    left: 5px;
+    bottom: 0;
+  }
+}

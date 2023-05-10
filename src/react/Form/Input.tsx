@@ -28,7 +28,6 @@ const InputBootstrap = ({...props}: IInput) => {
         $.each($("body").find(".form-control[type='password']"), function () {
             let position = $(this).position()
             let height = $(this).outerHeight()
-            console.log(height)
             $(this).parent().find(".form-control-view").css(({
                 "top": position.top,
                 "right": 8,
