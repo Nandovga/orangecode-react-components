@@ -25,7 +25,7 @@ function SearchBootstrap<T>(props: ISearch<T>) {
 
     //Ajusta posicionamento do Search
     $(document).ready(() => {
-        $.each($("body").find(".form-control.search[type='text']"), function () {
+        $.each($("body").find(".form-control.search"), function () {
             let position = $(this).position();
             let height = $(this).outerHeight();
             $(this).parent().find(".form-control-search").css(({
@@ -34,15 +34,15 @@ function SearchBootstrap<T>(props: ISearch<T>) {
                 "margin-top": "5px",
                 "height": ((!height ? 0 : height) - 10) + "px"
             }))
-        })
 
-        $("body").find(".form-control.search[name='" + props.name + "']").on("focus", function () {
-            $(this).on("keydown", function (ev) {
-                if (ev.code === "F2" && props.onSearchClick)
-                    props.onSearchClick();
-                if (ev.code === "NumpadEnter" || ev.code === "Enter")
-                    $(this).blur()
-            })
+            $(this).stop().on("focus", function () {
+                $(this).on("keydown", function (ev) {
+                    if (ev.code === "F2" && props.onSearchClick)
+                        props.onSearchClick();
+                    if (ev.code === "NumpadEnter" || ev.code === "Enter")
+                        $(this).blur()
+                })
+            });
         })
     })
 
@@ -51,7 +51,7 @@ function SearchBootstrap<T>(props: ISearch<T>) {
     | render() - Renderização do componente
     |------------------------------------------
     */
-    return <div className={"box-" + props.box + " " + boxClasses}>
+    return <div className={"position-relative box-" + (!props.box ? "100" : props.box) + " " + boxClasses}>
         <label htmlFor={props.name} className="form-label">
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
