@@ -26,26 +26,30 @@
   }
 }
 
+.form-control-search {
+  $padding: var(--oc-form-control-padding, #{$input-padding-y $input-padding-x});
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $padding;
+  color: var(--oc-form-control-color-search, #{$input-color});
+  font-size: var(--oc-form-control-font-size, #{$input-font-size});
+  right: 0;
+  bottom: 0;
+}
+
 .form-control-view{
+  $padding: var(--oc-form-control-padding, #{$input-padding-y $input-padding-x});
   position: absolute;
   cursor: pointer;
   font-size: 1.1em;
   display: flex;
   align-items: center;
+  padding: $padding;
   color: var(--oc-form-control-color, #{$input-color});
-}
-
-.form-control-search {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--oc-form-control-background-search, #{$input-bg});
-  padding: var(--oc-form-control-padding-search, 5px);
-  border-radius: var(--oc-form-control-border-radius-search, #{$input-border-radius});
-  color: var(--oc-form-control-color-search, #{$input-color});
-  border: var(--oc-form-control-border-search, #{$input-border-width solid $input-border-color});
-  font-size: var(--oc-form-control-font-size-search, #{$input-font-size});
+  right: 0;
+  bottom: 0;
 }
 
 .form-control-sm {

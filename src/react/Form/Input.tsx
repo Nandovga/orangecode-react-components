@@ -23,19 +23,6 @@ const InputBootstrap = ({...props}: IInput) => {
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
 
-    //Ajusta posicionamento do View Pass
-    $(document).ready(() => {
-        $.each($("body").find(".form-control[type='password']"), function () {
-            let position = $(this).position()
-            let height = $(this).outerHeight()
-            $(this).parent().find(".form-control-view").css(({
-                "top": position.top,
-                "right": 8,
-                "height": height + "px"
-            }))
-        })
-    })
-
     /*
     |--------------------------------------
     | render() - Renderização do componente
@@ -57,8 +44,9 @@ const InputBootstrap = ({...props}: IInput) => {
                onChange={event => !props.onChange ? null : props.onChange(event.target.value)}
                onBlur={event => !props.onBlur ? null : props.onBlur(event.target.value)}/>
         {props.previewPass && props.type === "password"
-            ? <span className={"bi bi-" + (type === "password" ? "eye" : "eye-slash") + " form-control-view"}
-                    onClick={() => setType(type === "password" ? "text" : "password")}/> : null}
+            ? <a href="#" className="form-control-view"
+                 onClick={() => setType(type === "password" ? "text" : "password")}>
+                <i className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a>  : null}
         <div id="j_feedback" data-name={props.name}/>
     </div>
 }

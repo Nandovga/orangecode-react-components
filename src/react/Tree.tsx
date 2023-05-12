@@ -40,7 +40,7 @@ function TreeBootstrap<T>(props: ITree<T>) {
     //STATE ≥ Configuração do componente
     useEffect(() => {
         setTreeData(buildTree(props.treeData))
-    }, [])
+    }, [props.treeData])
 
     //STATE ≥ Estrutura da árvore dados
     function buildTree(array: Array<T & ITreeData>, parentId: null | number = null) {
@@ -117,7 +117,7 @@ function TreeBootstrap<T>(props: ITree<T>) {
     }
 
     //JQUERY -> Ajusta posicionamento do Search
-    $(document).ready(() => {
+    useEffect(() => {
         let tree = $("body").find(".tree[id='" + props.treeName + "']");
         $.each(tree.find(".tree-line"), function () {
             let parent = $(this).attr("data-parent")
