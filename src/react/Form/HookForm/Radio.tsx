@@ -28,13 +28,14 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: Props) => {
     |------------------------------------------
     */
     return <div className={"box-" + box + " " + boxClasses + " d-flex flex-wrap " + "flex-" + radioAlign}>
-        <label className="form-label w-100">
+        <label className="form-label w-100" htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         {props.radioValue.map(row =>
             <div key={row.value} className={"form-check " + (radioAlign === "row" ? "me-2" : "mb-2") + (!props.errors[props.name] ? "" : " is-invalid")}>
                 <input className={"form-check-input " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
+                       id={props.name}
                        type="radio"
                        disabled={props.disabled || row.disabled}
                        value={row.value}

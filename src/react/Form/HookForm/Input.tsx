@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import $ from "jquery"
 
 import {GET_ICON} from "../../../ts/system";
 import {IIcon} from "../../../@types/icon";
@@ -23,20 +22,6 @@ const InputBootstrap = ({...props}: Props) => {
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
 
-    //Ajusta posicionamento do View Pass
-    $(document).ready(() => {
-        $.each($("body").find(".form-control[type='password']"), function () {
-            let position = $(this).position()
-            let height = $(this).outerHeight()
-            console.log(height)
-            $(this).parent().find(".form-control-view").css(({
-                "top": position.top,
-                "right": 8,
-                "height": height + "px"
-            }))
-        })
-    })
-
     /*
     |--------------------------------------
     | render() - Renderização do componente
@@ -48,6 +33,7 @@ const InputBootstrap = ({...props}: Props) => {
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <input className={"form-control " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
+               id={props.name}
                type={type}
                disabled={props.disabled}
                placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
@@ -57,8 +43,9 @@ const InputBootstrap = ({...props}: Props) => {
                    onChange: (e) => props.onChange ? props.onChange(e.target.value) : null
                })}/>
         {props.previewPass && props.type === "password"
-            ? <span className={"bi bi-" + (type === "password" ? "eye" : "eye-slash") + " form-control-view"}
-                    onClick={() => setType(type === "password" ? "text" : "password")}/> : null}
+            ? <a href="#" className="form-control-view"
+                 onClick={() => setType(type === "password" ? "text" : "password")}>
+                <i className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a>  : null}
         <div className={(!props.errors[props.name] ? "" : "invalid-feedback")}
              id="j_feedback" data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
     </div>

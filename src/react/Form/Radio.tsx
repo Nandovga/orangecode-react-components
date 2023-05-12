@@ -34,7 +34,7 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => 
     |------------------------------------------
     */
     return <div className={"box-" + box + " " + boxClasses + " d-flex flex-wrap " + "flex-" + radioAlign}>
-        <label className="form-label w-100">
+        <label className="form-label w-100" htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
@@ -42,6 +42,7 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => 
             <div key={row.value} className={"form-check " + (radioAlign === "row" ? "me-2" : "mb-2")}>
                 <input className={"form-check-input " + fieldClasses}
                        type="radio"
+                       id={props.name}
                        disabled={props.disabled || row.disabled}
                        required={props.required}
                        name={props.name}

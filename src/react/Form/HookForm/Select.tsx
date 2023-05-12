@@ -30,12 +30,13 @@ const SelectBootstrap = ({...props}: Props) => {
     |--------------------------------------
     */
     return <div className={"box-" + props.box + " " + boxClasses}>
-        <label className="form-label">
+        <label className="form-label" htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <select className={"form-select " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
                 disabled={props.disabled}
+                id={props.name}
                 placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
                 {...props.register(props.name, {
                     required: !props.required ? false : "Campo obrigatório",

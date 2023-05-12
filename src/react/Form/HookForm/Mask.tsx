@@ -32,6 +32,7 @@ const InputBootstrapMask = ({...props}: Props) => {
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <InputMask mask={props.mask}
+                   id={props.name}
                    type="text"
                    disabled={props.disabled}
                    placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}

@@ -25,12 +25,13 @@ const SwitchBootstrap = ({box = "50", ...props}: Props) => {
     |--------------------------------------
     */
     return <div className={"box-" + box + " " + boxClasses}>
-        <label className="form-label">
+        <label className="form-label" htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <div className="form-check form-switch ms-3">
             <input className={"form-check-input " + fieldClasses}
+                   id={props.name}
                    type="checkbox"
                    disabled={props.disabled}
                    {...props.register(props.name, {})}/>

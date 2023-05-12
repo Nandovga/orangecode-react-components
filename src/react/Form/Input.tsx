@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import $ from "jquery"
 
 import {GET_ICON} from "../../ts/system";
 import {IIcon} from "../../@types/icon";

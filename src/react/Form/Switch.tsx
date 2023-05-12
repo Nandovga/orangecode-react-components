@@ -25,7 +25,7 @@ const SwitchBootstrap = ({box = "50", ...props}: ISwitch) => {
     |--------------------------------------
     */
     return <div className={"box-" + box + " " + boxClasses}>
-        <label className="form-label">
+        <label className="form-label" htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>

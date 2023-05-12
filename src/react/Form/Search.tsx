@@ -4,17 +4,15 @@ import {GET_ICON} from "../../ts/system";
 import {IInputBase} from "../../@types/form";
 
 export interface ISearchData {
-    search: number
     name: string
+    search: number
     selected?: boolean
 }
 
 export interface ISearch<T> extends IInputBase, IIcon, Omit<IInputBase, "onChange" | "value"> {
-    value: T & ISearchData | null | string
-
     onChange(value: any): void
-
     searchData: Array<T & ISearchData>
+    value: T & ISearchData | null | string
     searchValueType?: "search" | "name"
     onSearchClick?: () => void
 }
@@ -49,13 +47,13 @@ function SearchBootstrap<T>(props: ISearch<T>) {
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <input className={"form-control search " + fieldClasses}
+               type="text"
                id={props.name}
                name={props.name}
-               type="text"
-               value={props.value === null ? "" : (typeof props.value === "string" ? props.value : props.value[!props.searchValueType ? "name" : props.searchValueType])}
                required={props.required}
                disabled={props.disabled}
                placeholder={!props.placeholder ? "" : props.placeholder}
+               value={props.value === null ? "" : (typeof props.value === "string" ? props.value : props.value[!props.searchValueType ? "name" : props.searchValueType])}
                onKeyDown={ev => {
                    if (ev.code === "F2" && props.onSearchClick)
                        props.onSearchClick();

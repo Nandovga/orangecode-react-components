@@ -31,6 +31,7 @@ const TextAreaBootstrap = ({...props}: IInput) => {
         </label>
         <textarea className={"form-control " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
                   rows={!props.rows ? 3 : props.rows}
+                  id={props.name}
                   disabled={props.disabled}
                   placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
                   {...props.register(props.name, {
