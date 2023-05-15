@@ -28,6 +28,7 @@ export type ITable<T> = {
 
     tableSelect?: T & { id: any } | null
     tableOnSelect?(state: T & { id: any } | null): void
+    tableSelectAuto?: boolean
     tableSelectTimeOut?: number
 
     tablePagination?: "auto" | ITablePagination

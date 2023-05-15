@@ -31,16 +31,17 @@ function Bootstrap<T>(props: ITable<T>) {
     useEffect(() => {
         if (props.tableSelect !== undefined && props.tableSelect !== null)
             handleKeyPress(props, props.tablePagination === "auto" ? tableDTO : props.tableDTO, paginationRef)
-        else
-            props.tableOnSelect ? props.tableOnSelect((props.tablePagination === "auto" ? tableDTO[0] : props.tableDTO[0])) : null
+        else if (props.tableOnSelect && tableDTO.length > 0 && props.tableSelectAuto !== false)
+            props.tableOnSelect((props.tablePagination === "auto" ? tableDTO[0] : props.tableDTO[0]))
     }, [props.tableSelect])
 
     //EFFECT - Gerencia a ação de select e paginação
     useEffect(() => {
-        if (props.tableOnSelect && props.tablePagination === "auto" && paginationRef.current.state.selected !== tablePageSelect){
-            props.tableOnSelect(tableDTO[0])
-            setTablePageSelect(paginationRef.current.state.selected)
-        }
+        if (tableDTO.length > 0)
+            if (props.tableOnSelect && props.tablePagination === "auto" && paginationRef.current.state.selected !== tablePageSelect && props.tableSelectAuto !== false) {
+                props.tableOnSelect(tableDTO[0])
+                setTablePageSelect(paginationRef.current.state.selected)
+            }
     }, [tableDTO])
 
     /*
@@ -54,18 +55,24 @@ function Bootstrap<T>(props: ITable<T>) {
                 <thead>
                 <tr>
                     {props.tableOnSelect ? <th className="text-center"><i className="bi bi-filter"/></th> : null}
-                    {props.tableHeader.map(value => handleHeader<T>(value,  props,setTableDTO, paginationRef))}
+                    {props.tableHeader.map(value => handleHeader<T>(value, props, setTableDTO, paginationRef))}
                 </tr>
                 </thead>
                 <tbody>
                 {props.tablePagination === "auto" ?
                     tableDTO.length > 0
                         ? tableDTO.map(value => handleContent<T>(value, props))
-                        : <tr><td className="text-center" colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td></tr> : null}
+                        : <tr>
+                            <td className="text-center"
+                                colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td>
+                        </tr> : null}
                 {props.tablePagination !== "auto"
                     ? props.tableDTO.length > 0
                         ? props.tableDTO.map(value => handleContent<T>(value, props))
-                        : <tr><td className="text-center" colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td></tr> : null}
+                        : <tr>
+                            <td className="text-center"
+                                colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td>
+                        </tr> : null}
                 </tbody>
                 {handlePagination<T>(props, setTableDTO, paginationRef)}
             </table>
@@ -73,4 +80,5 @@ function Bootstrap<T>(props: ITable<T>) {
         {handleFilter<T>(props)}
     </>
 }
+
 export default Bootstrap

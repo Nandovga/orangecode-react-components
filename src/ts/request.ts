@@ -20,7 +20,7 @@ export const POST = (
 
         let url = BASE + (route.substr(0, 1) === "/" ? "" : "/") + route
         globalMessageFieldsClear(form);
-        handleToManyRequest(!options ? false : options.blockedToManyRequest)
+        handleToManyRequest(!options ? false : options.blockedToManyRequest, reject, form)
         axios({
             method: "post",
             url: url,
@@ -40,8 +40,13 @@ export const POST = (
  * Realiza o bloqueio de multiplas requisições simutaneas
  * @param reject
  * @param block
+ * @param form
  */
-function handleToManyRequest(block: boolean = true) {
+function handleToManyRequest(
+    block: boolean = true,
+    reject: (reason?: any) => void,
+    form: string
+): void {
 
     let requestCount = 0;
     axios.interceptors.request.use(config => {
@@ -54,5 +59,9 @@ function handleToManyRequest(block: boolean = true) {
     axios.interceptors.response.use(response => {
         requestCount = requestCount - 1
         return response;
-    }, () => requestCount = requestCount - 1);
+    }, function (error) {
+        requestCount = requestCount - 1
+        globalResponse(error.response?.data, form)
+        reject(error);
+    });
 }

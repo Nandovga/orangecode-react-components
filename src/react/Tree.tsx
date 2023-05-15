@@ -18,7 +18,7 @@ export interface ITree<T> {
     treeName: string
     treeData: Array<T & ITreeData>
     treeFitler?: boolean
-    treeValue?: T & ITreeData
+    treeValue?: T & ITreeData | null
     frameworkStyle?: IFrameworkStyle
     onTreeSelect?: (value) => void
     onTreeDoubleClick?: () => void
@@ -81,9 +81,13 @@ function TreeBootstrap<T>(props: ITree<T>) {
                      className="tree-item-action">{(row.open === undefined ? "-" : (!row.open ? "+" : "-"))}</a>
                 : <span className="me-4"/>}
             <a href="#" className="link"
+               onKeyDown={ev => {
+                   if ((ev.code === "NumpadEnter" || ev.code === "Enter") && props.onTreeDoubleClick && props.treeValue?.id !== undefined)
+                       props.onTreeDoubleClick()
+               }}
                onDoubleClick={event => {
                    event.preventDefault();
-                   if (props.onTreeDoubleClick) props.onTreeDoubleClick()
+                   if (props.onTreeDoubleClick && (row.selected === undefined || row.selected)) props.onTreeDoubleClick()
                }}
                onClick={event => {
                    event.preventDefault();
@@ -124,11 +128,6 @@ function TreeBootstrap<T>(props: ITree<T>) {
             if (!parent) return;
             let margin = parseInt($(this).parent().parent(".tree-line[data-id='" + parent + "']").css("margin-left"));
             $(this).css({"margin-left": (margin === 0 ? 22 : margin) + 'px'});
-        })
-
-        tree.one("keypress", function (ev){
-            if ((ev.code === "NumpadEnter" || ev.code === "Enter") && props.onTreeDoubleClick && props.treeValue?.id !== undefined)
-                props.onTreeDoubleClick()
         })
     })
 
