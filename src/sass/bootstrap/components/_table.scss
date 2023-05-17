@@ -41,7 +41,7 @@
     text-transform: var(--oc-table-header-text-transform,  initial);
   }
 
-  tbody > * > * {
+  tbody > * > *:not(i) {
     vertical-align: var(--oc-table-vertical-align, #{$table-cell-vertical-align});
     font-size: var(--oc-table-font-size, .9em);
     font-weight: var(--oc-table-font-weight, normal);

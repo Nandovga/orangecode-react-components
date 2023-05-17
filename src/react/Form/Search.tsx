@@ -25,8 +25,8 @@ export interface ISearch<T> extends IInputBase, IIcon, Omit<IInputBase, "onChang
 function SearchBootstrap<T>(props: ISearch<T>) {
 
     //Configuração do componente
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
-    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+    let boxClasses: string = (!props.boxClasses ? "" : props.boxClasses) + (props.modeStyle === "table" ? "m-0 p-0" : "")
+    let fieldClasses: string = (!props.fieldClasses ? "" : props.fieldClasses) + " " + (props.modeStyle === "table" ? "form-control-sm" : "")
 
     //Executa a ação de pesquisa
     function handleBlur(value) {
@@ -42,10 +42,11 @@ function SearchBootstrap<T>(props: ISearch<T>) {
     |------------------------------------------
     */
     return <div className={"position-relative box-" + (!props.box ? "100" : props.box) + " " + boxClasses}>
-        <label htmlFor={props.name} className="form-label">
-            <i className={GET_ICON(props.iconType) + props.icon}/>
-            {props.legend}{props.required ? <span className="text-danger">*</span> : null}
-        </label>
+        {props.modeStyle !== "table"
+            ? <label htmlFor={props.name} className="form-label">
+                <i className={GET_ICON(props.iconType) + props.icon}/>
+                {props.legend}{props.required ? <span className="text-danger">*</span> : null}
+            </label> : null}
         <input className={"form-control search " + fieldClasses}
                type="text"
                id={props.name}
@@ -72,9 +73,7 @@ function SearchBootstrap<T>(props: ISearch<T>) {
                      event.preventDefault();
                      if (props.onSearchClick) props.onSearchClick();
                  }}
-                 className="form-control-search">
-                <i className="bi bi-search"/>
-            </a> : null}
+                 className="form-control-search"><i className="bi bi-search"/></a> : null}
         <div id="j_feedback" data-name={props.name}/>
     </div>
 }

@@ -26,3 +26,19 @@
     border-color: var(--oc-form-select-border-color-disabled , #{$form-select-disabled-border-color});
   }
 }
+
+.form-select-sm {
+  padding-top: var(--oc-form-select-padding-top-sm, #{$form-select-padding-y-sm});
+  padding-bottom: var(--oc-form-select-padding-bottom-sm, #{$form-select-padding-y-sm});
+  padding-left: var(--oc-form-select-padding-left-sm, #{$form-select-padding-x-sm});
+  @include font-size(var(--oc-form-select-font-size-sm, #{$form-select-font-size-sm}));
+  @include border-radius(var(--oc-form-select-border-radius-sm, #{$form-select-border-radius-sm}));
+}
+
+.form-select-lg {
+  padding-top: var(--oc-form-select-padding-top-lg, #{$form-select-padding-y-lg});
+  padding-bottom: var(--oc-form-select-padding-bottom-lg, #{$form-select-padding-y-lg});
+  padding-left: var(--oc-form-select-padding-left-lg, #{$form-select-padding-x-lg});
+  @include font-size(var(--oc-form-select-font-size-lg, #{$form-select-font-size-lg}));
+  @include border-radius(var(--oc-form-select-border-radius-lg, #{$form-select-border-radius-lg}));
+}

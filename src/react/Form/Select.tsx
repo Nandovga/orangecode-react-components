@@ -25,8 +25,8 @@ const SelectBootstrap = ({...props}: ISelect) => {
         : (typeof props.init === 'boolean'
             ? <option value=''>Selecione {props.legend.toLowerCase()}</option>
             : <option value=''>{props.init}</option>)
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
-    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+    let boxClasses: string = (!props.boxClasses ? "" : props.boxClasses) + (props.modeStyle === "table" ? "m-0 p-0" : "")
+    let fieldClasses: string = (!props.fieldClasses ? "" : props.fieldClasses) + " " + (props.modeStyle === "table" ? "form-select-sm" : "")
 
     /*
     |--------------------------------------
@@ -34,10 +34,11 @@ const SelectBootstrap = ({...props}: ISelect) => {
     |--------------------------------------
     */
     return <div className={"box-" + props.box + " " + boxClasses}>
-        <label className="form-label" htmlFor={props.name}>
-            <i className={GET_ICON(props.iconType) + props.icon}/>
-            {props.legend}{props.required ? <span className="text-danger">*</span> : null}
-        </label>
+        {props.modeStyle !== "table"
+            ? <label className="form-label" htmlFor={props.name}>
+                <i className={GET_ICON(props.iconType) + props.icon}/>
+                {props.legend}{props.required ? <span className="text-danger">*</span> : null}
+            </label> : null}
         <select className={"form-select " + fieldClasses}
                 id={props.name}
                 name={props.name}

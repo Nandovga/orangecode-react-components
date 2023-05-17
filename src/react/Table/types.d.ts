@@ -10,26 +10,40 @@ export interface ITableHeader<T> extends IIcon {
     classes?: string
     style?: object
     body?: (data: T, id: string) => React.ReactNode
+
     filter?: boolean
     filterOptions?: Array<ISelectData & {disabled?: boolean}>
     sort?: boolean
+
+    editor?: (options: ITableOptionsEdit<T>) => JSX.Element
 }
 
 export type ITable<T> = {
     tableHeader: Array<ITableHeader<T>>
     tableDTO: Array<T & { id: any }>
+    setTableDTO?: React.Dispatch<Array<T & { id: any }>>
 
     tableStyle?: "bordered" | "borderless"
     tableSize?: "small" | "large"
     tableClasses?: string
+    tableClassesOptions?: {
+        box?: string
+        create?: string
+        edit?: string
+        delete?: string
+    }
     tableEmptyValue?: string
     tableOnFilter?(field: string, value: string, setLoad: React.Dispatch<boolean>, options?: any): void
     tableOnSort?(field: string, value: "asc" | "desc"): void
+    tableOnDoubleClick?(): void
 
     tableSelect?: T & { id: any } | null
     tableOnSelect?(state: T & { id: any } | null): void
     tableSelectAuto?: boolean
     tableSelectTimeOut?: number
+
+    tableEditMode?: "single"
+    tableOnEdit?(tableDTO: Array<T & {id: any}> | T & {id: any}): void
 
     tablePagination?: "auto" | ITablePagination
     tablePaginationAlign?: "end" | "center" | "start"
@@ -43,4 +57,11 @@ export type ITablePagination = {
     elements: number
     pageTotal: number
     pageNumber: number
+}
+
+export type ITableOptionsEdit<T> = {
+    row: T & {id: any}
+    value: any
+    setValue: (value: any) => void
+    onBlur?: () => void
 }

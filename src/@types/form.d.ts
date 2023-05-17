@@ -10,6 +10,7 @@ export interface IInputBase{
     box?: '10' | '12_5' | '15' | '17_5' | '20' | '25' | '30' | '33' | '35' | '40' | '50' | '65' | '75' | '100'
     boxClasses?: string
     fieldClasses?: string
+    modeStyle?: "table"
     frameworkStyle?: IFrameworkStyle
     onChange?(value: any): void
 }

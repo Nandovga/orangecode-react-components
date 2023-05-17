@@ -19,8 +19,8 @@ const InputBootstrap = ({...props}: IInput) => {
 
     //Configuração do componente
     const [type, setType] = useState(props.type)
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
-    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+    let boxClasses: string = (!props.boxClasses ? "" : props.boxClasses) + (props.modeStyle === "table" ? "m-0 p-0" : "")
+    let fieldClasses: string = (!props.fieldClasses ? "" : props.fieldClasses) + " " + (props.modeStyle === "table" ? "form-control-sm" : "")
 
     /*
     |--------------------------------------
@@ -28,10 +28,11 @@ const InputBootstrap = ({...props}: IInput) => {
     |--------------------------------------
     */
     return <div className={"box-" + props.box + " " + boxClasses}>
-        <label htmlFor={props.name} className="form-label">
-            <i className={GET_ICON(props.iconType) + props.icon}/>
-            {props.legend}{props.required ? <span className="text-danger">*</span> : null}
-        </label>
+        {props.modeStyle !== "table"
+            ? <label htmlFor={props.name} className="form-label">
+                <i className={GET_ICON(props.iconType) + props.icon}/>
+                {props.legend}{props.required ? <span className="text-danger">*</span> : null}
+            </label> : null}
         <input className={"form-control " + fieldClasses}
                id={props.name}
                name={props.name}
@@ -45,7 +46,7 @@ const InputBootstrap = ({...props}: IInput) => {
         {props.previewPass && props.type === "password"
             ? <a href="#" className="form-control-view"
                  onClick={() => setType(type === "password" ? "text" : "password")}>
-                <i className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a>  : null}
+                <i className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a> : null}
         <div id="j_feedback" data-name={props.name}/>
     </div>
 }
