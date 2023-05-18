@@ -19,6 +19,7 @@ export interface ITree<T> {
     treeData: Array<T & ITreeData>
     treeFitler?: boolean
     treeValue?: T & ITreeData | null
+    treeBuild?: boolean
     frameworkStyle?: IFrameworkStyle
     onTreeSelect?: (value) => void
     onTreeDoubleClick?: () => void
@@ -32,31 +33,50 @@ export interface ITree<T> {
 function TreeBootstrap<T>(props: ITree<T>) {
 
     //STATE ≥ Configuração do componente
-    const [treeData, setTreeData] = useState<Array<T & ITreeData & { children: any }>>([])
+    const [treeData, setTreeData] = useState<Array<T & ITreeData & { children?: any }>>([])
     const [treefilter, setTreeFilter] = useState("")
     const ICON_OPEN = "bi-folder-symlink-fill"
     const ICON_CLOSED = "bi-folder-fill"
 
     //STATE ≥ Configuração do componente
     useEffect(() => {
-        setTreeData(buildTree(props.treeData))
+        if (props.treeBuild === false)
+            setTreeData(props.treeData)
+        else
+            setTreeData(buildTree(props.treeData))
     }, [props.treeData])
 
     //STATE ≥ Estrutura da árvore dados
-    function buildTree(array: Array<T & ITreeData>, parentId: null | number = null) {
-        var tree: any = [];
-        for (var i = 0; i < array.length; i++) {
-            if (array[i].parent === parentId) {
-                let a: any = array[i]
-                a.children = buildTree(array, a.id)
-                tree.push(array[i])
+    function buildTree(array: Array<T & ITreeData>) {
+        // Agrupa os dados pelo parent
+        const result = array.reduce((arr, item) => {
+            const value = item.parent;
+            if (!arr[value === null ? "" : value])
+                arr[value === null ? "" : value] = []
+            arr[value === null ? "" : value].push(item)
+            return arr;
+        }, {});
+
+        let build: Array<T & ITreeData> = [];
+        if (array.length > 0)
+            for (let i = 0; i < array.length; i++)
+                if (array[i].parent === null)
+                    build[build.length] = array[i];
+
+        function genereteTree(build: Array<T & ITreeData>, result: {}){
+            let arr: Array<T & ITreeData & {children?: any}> = [];
+            for (let i = 0; i < build.length; i++){
+                arr[i] = build[i]
+                if(result[arr[i].id] !== undefined)
+                    arr[i].children = genereteTree(result[arr[i].id], result)
             }
+            return arr;
         }
-        return tree;
+        return genereteTree(build, result);
     }
 
     //STATE ≥ Estrutura da arvore view
-    function renderTree(a: Array<T & ITreeData & { children: any }>) {
+    function renderTree(a: Array<T & ITreeData & { children: Array<any> }>) {
         return a.length === 0 ? <></>
             : <div className="tree-view">
                 {a.map(row => {
@@ -65,7 +85,7 @@ function TreeBootstrap<T>(props: ITree<T>) {
                                 data-parent={row.parent}
                                 data-id={row.id}>
                         {renderItem(row)}
-                        {renderTree(row.children)}
+                        {row.children !== undefined && row.children.length > 0 ? renderTree(row.children) : null}
                     </div>
                 })}
             </div>
@@ -75,7 +95,7 @@ function TreeBootstrap<T>(props: ITree<T>) {
     function renderItem(row) {
         return <div className={"tree-item " + (props.treeValue?.id === row.id ? "selected" : "")}
                     data-parent={row.parent} data-id={row.id}>
-            {row.children.length > 0
+            {row.children !== undefined && row.children.length > 0
                 ? <a href="#"
                      onClick={handleOpen}
                      className="tree-item-action">{(row.open === undefined ? "-" : (!row.open ? "+" : "-"))}</a>
@@ -143,7 +163,7 @@ function TreeBootstrap<T>(props: ITree<T>) {
                         data-id={row.id}
                         data-parent={row.parent}>
                 {renderItem(row)}
-                {renderTree(row.children)}
+                {row.children !== undefined ? renderTree(row.children) : null}
             </div>
         })}
         {props.treeFitler && props.onTreeSelect ? <div className="w-100">

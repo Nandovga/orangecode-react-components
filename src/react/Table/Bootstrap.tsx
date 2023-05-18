@@ -42,7 +42,7 @@ function Bootstrap<T>(props: ITable<T>) {
 
     //EFFECT - Gerencia a ação de select e paginação
     useEffect(() => {
-        if (tableDTO.length > 0)
+        if (tableDTO.length > 0 && paginationRef.current !== null)
             if (props.tableSelectAuto !== false && props.tableOnSelect && props.tablePagination === "auto" && paginationRef.current.state.selected !== tablePageSelect) {
                 props.tableOnSelect(tableDTO[0])
                 setTablePageSelect(paginationRef.current.state.selected)
@@ -58,7 +58,7 @@ function Bootstrap<T>(props: ITable<T>) {
         <div className="w-100 table-responsive">
             <table className={tableConfig.classes}>
                 <thead>
-                {handleHeaderOptions(props)}
+                {props.tableOptions ? handleHeaderOptions(props, tableDTO) : null}
                 <tr>
                     {props.tableOnSelect ? <th className="text-center"><i className="bi bi-filter"/></th> : null}
                     {props.tableHeader.map(value => handleHeader<T>(value, props, setTableDTO, paginationRef))}

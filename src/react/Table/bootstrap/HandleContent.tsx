@@ -46,7 +46,7 @@ export function handleContent<T>(
             style: {cursor: !props.tableOnSelect ? "initial" : "pointer", verticalAlign: "middle"}
         }
         return tableEdit.edit?.id === row.id && header.editor && tableEdit.editField === header.id
-            ? <td key={`${row.id}-${id}`}>{header.editor({
+            ? <td key={`${row.id}-${id}`} className={(select ? "bg-light" : "")}>{header.editor({
                 row: row,
                 value: row[tableEdit.editField],
                 setValue: value => handleContentEditor({data: tableDTO.data, setData: tableDTO.setData}, {

@@ -26,24 +26,29 @@ export type ITable<T> = {
     tableStyle?: "bordered" | "borderless"
     tableSize?: "small" | "large"
     tableClasses?: string
+    tableEmptyValue?: string
+
+    tableOptions?: boolean
     tableClassesOptions?: {
         box?: string
         create?: string
         edit?: string
         delete?: string
     }
-    tableEmptyValue?: string
-    tableOnFilter?(field: string, value: string, setLoad: React.Dispatch<boolean>, options?: any): void
+    tableOptionsDelete?(): void
+    tableOptionsCreate?(): void
+
+    tableEditMode?: "single"
+    tableOnEdit?(tableDTO: Array<T & {id: any}> | T & {id: any}): void
+
     tableOnSort?(field: string, value: "asc" | "desc"): void
+    tableOnFilter?(field: string, value: string, setLoad: React.Dispatch<boolean>, options?: any): void
     tableOnDoubleClick?(): void
 
     tableSelect?: T & { id: any } | null
     tableOnSelect?(state: T & { id: any } | null): void
     tableSelectAuto?: boolean
     tableSelectTimeOut?: number
-
-    tableEditMode?: "single"
-    tableOnEdit?(tableDTO: Array<T & {id: any}> | T & {id: any}): void
 
     tablePagination?: "auto" | ITablePagination
     tablePaginationAlign?: "end" | "center" | "start"
