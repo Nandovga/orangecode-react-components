@@ -185,6 +185,14 @@ const TransferList = ({data, onChange}: {
         setInit(true)
     }, [inative, active])
 
+    //EFFECT ≥ Executa a ação quando altera os dados
+    useEffect(() => {
+        setActiveSelect([])
+        setInativeSelect([])
+        setActive(data.filter(row => row.active))
+        setInative(data.filter(row => !row.active))
+    }, [data])
+
     /*
     |------------------------------------------
     | render() - Renderização do componente
