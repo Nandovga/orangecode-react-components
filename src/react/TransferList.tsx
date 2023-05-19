@@ -1,10 +1,36 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useReducer, useState} from "react";
 
 export interface ITransferList {
     id: number
-    value: string
     label: string
     active?: boolean
+}
+
+type Props = {
+    data: ITransferList[]
+    active: ITransferList[]
+    inative: ITransferList[]
+}
+
+const TransferListContext = React.createContext<{ state: any, setState: React.Dispatch<any> }>({
+    state: null, setState: () => null
+})
+
+type STOREAction = { type: STOREType, payload: any }
+
+type STOREType = "setData" | "setActive" | "setInative";
+
+function reducer(state: Props, action: STOREAction) {
+    switch (action.type) {
+        case "setData":
+            return {...state, data: action.payload}
+        case "setActive":
+            return {...state, active: action.payload}
+        case "setInative":
+            return {...state, inative: action.payload}
+        default:
+            return {...state}
+    }
 }
 
 /**
@@ -12,11 +38,11 @@ export interface ITransferList {
  * @param DTOInative
  * @constructor
  */
-const TransferListInative = ({inative, inativeSelect, setInativeSelect}: {
-    inative: Array<ITransferList>
-    inativeSelect: Array<ITransferList>
-    setInativeSelect: React.Dispatch<Array<ITransferList>>
-}) => {
+const TransferListInative = () => {
+
+    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext)
+    const inative = state.data.filter(row => !row.active)
+
     return <div className="transfer-list-box">
         {inative.map(row => {
             return <div className="form-check item" key={row.id}>
@@ -25,9 +51,15 @@ const TransferListInative = ({inative, inativeSelect, setInativeSelect}: {
                        value={row.id}
                        onChange={event => {
                            if (event.target.checked)
-                               setInativeSelect([...inativeSelect, inative.filter(value => value.id === parseInt(event.target.value))[0]])
+                               setState({
+                                   type: "setInative",
+                                   payload: [...state.inative, inative.filter(row => row.id === parseInt(event.target.value))[0]]
+                               })
                            else
-                               setInativeSelect(inativeSelect.filter(value => value.id !== parseInt(event.target.value)))
+                               setState({
+                                   type: "setInative",
+                                   payload: state.inative.filter(row => row?.id !== parseInt(event.target.value))
+                               })
                        }}/>
                 <label className="form-check-label">{row.label}</label>
             </div>
@@ -40,11 +72,11 @@ const TransferListInative = ({inative, inativeSelect, setInativeSelect}: {
  * @param DTOActive
  * @constructor
  */
-const TransferListActive = ({active, activeSelect, setActiveSelect}: {
-    active: Array<ITransferList>
-    activeSelect: Array<ITransferList>
-    setActiveSelect: React.Dispatch<Array<ITransferList>>
-}) => {
+const TransferListActive = () => {
+
+    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext)
+    const active = state.data.filter(row => row.active)
+
     return <div className="transfer-list-box">
         {active.map(row => {
             return <div className="form-check item" key={row.id}>
@@ -53,9 +85,15 @@ const TransferListActive = ({active, activeSelect, setActiveSelect}: {
                        value={row.id}
                        onChange={event => {
                            if (event.target.checked)
-                               setActiveSelect([...activeSelect, active.filter(value => value.id === parseInt(event.target.value))[0]])
+                               setState({
+                                   type: "setActive",
+                                   payload: [...state.active, active.filter(row => row.id === parseInt(event.target.value))[0]]
+                               })
                            else
-                               setActiveSelect(activeSelect.filter(value => value.id !== parseInt(event.target.value)))
+                               setState({
+                                   type: "setActive",
+                                   payload: state.active.filter(row => row?.id !== parseInt(event.target.value))
+                               })
                        }}/>
                 <label className="form-check-label">{row.label}</label>
             </div>
@@ -75,17 +113,12 @@ const TransferListActive = ({active, activeSelect, setActiveSelect}: {
  * @param setInativeSelect
  * @constructor
  */
-const TransferListOptions = ({active, inative, setActive, setInative, activeSelect, setActiveSelect, inativeSelect, setInativeSelect}: {
-    active: Array<ITransferList>
-    activeSelect: Array<ITransferList>
-    setActive: React.Dispatch<Array<ITransferList>>
-    setActiveSelect: React.Dispatch<Array<ITransferList>>
+const TransferListOptions = () => {
 
-    inative: Array<ITransferList>
-    inativeSelect: Array<ITransferList>
-    setInative: React.Dispatch<Array<ITransferList>>
-    setInativeSelect: React.Dispatch<Array<ITransferList>>
-}) => {
+    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext)
+    const active = state.data.filter(row => row.active)
+    const inative = state.data.filter(row => !row.active)
+
     const transferAll = (mode: "active" | "inative") => {
         var x: Array<ITransferList> = [];
         if (mode === "inative") {
@@ -93,40 +126,43 @@ const TransferListOptions = ({active, inative, setActive, setInative, activeSele
                 x[i] = inative[i];
                 x[i].active = true;
             }
-            setActive([...active, ...x])
-            setInative([])
+            setState({type: "setData", payload: [...active, ...x]})
+            setState({type: "setInative", payload: []})
         } else {
             for (let i = 0; i < active.length; i++) {
                 x[i] = active[i];
                 x[i].active = false;
             }
-            setInative([...inative, ...x])
-            setActive([])
+            setState({type: "setData", payload: [...inative, ...x]})
+            setState({type: "setActive", payload: []})
         }
     }
 
     const transferSelect = (mode: "active" | "inative") => {
-        var x: Array<ITransferList> = []
         if (mode === "inative") {
+            let x: Array<ITransferList> = []
             let y: Array<ITransferList> = inative
-            for (let i = 0; i < inativeSelect.length; i++){
-                x[i] = inativeSelect[i];
-                x[i].active = true;
-                y = y.filter(row => row.id !== x[i].id)
+            for (let i = 0; i < state.inative.length; i++) {
+                if (state.inative[i] !== undefined) {
+                    x[i] = state.inative[i];
+                    x[i].active = true;
+                    y = y.filter(row => row.id !== x[i].id)
+                }
             }
-            setInativeSelect([])
-            setActive([...active, ...x])
-            setInative(y)
+            setState({type: "setData", payload: [...active, ...x, ...y]})
+            setState({type: "setInative", payload: []})
         } else {
+            let x: Array<ITransferList> = []
             let y: Array<ITransferList> = active
-            for (let i = 0; i < activeSelect.length; i++){
-                x[i] = activeSelect[i];
-                x[i].active = false;
-                y = y.filter(row => row.id !== x[i].id)
+            for (let i = 0; i < state.active.length; i++) {
+                if (state.active[i] !== undefined) {
+                    x[i] = state.active[i];
+                    x[i].active = false;
+                    y = y.filter(row => row.id !== x[i].id)
+                }
             }
-            setActiveSelect([])
-            setInative([...inative, ...x])
-            setActive(y)
+            setState({type: "setData", payload: [...inative, ...x, ...y]})
+            setState({type: "setActive", payload: []})
         }
     }
 
@@ -137,14 +173,14 @@ const TransferListOptions = ({active, inative, setActive, setInative, activeSele
                transferAll("inative")
            }}
            href="#"><i className="bi bi-chevron-double-right"/></a>
-        <a className={"options btn " + (inativeSelect.length === 0 ? "disabled" : "")}
+        <a className={"options btn " + (state.inative.length === 0 ? "disabled" : "")}
            onClick={event => {
                event.preventDefault();
                transferSelect("inative")
            }}
            href="#"><i className="bi bi-chevron-right"/></a>
 
-        <a className={"options btn " + (activeSelect.length === 0 ? "disabled" : "")}
+        <a className={"options btn " + (state.active.length === 0 ? "disabled" : "")}
            onClick={event => {
                event.preventDefault();
                transferSelect("active")
@@ -161,55 +197,35 @@ const TransferListOptions = ({active, inative, setActive, setInative, activeSele
 
 /**
  * Transferência de dados
- * @param data
- * @param onChange
  * @constructor
+ * @param props
  */
-const TransferList = ({data, onChange}: {
+const TransferList = (props: {
     data: Array<ITransferList>
     onChange(data: Array<ITransferList>): void
 }) => {
 
-    //STATE ≥ Estado do componente
+    const initState: Props = {data: props.data, active: [], inative: []}
     const [init, setInit] = useState(false)
-    const [inative, setInative] = useState(data.filter(row => !row.active))
-    const [inativeSelect, setInativeSelect] = useState<Array<ITransferList>>([])
-
-    const [active, setActive] = useState(data.filter(row => row.active))
-    const [activeSelect, setActiveSelect] = useState<Array<ITransferList>>([])
+    const [state, setState] = useReducer(reducer, initState)
 
     //EFFECT ≥ Executa a ação de onChange
     useEffect(() => {
-        if (init)
-            onChange([...inative, ...active])
+        if (init) props.onChange(state.data)
         setInit(true)
-    }, [inative, active])
+    }, [state.data])
 
     //EFFECT ≥ Executa a ação quando altera os dados
     useEffect(() => {
-        setActiveSelect([])
-        setInativeSelect([])
-        setActive(data.filter(row => row.active))
-        setInative(data.filter(row => !row.active))
-    }, [data])
+        setState({type: "setData", payload: props.data})
+    }, [props.data])
 
-    /*
-    |------------------------------------------
-    | render() - Renderização do componente
-    |------------------------------------------
-    */
-    return <div className="w-100 p-1 transfer-list d-flex">
-        <TransferListInative inative={inative} inativeSelect={inativeSelect} setInativeSelect={setInativeSelect}/>
-        <TransferListOptions active={active}
-                             activeSelect={activeSelect}
-                             setActive={setActive}
-                             setActiveSelect={setActiveSelect}
-
-                             inative={inative}
-                             inativeSelect={inativeSelect}
-                             setInative={setInative}
-                             setInativeSelect={setInativeSelect}/>
-        <TransferListActive active={active} activeSelect={activeSelect} setActiveSelect={setActiveSelect}/>
-    </div>
+    return <TransferListContext.Provider value={{state, setState}}>
+        <div className="w-100 p-1 transfer-list d-flex">
+            <TransferListInative/>
+            <TransferListOptions/>
+            <TransferListActive/>
+        </div>
+    </TransferListContext.Provider>
 }
 export default TransferList
