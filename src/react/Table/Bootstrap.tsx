@@ -28,7 +28,7 @@ function Bootstrap<T>(props: ITable<T>) {
     const [tableDTO, setTableDTO] = useState<Array<T & { id: any }>>(props.tableDTO)
     const [tablePageSelect, setTablePageSelect] = useState<number>(0)
 
-    const [tableEdit, setTableEdit] = useState<null | T & {id: any}>(null)
+    const [tableEdit, setTableEdit] = useState<null | T & { id: any }>(null)
     const [tableEditField, setTableEditField] = useState<string>("")
 
     //EFFECT ≥ Gerencia a ação de select
@@ -47,7 +47,17 @@ function Bootstrap<T>(props: ITable<T>) {
                 props.tableOnSelect(tableDTO[0])
                 setTablePageSelect(paginationRef.current.state.selected)
             }
+        if (paginationRef.current === null)
+            setTableDTO(props.tableDTO)
     }, [tableDTO])
+
+    //EFFECT - Muda para 1.º pagina quando os dados originais são alterados
+    useEffect(() => {
+        if (paginationRef.current !== null && props.tablePagination === "auto") {
+            paginationRef.current.props.onPageChange({selected: 0})
+            paginationRef.current.setState({selected: 0})
+        }
+    }, [props.tableDTO])
 
     /*
     |------------------------------------------
@@ -73,7 +83,10 @@ function Bootstrap<T>(props: ITable<T>) {
                             setEdit: setTableEdit,
                             setEditField: setTableEditField
                         }, {data: tableDTO, setData: setTableDTO}))
-                        : <tr><td className="text-center" colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td></tr> : null}
+                        : <tr>
+                            <td className="text-center"
+                                colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td>
+                        </tr> : null}
                 {props.tablePagination !== "auto"
                     ? props.tableDTO.length > 0
                         ? props.tableDTO.map(value => handleContent<T>(value, props, {
@@ -82,7 +95,10 @@ function Bootstrap<T>(props: ITable<T>) {
                             setEdit: setTableEdit,
                             setEditField: setTableEditField
                         }, {data: props.tableDTO, setData: props.setTableDTO}))
-                        : <tr><td className="text-center" colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td></tr> : null}
+                        : <tr>
+                            <td className="text-center"
+                                colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td>
+                        </tr> : null}
                 </tbody>
                 {handlePagination<T>(props, setTableDTO, paginationRef)}
             </table>
