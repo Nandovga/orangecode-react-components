@@ -11,9 +11,10 @@ export interface ISearchData {
 
 export interface ISearch<T> extends IInputBase, IIcon, Omit<IInputBase, "onChange" | "value"> {
     onChange(value: any): void
-    searchData: Array<T & ISearchData>
     value: T & ISearchData | null | string
+    searchData: Array<T & ISearchData>
     searchValueType?: "search" | "name"
+    onSearchData?: (value: T & ISearchData | null | string) => void
     onSearchClick?: () => void
 }
 
@@ -30,6 +31,8 @@ function SearchBootstrap<T>(props: ISearch<T>) {
 
     //Executa a ação de pesquisa
     function handleBlur(value) {
+        if (props.onSearchData)
+            return props.onSearchData(value);
         let search = props.searchData.filter(row => row.search === parseInt(value))
         if (search.length === 0 || search[0].selected === false)
             return props.onChange("")

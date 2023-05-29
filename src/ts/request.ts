@@ -27,7 +27,7 @@ export const POST = (
             headers: {"X-CSRF-TOKEN": TOKEN},
             data: !body ? {} : body
         }).then(response => {
-            if (response.data)
+            if (response?.data !== undefined)
                 resolve(response.data)
         }).catch(error => {
             globalResponse(error.response?.data, form)
