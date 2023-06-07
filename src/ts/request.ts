@@ -17,15 +17,17 @@ export const POST = (
     options?: { blockedToManyRequest: boolean }
 ): Promise<any> => {
     return new Promise((resolve, reject) => {
-
-        let url = BASE + (route.substr(0, 1) === "/" ? "" : "/") + route
         globalMessageFieldsClear(form);
-        handleToManyRequest(url, !options ? false : options.blockedToManyRequest, reject, form)
+        let url = BASE + (route.substr(0, 1) === "/" ? "" : "/") + route
+
+        if (options?.blockedToManyRequest)
+            handleToManyRequest(url, form)
+        else axios.interceptors.response.eject(0)
         axios({
             method: "post",
             url: url,
             headers: {"X-CSRF-TOKEN": TOKEN},
-            data: !body ? {} : body
+            data: !body ? {} : body,
         }).then(response => {
             if (response?.data !== undefined)
                 resolve(response.data)
@@ -45,17 +47,12 @@ export const POST = (
  */
 function handleToManyRequest(
     url: string,
-    block: boolean = true,
-    reject: (reason?: any) => void,
     form: string
 ): void {
-    if (!block)
-        return;
-
     let requestCount = 0;
     axios.interceptors.request.use(config => {
         requestCount = requestCount + 1
-        if (requestCount > 1 && block && axios.getUri(config) === url)
+        if (requestCount > 1 && axios.getUri(config) === url)
             config.timeout = 1
         return config;
     })
@@ -65,7 +62,7 @@ function handleToManyRequest(
         return response;
     }, function (error) {
         requestCount = requestCount - 1
-        reject(error);
         globalResponse(error.response?.data, form)
+        return Promise.reject(error);
     });
 }
