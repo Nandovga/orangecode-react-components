@@ -8,6 +8,7 @@ interface Props extends Omit<IModal, "modalTitle"> {
     modalTitle?: string
     modalAcceptLabel?: string
     modalAcceptColor?: string
+    modalLoadAccept?: boolean
     modalRejectLabel?: string
     modalRejectColor?: string
     frameworkStyle?: IFrameworkStyle
@@ -54,9 +55,13 @@ const Message = (
                    onClick={() => props.onModalVisible("closed")}>
                     <i className="bi bi-slash-circle me-1"/>{modalRejectLabel}</a>
                 <a href="#"
-                   className={"btn btn-sm me-2 " + acceptColor}
+                   className={"btn d-flex align-items-center btn-sm me-2 " + acceptColor}
                    onClick={props.onModalAccept}>
-                    <i className="bi bi-check-lg me-1"/>{modalAcceptLabel}</a>
+                    {props.modalLoadAccept ? <>
+                            <div className="spinner-border" style={{width: "20px", height: "20px"}}>
+                                <span className="visually-hidden">Loading...</span>
+                            </div><span className="ms-1">Processando...</span></>
+                        : <><i className="bi bi-check-lg me-1"/>{modalAcceptLabel}</>}</a>
             </div>
         </Modal> : <></>
 }
