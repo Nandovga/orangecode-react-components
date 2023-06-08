@@ -17,12 +17,9 @@ export const POST = (
     options?: { blockedToManyRequest: boolean }
 ): Promise<any> => {
     return new Promise((resolve, reject) => {
-        globalMessageFieldsClear(form);
         let url = BASE + (route.substr(0, 1) === "/" ? "" : "/") + route
-
-        if (options?.blockedToManyRequest)
-            handleToManyRequest(url, form)
-        else axios.interceptors.response.eject(0)
+        globalMessageFieldsClear(form);
+        handleToManyRequest(url, options?.blockedToManyRequest ?? false)
         axios({
             method: "post",
             url: url,
@@ -41,28 +38,25 @@ export const POST = (
 /**
  * Realiza o bloqueio de multiplas requisições simutaneas
  * @param url
- * @param reject
- * @param block
- * @param form
+ * @param blocked
  */
-function handleToManyRequest(
-    url: string,
-    form: string
-): void {
+function handleToManyRequest(url: string, blocked: boolean): void {
     let requestCount = 0;
+
     axios.interceptors.request.use(config => {
         requestCount = requestCount + 1
-        if (requestCount > 1 && axios.getUri(config) === url)
-            config.timeout = 1
+        if (requestCount > 1 && axios.getUri(config) === url && blocked)
+            return Promise.reject(new Error("Requisições bloqueadas!"))
         return config;
     })
+    if (!blocked)
+        axios.interceptors.request.clear()
 
     axios.interceptors.response.use(response => {
         requestCount = requestCount - 1
         return response;
     }, function (error) {
         requestCount = requestCount - 1
-        globalResponse(error.response?.data, form)
         return Promise.reject(error);
     });
 }
