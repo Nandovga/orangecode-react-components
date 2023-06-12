@@ -30,6 +30,17 @@
     .item:last-of-type {
       border-bottom: none;
     }
+
+    &::-webkit-scrollbar{
+      width: 2px;
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb{
+      border-radius: 5px;
+      background: var(--oc-transfer-list-scroll-color, #ccc);
+      border: none;
+    }
   }
 
   .transfer-list-options {
