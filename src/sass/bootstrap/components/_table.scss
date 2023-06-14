@@ -55,6 +55,19 @@
     font-weight: var(--oc-table-footer-font-weight, bold);
     border-color: var(--oc-table-footer-border-color,  var(--oc-table-border-color, #{$table-border-color}));
   }
+
+  .table-row-closed {
+    display: none;
+  }
+
+  .table-button-details{
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: var(--oc-table-details-background, #fff);
+    color: var(--oc-table-details-color, #000);
+    border-radius: var(--oc-table-details-border-radius, 2px);
+  }
 }
 
 .table-sm {

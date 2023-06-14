@@ -71,6 +71,7 @@ function Bootstrap<T>(props: ITable<T>) {
                 {props.tableOptions ? handleHeaderOptions(props, tableDTO) : null}
                 <tr>
                     {props.tableOnSelect ? <th className="text-center"><i className="bi bi-filter"/></th> : null}
+                    {props.tableDetail ? <th className="text-center"/> : null}
                     {props.tableHeader.map(value => handleHeader<T>(value, props, setTableDTO, paginationRef))}
                 </tr>
                 </thead>

@@ -51,8 +51,8 @@ function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>)
         {!props.paginationRender ? null : props.paginationRender(currentItem)}
         {itemPerPage > 1 ? <ReactPaginate {...props}
                                           ref={props.paginationRef}
-                                          nextLabel="Próximo"
-                                          previousLabel="Anterior"
+                                          nextLabel={props.nextLabel ?? "Próximo"}
+                                          previousLabel={props.previousLabel ?? "Anterior"}
                                           pageCount={itemPerPage}
                                           onPageChange={handlePageClick}
                                           className={classePage}

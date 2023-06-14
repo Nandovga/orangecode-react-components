@@ -18,6 +18,13 @@ export interface ITableHeader<T> extends IIcon {
     editor?: (options: ITableOptionsEdit<T>) => JSX.Element
 }
 
+export interface ITableDetail {
+    id: number
+    parent?: number
+    children?: Array<any & ITableDetail>
+    open?: boolean
+}
+
 export type ITable<T> = {
     tableHeader: Array<ITableHeader<T>>
     tableDTO: Array<T & { id: any }>
@@ -27,6 +34,7 @@ export type ITable<T> = {
     tableSize?: "small" | "large"
     tableClasses?: string
     tableEmptyValue?: string
+    tableDetail?: boolean
 
     tableOptions?: boolean
     tableClassesOptions?: {

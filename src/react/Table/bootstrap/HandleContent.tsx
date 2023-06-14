@@ -1,5 +1,6 @@
+import $ from "jquery"
 import React from "react";
-import {ITable, ITableHeader} from "../types";
+import {ITable, ITableDetail, ITableHeader} from "../types";
 import {handleContentEditor} from "./HandleContentEditor";
 
 /**
@@ -10,7 +11,7 @@ import {handleContentEditor} from "./HandleContentEditor";
  * @param tableDTO
  */
 export function handleContent<T>(
-    row: T & { id: any },
+    row: T & ITableDetail,
     props: ITable<T>,
     tableEdit: {
         edit: null | T & { id: any }
@@ -25,12 +26,43 @@ export function handleContent<T>(
 ) {
     let select = !props.tableSelect ? false : props.tableSelect?.id === row.id
 
+    let id = $("body").find("tr[data-id='" + row.parent + "'][data-open='true']").attr('data-id')
     const rowProps = {
         key: row.id,
+        className: !props.tableDetail ? "" : (row.parent === undefined ? "" : parseInt(id === undefined ? "0" : id) === row.parent ? "" : "table-row-closed"),
         onClick: () => props.tableOnSelect ? props.tableOnSelect(row) : null,
         onDoubleClick: () => props.tableOnDoubleClick ? props.tableOnDoubleClick() : null
     }
 
+    //Gestão do Details
+    let renderDetail = () => {
+        if (!props.tableDetail)
+            return null;
+        return row.children === undefined ? <td/> : <td style={{width: "0px"}} className="text-center">
+            <a href="#" className="table-button-details" onClick={event => {
+                event.preventDefault();
+                let icon = event.currentTarget.children[0]
+                if (icon.classList.contains("bi-chevron-right")) {
+                    icon.classList.remove("bi-chevron-right")
+                    icon.classList.add("bi-chevron-down")
+                } else {
+                    icon.classList.add("bi-chevron-right")
+                    icon.classList.remove("bi-chevron-down")
+                }
+
+                let id = event.currentTarget.parentElement?.parentElement?.getAttribute("data-id")
+                let data = document.querySelectorAll("tr[data-parent='" + id + "']")
+                for (var i = 0; i < data.length; i++) {
+                    let el = data[i]
+                    let classes = "table-row-closed"
+                    if (el.classList.contains(classes)) el.classList.remove(classes)
+                    else el.classList.add(classes)
+                }
+            }}>{row.open ? <i className="bi bi-chevron-down"/> : <i className="bi bi-chevron-right"/>}</a>
+        </td>
+    }
+
+    //Gestão do SELECT
     let renderSelect = () => {
         if (!props.tableOnSelect || props.tableSelect === undefined)
             return null;
@@ -38,6 +70,7 @@ export function handleContent<T>(
                    style={{width: "0px"}}>{select ? <i className="bi bi-caret-right-fill"/> : ''}</td>
     }
 
+    //Exibe os dados normais
     let renderCell = (header: ITableHeader<T>) => {
         const {id, body, align, classes} = header
         const cellProps = {
@@ -72,8 +105,13 @@ export function handleContent<T>(
             </td>
     }
 
-    return <tr {...rowProps}>
-        {renderSelect()}
-        {props.tableHeader.map(header => renderCell(header))}
-    </tr>
+    return <React.Fragment key={row.id}>
+        <tr {...rowProps} data-id={row.id} data-parent={row.parent} data-open={row.open}>
+            {renderSelect()}
+            {renderDetail()}
+            {props.tableHeader.map(header => renderCell(header))}
+        </tr>
+        {props.tableDetail && row.children !== undefined
+            ? row.children.map(row => handleContent(row, props, tableEdit, tableDTO)) : null}
+    </React.Fragment>
 }
