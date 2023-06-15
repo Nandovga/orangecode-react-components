@@ -1,4 +1,3 @@
-import React from "react";
 import {ITableDetail} from "@react/Table/types";
 
 /**

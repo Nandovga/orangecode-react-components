@@ -70,8 +70,8 @@ function Bootstrap<T>(props: ITable<T>) {
                 <thead>
                 {props.tableOptions ? handleHeaderOptions(props, tableDTO) : null}
                 <tr>
-                    {props.tableOnSelect ? <th className="text-center"><i className="bi bi-filter"/></th> : null}
-                    {props.tableDetail ? <th className="text-center"/> : null}
+                    {props.tableOnSelect ? <th className="text-center" style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
+                    {props.tableDetail ? <th className="text-center" style={{width: "0px"}}/> : null}
                     {props.tableHeader.map(value => handleHeader<T>(value, props, setTableDTO, paginationRef))}
                 </tr>
                 </thead>
@@ -86,7 +86,7 @@ function Bootstrap<T>(props: ITable<T>) {
                         }, {data: tableDTO, setData: setTableDTO}))
                         : <tr>
                             <td className="text-center"
-                                colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td>
+                                colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0) + (props.tableDetail ? 1 : 0)}>{tableEmptyValue}</td>
                         </tr> : null}
                 {props.tablePagination !== "auto"
                     ? props.tableDTO.length > 0
@@ -98,7 +98,7 @@ function Bootstrap<T>(props: ITable<T>) {
                         }, {data: props.tableDTO, setData: props.setTableDTO}))
                         : <tr>
                             <td className="text-center"
-                                colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0)}>{tableEmptyValue}</td>
+                                colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0) + (props.tableDetail ? 1 : 0)}>{tableEmptyValue}</td>
                         </tr> : null}
                 </tbody>
                 {handlePagination<T>(props, setTableDTO, paginationRef)}
