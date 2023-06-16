@@ -29,7 +29,7 @@ export function handleContent<T>(
     let id = $("body").find("tr[data-id='" + row.parent + "'][data-open='true']").attr('data-id')
     const rowProps = {
         key: row.id,
-        className: !props.tableDetail ? "" : (row.parent === undefined ? "" : parseInt(id === undefined ? "0" : id) === row.parent ? "" : "table-row-closed"),
+        className: !props.tableDetail ? "" : (row.parent === undefined ? "" : parseInt(id === undefined ? "0" : id) == row.parent ? "" : "table-row-closed"),
         onClick: () => props.tableOnSelect ? props.tableOnSelect(row) : null,
         onDoubleClick: () => props.tableOnDoubleClick ? props.tableOnDoubleClick() : null
     }

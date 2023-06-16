@@ -1,4 +1,4 @@
-import {ITableDetail} from "@react/Table/types";
+import {ITableDetail} from "../types";
 
 /**
  * Realiza a construção dos dados para detalhamento
