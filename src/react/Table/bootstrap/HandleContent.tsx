@@ -9,6 +9,7 @@ import {handleContentEditor} from "./HandleContentEditor";
  * @param props
  * @param tableEdit
  * @param tableDTO
+ * @param tableDetailOpen
  */
 export function handleContent<T>(
     row: T & ITableDetail,
@@ -22,14 +23,15 @@ export function handleContent<T>(
     tableDTO: {
         data: Array<T & { id: any }>,
         setData?: React.Dispatch<Array<T & { id: any }>>
-    }
+    },
+    tableDetailOpen: boolean | null = null
 ) {
     let select = !props.tableSelect ? false : props.tableSelect?.id === row.id
 
     let id = $("body").find("tr[data-id='" + row.parent + "'][data-open='true']").attr('data-id')
     const rowProps = {
         key: row.id,
-        className: !props.tableDetail ? "" : (row.parent === undefined ? "" : parseInt(id === undefined ? "0" : id) == row.parent ? "" : "table-row-closed"),
+        className: !props.tableDetail ? "" : (row.parent === undefined ? "" : tableDetailOpen ? "" : "table-row-closed"),
         onClick: () => props.tableOnSelect ? props.tableOnSelect(row) : null,
         onDoubleClick: () => props.tableOnDoubleClick ? props.tableOnDoubleClick() : null
     }
@@ -58,7 +60,7 @@ export function handleContent<T>(
                     if (el.classList.contains(classes)) el.classList.remove(classes)
                     else el.classList.add(classes)
                 }
-            }}>{row.open ? <i className="bi bi-chevron-down"/> : <i className="bi bi-chevron-right"/>}</a>
+            }}>{row.open || row.open === undefined ? <i className="bi bi-chevron-down"/> : <i className="bi bi-chevron-right"/>}</a>
         </td>
     }
 
@@ -112,6 +114,6 @@ export function handleContent<T>(
             {props.tableHeader.map(header => renderCell(header))}
         </tr>
         {props.tableDetail && row.children !== undefined
-            ? row.children.map(row => handleContent(row, props, tableEdit, tableDTO)) : null}
+            ? row.children.map(r => handleContent(r, props, tableEdit, tableDTO, row.open === undefined || row.open)) : null}
     </React.Fragment>
 }
