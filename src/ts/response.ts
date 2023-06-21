@@ -149,6 +149,7 @@ const globalMessageFields = (data, form: string = "", type = 'is-invalid'): void
             .parent()
             .find("#j_feedback[data-name='" + key + "']")
             .addClass(type === 'is-invalid' ? 'invalid-feedback' : 'valid-feedback')
+            .removeClass(type === 'is-invalid' ? 'is-valid' :'is-invalid')
             .html(text)
 
         //INPUT - Default com mais de um parent
@@ -158,6 +159,7 @@ const globalMessageFields = (data, form: string = "", type = 'is-invalid'): void
             .parent()
             .find("#j_feedback[data-name='" + key + "']")
             .addClass(type === 'is-invalid' ? 'invalid-feedback' : 'valid-feedback')
+            .removeClass(type === 'is-invalid' ? 'is-valid' :'is-invalid')
             .html(text)
 
         //INPUT - Default com mais de um parent
@@ -168,6 +170,7 @@ const globalMessageFields = (data, form: string = "", type = 'is-invalid'): void
             .parent()
             .find("#j_feedback[data-name='" + key + "']")
             .addClass(type === 'is-invalid' ? 'invalid-feedback' : 'valid-feedback')
+            .removeClass(type === 'is-invalid' ? 'is-valid' :'is-invalid')
             .html(text)
 
         //SELECT - Default
@@ -176,6 +179,7 @@ const globalMessageFields = (data, form: string = "", type = 'is-invalid'): void
             .parent()
             .find("#j_feedback[data-name='" + key + "']")
             .addClass(type === 'is-invalid' ? 'invalid-feedback' : 'valid-feedback')
+            .removeClass(type === 'is-invalid' ? 'is-valid' :'is-invalid')
             .html(text)
 
         //TEXTAREA - Default
@@ -184,6 +188,7 @@ const globalMessageFields = (data, form: string = "", type = 'is-invalid'): void
             .parent()
             .find("#j_feedback[data-name='" + key + "']")
             .addClass(type === 'is-invalid' ? 'invalid-feedback' : 'valid-feedback')
+            .removeClass(type === 'is-invalid' ? 'is-valid' :'is-invalid')
             .html(text)
 
         //Default - Feedback
