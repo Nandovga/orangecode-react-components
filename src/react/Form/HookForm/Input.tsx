@@ -32,22 +32,26 @@ const InputBootstrap = ({...props}: Props) => {
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
-        <input className={"form-control " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
-               id={props.name}
-               type={type}
-               disabled={props.disabled}
-               placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
-               {...props.register(props.name, {
-                   required: !props.required ? false : "Campo obrigatório",
-                   onBlur: (e) => props.onBlur ? props.onBlur(e.target.value) : null ,
-                   onChange: (e) => props.onChange ? props.onChange(e.target.value) : null
-               })}/>
-        {props.previewPass && props.type === "password"
-            ? <a href="#" className="form-control-view"
-                 onClick={() => setType(type === "password" ? "text" : "password")}>
-                <i className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a>  : null}
+        <div className="input-group">
+            <input className={"form-control " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
+                   id={props.name}
+                   type={type}
+                   disabled={props.disabled}
+                   placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
+                   {...props.register(props.name, {
+                       required: !props.required ? false : "Campo obrigatório",
+                       onBlur: (e) => props.onBlur ? props.onBlur(e.target.value) : null,
+                       onChange: (e) => props.onChange ? props.onChange(e.target.value) : null
+                   })}/>
+            {props.previewPass && props.type === "password"
+                ? <span className="input-group-text">
+                    <a href="#" className="form-control-view"
+                       onClick={() => setType(type === "password" ? "text" : "password")}><i
+                        className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a></span> : null}
+        </div>
         <div className={(!props.errors[props.name] ? "" : "invalid-feedback")}
-             id="j_feedback" data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
+             id="j_feedback"
+             data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
     </div>
 }
 

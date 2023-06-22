@@ -58,6 +58,9 @@ export type ITable<T> = {
     tableSelectAuto?: boolean
     tableSelectTimeOut?: number
 
+    tableMultiSelect?: Array<T & { id: any }>
+    tableOnMultiSelect?(state: Array<T & { id: any }>): void
+
     tablePagination?: "auto" | ITablePagination
     tablePaginationAlign?: "end" | "center" | "start"
     tablePaginationRow?: 5 | 10 | 25 | 50 | 100

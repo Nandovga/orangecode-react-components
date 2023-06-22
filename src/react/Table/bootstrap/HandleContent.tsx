@@ -27,6 +27,7 @@ export function handleContent<T>(
     tableDetailOpen: boolean | null = null
 ) {
     let select = !props.tableSelect ? false : props.tableSelect?.id === row.id
+    let multiSelect = !props.tableMultiSelect ? false : props.tableMultiSelect.some(r => r.id === row.id)
 
     let id = $("body").find("tr[data-id='" + row.parent + "'][data-open='true']").attr('data-id')
     const rowProps = {
@@ -60,7 +61,8 @@ export function handleContent<T>(
                     if (el.classList.contains(classes)) el.classList.remove(classes)
                     else el.classList.add(classes)
                 }
-            }}>{row.open || row.open === undefined ? <i className="bi bi-chevron-down"/> : <i className="bi bi-chevron-right"/>}</a>
+            }}>{row.open || row.open === undefined ? <i className="bi bi-chevron-down"/> :
+                <i className="bi bi-chevron-right"/>}</a>
         </td>
     }
 
@@ -72,12 +74,28 @@ export function handleContent<T>(
                    style={{width: "0px"}}>{select ? <i className="bi bi-caret-right-fill"/> : ''}</td>
     }
 
+    //Gestão do MultiSelect
+    let renderMultiSelect = () => {
+        return props.tableMultiSelect ? <td className={"text-center"} style={{width: "0px"}}>
+            <input className="form-check-input" type="checkbox"
+                   checked={props.tableMultiSelect.filter(r => r.id === row.id)[0] !== undefined}
+                   onChange={event => {
+                       if (props.tableOnMultiSelect && props.tableMultiSelect)
+                           if (event.target.checked)
+                               props.tableOnMultiSelect([...props.tableMultiSelect, row])
+                           else
+                               props.tableOnMultiSelect(props.tableMultiSelect.filter(r => r.id !== row.id))
+                   }}
+            />
+        </td> : <></>
+    }
+
     //Exibe os dados normais
     let renderCell = (header: ITableHeader<T>) => {
         const {id, body, align, classes} = header
         const cellProps = {
             key: `${row.id}-${id}`,
-            className: `${!align ? "" : "text-" + align} ${select ? "fw-bold bg-light" : ""} ${!classes ? "" : classes}`,
+            className: `${!align ? "" : "text-" + align} ${select || multiSelect ? "fw-bold bg-light" : ""} ${!classes ? "" : classes}`,
             style: {cursor: !props.tableOnSelect ? "initial" : "pointer", verticalAlign: "middle"}
         }
         return tableEdit.edit?.id === row.id && header.editor && tableEdit.editField === header.id
@@ -110,6 +128,7 @@ export function handleContent<T>(
     return <React.Fragment key={row.id}>
         <tr {...rowProps} data-id={row.id} data-parent={row.parent} data-open={row.open}>
             {renderSelect()}
+            {renderMultiSelect()}
             {renderDetail()}
             {props.tableHeader.map(header => renderCell(header))}
         </tr>

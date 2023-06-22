@@ -33,20 +33,22 @@ const InputBootstrap = ({...props}: IInput) => {
                 <i className={GET_ICON(props.iconType) + props.icon}/>
                 {props.legend}{props.required ? <span className="text-danger">*</span> : null}
             </label> : null}
-        <input className={"form-control " + fieldClasses}
-               id={props.name}
-               name={props.name}
-               type={type}
-               value={props.value}
-               required={props.required}
-               disabled={props.disabled}
-               placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
-               onChange={event => !props.onChange ? null : props.onChange(event.target.value)}
-               onBlur={event => !props.onBlur ? null : props.onBlur(event.target.value)}/>
-        {props.previewPass && props.type === "password"
-            ? <a href="#" className="form-control-view"
-                 onClick={() => setType(type === "password" ? "text" : "password")}>
-                <i className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a> : null}
+        <div className="input-group">
+            <input className={"form-control " + fieldClasses}
+                   id={props.name}
+                   name={props.name}
+                   type={type}
+                   value={props.value}
+                   required={props.required}
+                   disabled={props.disabled}
+                   placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
+                   onChange={event => !props.onChange ? null : props.onChange(event.target.value)}
+                   onBlur={event => !props.onBlur ? null : props.onBlur(event.target.value)}/>
+            {props.previewPass && props.type === "password"
+                ? <span className="input-group-text"><a href="#" className="form-control-view"
+                                                        onClick={() => setType(type === "password" ? "text" : "password")}>
+                        <i className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a></span> : null}
+        </div>
         <div id="j_feedback" data-name={props.name}/>
     </div>
 }

@@ -5,9 +5,17 @@
       --oc-form-control-#{$nome}: #{$value};
     }
   }
+
+  @if variable-exists(oc-form-view) {
+    @each $nome in map-keys($oc-form-view) {
+      $value: map-get($oc-form-view, $nome);
+      --oc-form-view-#{$nome}: #{$value};
+    }
+  }
 }
 
 .form-control {
+  position: relative;
   background: var(--oc-form-control-background, #{$input-bg});
   border: var(--oc-form-control-border, #{$input-border-width solid $input-border-color});
   border-radius: var(--oc-form-control-border-radius, #{$input-border-radius});
@@ -39,19 +47,6 @@
   bottom: 0;
 }
 
-.form-control-view{
-  $padding: var(--oc-form-control-padding, #{$input-padding-y $input-padding-x});
-  position: absolute;
-  cursor: pointer;
-  font-size: 1.1em;
-  display: flex;
-  align-items: center;
-  padding: $padding;
-  color: var(--oc-form-control-color, #{$input-color});
-  right: 0;
-  bottom: 0;
-}
-
 .form-control-sm {
   min-height: var(--oc-form-control-min-height-sm, #{$input-height-sm});
   padding: var(--oc-form-control-padding-sm, #{$input-padding-y-sm $input-padding-x-sm});
@@ -70,4 +65,21 @@
   .#{$state}-feedback{
     font-size: var(--oc-form-control-font-size-feedback, #{$form-feedback-font-size});
   }
+}
+
+.invalid-feedback.is-invalid,
+.invalid-feedback.is-valid{
+  display: block !important;
+}
+
+.form-control-view{
+  color: var(--oc-form-view-color, #{$input-group-addon-color});
+}
+
+.input-group-text {
+  color: var(--oc-form-view-color, #{$input-group-addon-color});
+  padding: var(--oc-form-view-padding, #{$input-group-addon-padding-y $input-group-addon-padding-x});
+  background-color: var(--oc-form-view-bg, #{$input-group-addon-bg});
+  border: var(--oc-form-view-border, #{$input-border-width solid $input-group-addon-border-color});
+  font-size: var(--oc-form-view-font-size,  #{$input-font-size});
 }
