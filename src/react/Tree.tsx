@@ -157,15 +157,17 @@ function TreeBootstrap<T>(props: ITree<T>) {
     |--------------------------------------
     */
     return <div className="box-100 tree" id={props.treeName}>
-        {treeData.map((row) => {
-            return <div key={row.id}
-                        className={"tree-line " + (row.open === undefined ? "" : (!row.open ? "hide" : ""))}
-                        data-id={row.id}
-                        data-parent={row.parent}>
-                {renderItem(row)}
-                {row.children !== undefined ? renderTree(row.children) : null}
-            </div>
-        })}
+        <div className="w-100 tree-content">
+            {treeData.map((row) => {
+                return <div key={row.id}
+                            className={"tree-line " + (row.open === undefined ? "" : (!row.open ? "hide" : ""))}
+                            data-id={row.id}
+                            data-parent={row.parent}>
+                    {renderItem(row)}
+                    {row.children !== undefined ? renderTree(row.children) : null}
+                </div>
+            })}
+        </div>
         {props.treeFitler && props.onTreeSelect ? <div className="w-100">
             <Input legend="Filtrar" name="filtrar" icon="filter" boxClasses="m-0 mt-1"
                    value={treefilter}

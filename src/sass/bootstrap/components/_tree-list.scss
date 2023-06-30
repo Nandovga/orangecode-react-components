@@ -72,4 +72,20 @@
     left: 5px;
     bottom: 0;
   }
+
+  &-content{
+    max-height: var(--oc-tree-list-content, 700px);
+    overflow: auto;
+
+    &::-webkit-scrollbar{
+      width: 2px;
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb{
+      border-radius: 5px;
+      background: var(--oc-transfer-list-scroll-color, #ccc);
+      border: none;
+    }
+  }
 }

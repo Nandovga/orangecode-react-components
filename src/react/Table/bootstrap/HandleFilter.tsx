@@ -34,17 +34,17 @@ export function handleFilter<T>(props: ITable<T>) {
     | render() - Renderização do componente
     |------------------------------------------
     */
-    return filter.length > 0 ? <div className="w-100 d-flex m-0 mt-1 align-items-end">
+    return filter.length > 0 ? <div className="w-100 d-flex flex-column flex-md-row m-0 mt-1 align-items-start align-items-md-end">
         <Select data={filter.map(row => {
             return {id: row.id, name: row.title}
         })}
                 value={filterField}
                 onChange={setFilterField}
-                boxClasses="mx-2" box="25" legend="Campo"
+                boxClasses="mx-0" box="25" legend="Campo"
                 name="campo" icon="funnel-fill"/>
         {options[filterField] !== null
             ? <Select box="33"
-                      boxClasses="mx-2"
+                      boxClasses="mx-2 mx-md-0"
                       init icon="funnel-fill"
                       data={options[filterField]}
                       legend="Opções"
@@ -52,16 +52,20 @@ export function handleFilter<T>(props: ITable<T>) {
                       value={filterOptions}
                       onChange={setFilterOptions}/>
             : null}
-        <Input legend="Localizar" boxClasses="mx-2" name="pesquisa" icon="funnel-fill"
-               value={filterSearch} onChange={setFilterSearch} disabled={inputDisabled}/>
+        <Input legend="Localizar" boxClasses="mx-0 mx-md-2" name="pesquisa" icon="funnel-fill"
+               value={!props.tableFilter ? filterSearch : props.tableFilter.value}
+               onChange={value => {
+                   if (!props.tableFilter) setFilterSearch(value)
+                   else props.tableFilter.setValue(value)
+               }} disabled={inputDisabled}/>
         <div style={{minWidth: "80px"}}>
             <Button colors="secondary"
                     legend="Filtrar"
-                    classes="btn-sm mb-1"
+                    classes="btn-sm mb-2 mt-2 mt-md-0"
                     load={filterLoad}
                     onClick={() => {
                         if (props.tableOnFilter)
-                            props.tableOnFilter(filterField, filterSearch, setFilterLoad, filterOptions);
+                            props.tableOnFilter(filterField, !props.tableFilter ? filterSearch : props.tableFilter.value, setFilterLoad, filterOptions);
                     }}
                     icon="funnel-fill"/>
         </div>

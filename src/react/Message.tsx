@@ -6,11 +6,13 @@ import {IFrameworkStyle} from "../@types/style";
 interface Props extends Omit<IModal, "modalTitle"> {
     modalMessage: string
     modalTitle?: string
+    modalAcceptInvert?: boolean
     modalAcceptLabel?: string
     modalAcceptColor?: string
     modalLoadAccept?: boolean
     modalRejectLabel?: string
     modalRejectColor?: string
+    modalOptionsPosition?: "center" | "start" | "end"
     frameworkStyle?: IFrameworkStyle
     onModalAccept(): void
 }
@@ -21,6 +23,7 @@ interface Props extends Omit<IModal, "modalTitle"> {
  * @param frameworkStyle
  * @param modalAcceptLabel
  * @param modalRejectLabel
+ * @param modalOptionsPosition
  * @param props
  * @constructor
  */
@@ -30,6 +33,7 @@ const Message = (
         frameworkStyle = "bootstrap",
         modalAcceptLabel = "Confirmar",
         modalRejectLabel = "Cancelar",
+        modalOptionsPosition = "end",
         ...props
     }: Props) => {
     const rejectColor = !props.modalRejectColor ? "btn-danger text-white" : props.modalRejectColor
@@ -49,7 +53,9 @@ const Message = (
                  frameworkStyle="bootstrap"
                  icon="cone-striped fs-4">
             <p className="fw-semibold">{props.modalMessage}</p>
-            <div className="w-100 d-flex justify-content-end mt-3">
+            <div className={"w-100 d-flex mt-3 " +
+                (props.modalAcceptInvert ? "flex-row-reverse " : "") +
+                "justify-content-" + modalOptionsPosition}>
                 <a href="#"
                    className={"btn btn-sm me-2 " + rejectColor}
                    onClick={() => props.onModalVisible("closed")}>
