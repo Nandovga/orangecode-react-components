@@ -76,9 +76,9 @@ export function handleContent<T>(
 
     //Gestão do MultiSelect
     let renderMultiSelect = () => {
-        return props.tableMultiSelect ? <td className={"text-center"} style={{width: "0px"}}>
+        return props.tableMultiSelect ? <td className={"text-center" + (multiSelect ? " bg-light" : "")} style={{width: "0px"}}>
             <input className="form-check-input" type="checkbox"
-                   checked={props.tableMultiSelect.filter(r => r.id === row.id)[0] !== undefined}
+                   checked={multiSelect}
                    onChange={event => {
                        if (props.tableOnMultiSelect && props.tableMultiSelect)
                            if (event.target.checked)

@@ -49,7 +49,7 @@ const InputBootstrap = ({...props}: Props) => {
                        onClick={() => setType(type === "password" ? "text" : "password")}><i
                         className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a></span> : null}
         </div>
-        <div className={(!props.errors[props.name] ? "" : "invalid-feedback")}
+        <div className={(!props.errors[props.name] ? "" : "invalid-feedback is-invalid")}
              id="j_feedback"
              data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
     </div>

@@ -46,7 +46,7 @@ const SelectBootstrap = ({...props}: Props) => {
             {props.data.length > 0 ? props.data.map(row =>
                 <option key={row.id} value={row.id}>{row.name}</option>) : null}
         </select>
-        <div className={(!props.errors[props.name] ? "" : "invalid-feedback")}
+        <div className={(!props.errors[props.name] ? "" : "invalid-feedback is-invalid")}
              id="j_feedback" data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
     </div>
 }

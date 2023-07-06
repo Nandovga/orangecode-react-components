@@ -15,6 +15,11 @@ export function handlePagination<T>(
     setDTO: React.Dispatch<Array<T & { id: any }>>,
     paginationRef: React.MutableRefObject<any>
 ) {
+    const colspan = props.tableHeader.length
+        + (props.tableOnSelect ? 1 : 0)
+        + (props.tableDetail ? 1 : 0)
+        + (props.tableOnMultiSelect ? 1 : 0)
+
     const manual = () => {
         let {elements, pageTotal, pageNumber} = GET_TYPE<ITablePagination>(props.tablePagination)
         let pagerInit = (pageNumber - 3 < 1 ? 0 : pageNumber - 4);
@@ -24,7 +29,7 @@ export function handlePagination<T>(
             pager.push(i)
 
         //Renderização
-        return pageTotal > 1 ? <td className="p-0" colSpan={props.tableHeader.length + (props.tableDetail ? 2 : 1)}>
+        return pageTotal > 1 ? <td className="p-0" colSpan={colspan}>
             <div
                 className={"w-100 d-flex align-items-center justify-content-" + (!props.tablePaginationAlign ? "end" : props.tablePaginationAlign)}>
                 <p className="fs-7 mx-2 my-auto text-primary-300">Total de registro {elements}</p>
@@ -66,7 +71,7 @@ export function handlePagination<T>(
         const [row, setRow] = useState<number>(!props.tablePaginationRow ? 10 : props.tablePaginationRow)
 
         //Renderização
-        return <td className="p-1" colSpan={props.tableHeader.length + (props.tableDetail ? 2 : 1)}>
+        return <td className="p-1" colSpan={colspan}>
             <div
                 className={"w-100 d-flex align-items-center justify-content-" + (!props.tablePaginationAlign ? "end" : props.tablePaginationAlign)}>
                 {paginationRef.current !== null ? <select className="form-select form-select-sm me-2"

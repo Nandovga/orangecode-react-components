@@ -39,7 +39,7 @@ const TextAreaBootstrap = ({...props}: IInput) => {
                       onBlur: (e) => props.onBlur ? props.onBlur(e.target.value) : null ,
                       onChange: (e) => props.onChange ? props.onChange(e.target.value) : null
                   })}/>
-        <div className={(!props.errors[props.name] ? "" : "invalid-feedback")}
+        <div className={(!props.errors[props.name] ? "" : "invalid-feedback is-invalid")}
              id="j_feedback" data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
     </div>
 }

@@ -1,13 +1,14 @@
 import React from "react";
+import {Controller} from "react-hook-form";
 import InputMask from "react-input-mask";
 
 import {GET_ICON} from "../../../ts/system";
 import {IIcon} from "../../../@types/icon";
-import {IHookForm, IInputBase} from "../../../@types/form";
+import {IInputBase} from "../../../@types/form";
 
-interface Props extends IInputBase, IHookForm, IIcon {
+interface Props extends IInputBase, IIcon {
     mask: string
-    onBlur?(value: any): void
+    control: any
 }
 
 /**
@@ -31,21 +32,27 @@ const InputBootstrapMask = ({...props}: Props) => {
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
-        <InputMask mask={props.mask}
-                   id={props.name}
-                   type="text"
-                   disabled={props.disabled}
-                   placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
-                   className={"form-control " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
-                   {...props.register(props.name, {
-                       required: !props.required ? false : "Campo obrigatório",
-                       onBlur: (e) => props.onBlur ? props.onBlur(e.target.value) : null ,
-                       onChange: (e) => props.onChange ? props.onChange(e.target.value) : null
-                   })}/>
-        <div className={(!props.errors[props.name] ? "" : "invalid-feedback")}
-             id="j_feedback"
-             data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
-    </div>
+        <Controller
+            control={props.control}
+            name={props.name}
+            render={({field: {onChange, value}, formState: {errors}}) => {
+                let message = !errors[props.name] ? '' : errors[props.name]?.message
+                return <>
+                    <InputMask mask={props.mask}
+                               id={props.name}
+                               type="text"
+                               disabled={props.disabled}
+                               placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
+                               className={"form-control " + fieldClasses + (!errors[props.name] ? "" : "is-invalid")}
+                               value={value}
+                               required={props.required}
+                               onChange={(e) => onChange(e.target.value)}/>
+                    <div id="j_feedback"
+                         className={(!errors[props.name] ? "" : "invalid-feedback is-invalid")}
+                         data-name={props.name}>{typeof message === "string" ? message : ""}</div>
+                </>
+            }}/>
+</div>
 }
 
 /**

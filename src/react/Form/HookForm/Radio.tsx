@@ -44,7 +44,7 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: Props) => {
                        })}/>
                 <label className="form-check-label">{row.legend}</label>
             </div>)}
-        <div className={(!props.errors[props.name] ? "" : "invalid-feedback")}
+        <div className={(!props.errors[props.name] ? "" : "invalid-feedback is-invalid")}
              id="j_feedback" data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
     </div>
 }
