@@ -56,7 +56,7 @@ function SearchBootstrap<T>(props: ISearch<T>) {
                name={props.name}
                required={props.required}
                disabled={props.disabled}
-               placeholder={!props.placeholder ? "" : props.placeholder}
+               placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
                value={props.value === null ? "" : (typeof props.value === "string" ? props.value : props.value[!props.searchValueType ? "name" : props.searchValueType])}
                onKeyDown={ev => {
                    if (ev.code === "F2" && props.onSearchClick)

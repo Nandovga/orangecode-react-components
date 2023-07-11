@@ -37,7 +37,7 @@ const InputBootstrapMask = ({...props}: IInput) => {
                    type="text"
                    disabled={props.disabled}
                    required={props.required}
-                   placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
+                   placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
                    value={props.value}
                    className={"form-control " + fieldClasses}
                    onChange={event => !props.onChange ? null : props.onChange(event.target.value)}

@@ -36,7 +36,7 @@ const TextAreaBootstrap = ({...props}: IInput) => {
                   value={props.value}
                   required={props.required}
                   disabled={props.disabled}
-                  placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
+                  placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
                   onChange={event => !props.onChange ? null : props.onChange(event.target.value)}
                   onBlur={event => !props.onBlur ? null : props.onBlur(event.target.value)}/>
         <div id="j_feedback" data-name={props.name}/>

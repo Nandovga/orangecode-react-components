@@ -53,7 +53,7 @@ const EditorQuill = ({module = "basic", ...props}: IEditorProps) => {
                     id={props.name}
                     value={props.value}
                     readOnly={props.disabled}
-                    placeholder={props.placeholder}
+                    placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
                     onChange={value => props.onChange ? props.onChange(value) : null}/>
         <div id="j_feedback" data-name={props.name}/>
     </div>

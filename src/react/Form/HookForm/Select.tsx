@@ -37,7 +37,7 @@ const SelectBootstrap = ({...props}: Props) => {
         <select className={"form-select " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
                 disabled={props.disabled}
                 id={props.name}
-                placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
+                placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
                 {...props.register(props.name, {
                     required: !props.required ? false : "Campo obrigatório",
                     onChange: (e) => props.onChange ? props.onChange(e.target.value) : null

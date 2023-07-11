@@ -37,7 +37,7 @@ const InputBootstrap = ({...props}: Props) => {
                    id={props.name}
                    type={type}
                    disabled={props.disabled}
-                   placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
+                   placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
                    {...props.register(props.name, {
                        required: !props.required ? false : "Campo obrigatório",
                        onBlur: (e) => props.onBlur ? props.onBlur(e.target.value) : null,

@@ -9,6 +9,7 @@ import {IInputBase} from "../../../@types/form";
 interface Props extends IInputBase, IIcon {
     mask: string
     control: any
+    onBlur?(value: any): void
 }
 
 /**
@@ -22,6 +23,7 @@ const InputBootstrapMask = ({...props}: Props) => {
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
 
+    console.log(props.placeholder?.length)
     /*
     |--------------------------------------
     | render() - Renderização do componente
@@ -42,17 +44,20 @@ const InputBootstrapMask = ({...props}: Props) => {
                                id={props.name}
                                type="text"
                                disabled={props.disabled}
-                               placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
+                               placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
                                className={"form-control " + fieldClasses + (!errors[props.name] ? "" : "is-invalid")}
-                               value={value}
+                               value={value === undefined || value === null ? "" : value}
                                required={props.required}
-                               onChange={(e) => onChange(e.target.value)}/>
+                               onChange={(e) => onChange(e.target.value)}
+                               onBlur={event => {
+                                   if (props.onBlur) props.onBlur(event.target.value)
+                               }}/>
                     <div id="j_feedback"
                          className={(!errors[props.name] ? "" : "invalid-feedback is-invalid")}
                          data-name={props.name}>{typeof message === "string" ? message : ""}</div>
                 </>
             }}/>
-</div>
+    </div>
 }
 
 /**

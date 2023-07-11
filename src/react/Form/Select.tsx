@@ -45,7 +45,7 @@ const SelectBootstrap = ({...props}: ISelect) => {
                 required={props.required}
                 disabled={props.disabled}
                 value={!props.value ? "" : props.value}
-                placeholder={!props.placeholder ? "Digite " + props.name : props.placeholder}
+                placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
                 onChange={event => !props.onChange ? null : props.onChange(event.target.value)}>
             {init}
             {props.data.length > 0 ? props.data.map(row =>
