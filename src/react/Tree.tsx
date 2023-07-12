@@ -12,6 +12,7 @@ export type ITreeData = {
     open?: boolean
     color?: IColor
     selected?: boolean
+    children?: any
 }
 
 export interface ITree<T> {
@@ -35,16 +36,17 @@ function TreeBootstrap<T>(props: ITree<T>) {
     //STATE ≥ Configuração do componente
     const [treeData, setTreeData] = useState<Array<T & ITreeData & { children?: any }>>([])
     const [treefilter, setTreeFilter] = useState("")
+    const [treefilterData, setTreeFilterData] = useState<Array<T & ITreeData & { children?: any }>>([])
     const ICON_OPEN = "bi-folder-symlink-fill"
     const ICON_CLOSED = "bi-folder-fill"
 
     //STATE ≥ Configuração do componente
     useEffect(() => {
         if (props.treeBuild === false)
-            setTreeData(props.treeData)
+            setTreeData(treefilter.length === 0 ? props.treeData : treefilterData)
         else
-            setTreeData(buildTree(props.treeData))
-    }, [props.treeData])
+            setTreeData(buildTree(treefilter.length === 0 ? props.treeData : treefilterData))
+    }, [props.treeData, treefilter])
 
     //STATE ≥ Estrutura da árvore dados
     function buildTree(array: Array<T & ITreeData>) {
@@ -63,15 +65,16 @@ function TreeBootstrap<T>(props: ITree<T>) {
                 if (array[i].parent === null)
                     build[build.length] = array[i];
 
-        function genereteTree(build: Array<T & ITreeData>, result: {}){
-            let arr: Array<T & ITreeData & {children?: any}> = [];
-            for (let i = 0; i < build.length; i++){
+        function genereteTree(build: Array<T & ITreeData>, result: {}) {
+            let arr: Array<T & ITreeData & { children?: any }> = [];
+            for (let i = 0; i < build.length; i++) {
                 arr[i] = build[i]
-                if(result[arr[i].id] !== undefined)
+                if (result[arr[i].id] !== undefined)
                     arr[i].children = genereteTree(result[arr[i].id], result)
             }
             return arr;
         }
+
         return genereteTree(build, result);
     }
 
@@ -179,10 +182,14 @@ function TreeBootstrap<T>(props: ITree<T>) {
                            return props.onTreeSelect(null)
                        let result = props.treeData.filter(item => {
                            const regex = new RegExp(value, "i");
-                           return regex.test(item.name)
+                           return (item.selected === false || regex.test(item.name))
                        })
-                       if (result.length > 0 && result[0].selected !== false)
-                           return props.onTreeSelect(result[0])
+
+                       if (result.length > 0)
+                           for (var i = 0; i < result.length; i++)
+                               delete result[i]?.children;
+                       setTreeFilterData(result)
+                       props.onTreeSelect(null)
                    }}/>
         </div> : null}
     </div>
