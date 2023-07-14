@@ -74,20 +74,16 @@ export function handlePagination<T>(
         return <td className="p-1" colSpan={colspan}>
             <div
                 className={"w-100 d-flex align-items-center justify-content-" + (!props.tablePaginationAlign ? "end" : props.tablePaginationAlign)}>
-                {paginationRef.current !== null ? <select className="form-select form-select-sm me-2"
-                                                          value={row}
-                                                          onChange={event => setRow(parseInt(event.target.value))}
-                                                          style={{
-                                                              maxWidth: "60px",
-                                                              padding: "1px 3px",
-                                                              fontSize: ".9em"
-                                                          }}>
+                <select className="form-select form-select-sm me-2"
+                        value={row}
+                        onChange={event => setRow(parseInt(event.target.value))}
+                        style={{maxWidth: "60px", padding: "1px 3px", fontSize: ".9em"}}>
                     <option value={5}>5</option>
                     <option value={10}>10</option>
                     <option value={25}>25</option>
                     <option value={50}>50</option>
                     <option value={100}>100</option>
-                </select> : null}
+                </select>
                 <p className='m-0 mx-2'>Total de {props.tableDTO.length} registro</p>
                 <Pagination<T> pageCount={row}
                                paginationDTO={props.tableDTO}

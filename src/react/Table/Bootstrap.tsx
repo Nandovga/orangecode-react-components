@@ -25,11 +25,20 @@ function Bootstrap<T>(props: ITable<T>) {
 
     //STATE ≥ Estado do componente
     const paginationRef = useRef<any>(null)
+    const [init, setInit] = useState(false)
     const [tableDTO, setTableDTO] = useState<Array<T & { id: any }>>(props.tableDTO)
+    const [tableDTOOriginal, setTableDTOOriginal] = useState<Array<T & { id: any }>>([])
     const [tablePageSelect, setTablePageSelect] = useState<number>(0)
 
     const [tableEdit, setTableEdit] = useState<null | T & { id: any }>(null)
     const [tableEditField, setTableEditField] = useState<string>("")
+
+    //EFFECT ≥ Inicializa componente
+    useEffect(() => {
+        if (!init)
+            setTableDTOOriginal(props.tableDTO)
+        setInit(true)
+    }, [init])
 
     //EFFECT ≥ Gerencia a ação de select
     useEffect(() => {
@@ -70,8 +79,10 @@ function Bootstrap<T>(props: ITable<T>) {
                 <thead>
                 {props.tableOptions ? handleHeaderOptions(props, tableDTO) : null}
                 <tr>
-                    {props.tableOnSelect ? <th className="text-center" style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
-                    {props.tableMultiSelect ? <th className="text-center" style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
+                    {props.tableOnSelect ?
+                        <th className="text-center" style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
+                    {props.tableMultiSelect ?
+                        <th className="text-center" style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
                     {props.tableDetail ? <th className="text-center" style={{width: "0px"}}/> : null}
                     {props.tableHeader.map(value => handleHeader<T>(value, props, setTableDTO, paginationRef))}
                 </tr>
@@ -105,7 +116,7 @@ function Bootstrap<T>(props: ITable<T>) {
                 {handlePagination<T>(props, setTableDTO, paginationRef)}
             </table>
         </div>
-        {handleFilter<T>(props)}
+        {handleFilter<T>(props, tableDTOOriginal)}
     </>
 }
 
