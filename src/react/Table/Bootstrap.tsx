@@ -35,10 +35,11 @@ function Bootstrap<T>(props: ITable<T>) {
 
     //EFFECT ≥ Inicializa componente
     useEffect(() => {
-        if (!init)
+        if (!init || !props.tableInit)
             setTableDTOOriginal(props.tableDTO)
         setInit(true)
-    }, [init])
+        if (props.tableOnInit) props.tableOnInit(true)
+    }, [init, props.tableInit])
 
     //EFFECT ≥ Gerencia a ação de select
     useEffect(() => {

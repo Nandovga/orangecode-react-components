@@ -23,7 +23,6 @@ const InputBootstrapMask = ({...props}: Props) => {
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
 
-    console.log(props.placeholder?.length)
     /*
     |--------------------------------------
     | render() - Renderização do componente

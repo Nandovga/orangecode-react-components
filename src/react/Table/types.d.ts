@@ -12,7 +12,7 @@ export interface ITableHeader<T> extends IIcon {
     body?: (data: T, id: string) => React.ReactNode
 
     filter?: boolean
-    filterOptions?: Array<ISelectData & {disabled?: boolean}>
+    filterOptions?: Array<ISelectData & { disabled?: boolean }>
     sort?: boolean
 
     editor?: (options: ITableOptionsEdit<T>) => JSX.Element
@@ -36,6 +36,9 @@ export type ITable<T> = {
     tableEmptyValue?: string
     tableDetail?: boolean
 
+    tableInit?: boolean
+    tableOnInit?(value: boolean): void
+
     tableOptions?: boolean
     tableClassesOptions?: {
         box?: string
@@ -47,9 +50,9 @@ export type ITable<T> = {
     tableOptionsCreate?(): void
 
     tableEditMode?: "single"
-    tableOnEdit?(tableDTO: Array<T & {id: any}> | T & {id: any}): void
+    tableOnEdit?(tableDTO: Array<T & { id: any }> | T & { id: any }): void
 
-    tableFilter?: {value: string, setValue: React.Dispatch<string>}
+    tableFilter?: { value: string, setValue: React.Dispatch<string> }
     tableOnFilter?(field: string, value: string, setLoad: React.Dispatch<boolean>, options?: any): void
     tableOnSort?(field: string, value: "asc" | "desc"): void
     tableOnDoubleClick?(): void
@@ -77,7 +80,7 @@ export type ITablePagination = {
 }
 
 export type ITableOptionsEdit<T> = {
-    row: T & {id: any}
+    row: T & { id: any }
     value: any
     setValue: (value: any) => void
     onBlur?: () => void

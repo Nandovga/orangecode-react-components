@@ -63,7 +63,7 @@ export function handleFilter<T>(
                        if (!props.tableFilter) setFilterSearch(value)
                        else props.tableFilter.setValue(value)
                    }} disabled={inputDisabled}/>
-            <div style={{minWidth: "80px"}}>
+            <div style={{minWidth: "100px"}}>
                 <Button colors="secondary"
                         legend="Filtrar"
                         classes="btn-sm mb-2 mt-2 mt-md-0"
@@ -77,7 +77,6 @@ export function handleFilter<T>(
                                     const regex = new RegExp(filterSearch, "i");
                                     return regex.test(item[filterField])
                                 })
-                                console.log(filterOptions, tableDTOOriginal)
                                 props.setTableDTO(filterSearch.lenght === 0 ? tableDTOOriginal : result)
                             }
                         }}
