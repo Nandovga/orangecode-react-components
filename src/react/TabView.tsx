@@ -9,6 +9,7 @@ export interface ITabView {
     disabled?: boolean
     active?: boolean
     icon?: string
+    identify?: string
 }
 
 type Props = {
@@ -30,15 +31,15 @@ const TabViewBootstrap = ({tabs, iconType = "bootstrap"}: Props) => {
             {tabs.map(row => <li key={row.tab} className="nav-item">
                 <button className={(row.disabled ? "disabled" : "") + " nav-link " + (row.active ? "active" : "")}
                         data-bs-toggle="tab"
-                        data-bs-target={"#" + row.tab}
+                        data-bs-target={"#" + (row.identify === undefined ? row.tab : row.identify)}
                         type="button"><i className={"me-1 " + icon + row.icon}/>{row.tab}</button>
             </li>)}
         </ul>
         <div className="tab-content w-100">
             {tabs.map(row => {
-                return <div key={row.tab}
+                return <div key={(row.identify === undefined ? row.tab : row.identify)}
                             className={"tab-pane fade " + (row.active ? "show active" : "")}
-                            id={row.tab}>{row.content}</div>
+                            id={(row.identify === undefined ? row.tab : row.identify)}>{row.content}</div>
             })}
         </div>
     </>
