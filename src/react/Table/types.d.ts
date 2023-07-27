@@ -52,7 +52,7 @@ export type ITable<T> = {
     tableEditMode?: "single"
     tableOnEdit?(tableDTO: Array<T & { id: any }> | T & { id: any }): void
 
-    tableFilter?: { value: string, setValue: React.Dispatch<string> }
+    tableFilter?: { value: string, setValue: React.Dispatch<string>, field?: any, setField?: React.Dispatch<any> }
     tableOnFilter?(field: string, value: string, setLoad: React.Dispatch<boolean>, options?: any): void
     tableOnSort?(field: string, value: "asc" | "desc"): void
     tableOnDoubleClick?(): void

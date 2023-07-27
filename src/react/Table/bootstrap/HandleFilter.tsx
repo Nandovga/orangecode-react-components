@@ -33,6 +33,7 @@ export function handleFilter<T>(
             setInputDisabled(options[filterField].filter(row => row.id == filterOptions)[0]?.disabled)
     })
 
+    console.log(props.tableFilter?.field)
     /*
     |------------------------------------------
     | render() - Renderização do componente
@@ -43,8 +44,11 @@ export function handleFilter<T>(
             <Select data={filter.map(row => {
                 return {id: row.id, name: row.title}
             })}
-                    value={filterField}
-                    onChange={setFilterField}
+                    value={!props.tableFilter || props.tableFilter?.field === undefined ? filterField : props.tableFilter.field}
+                    onChange={value => {
+                        if (!props.tableFilter || props.tableFilter?.setField === undefined) setFilterField(value)
+                        else props.tableFilter.setField(value)
+                    }}
                     boxClasses="mx-1" box="25" legend="Campo"
                     name="campo" icon="funnel-fill"/>
             {options[filterField] !== null && props.tableOnFilter
