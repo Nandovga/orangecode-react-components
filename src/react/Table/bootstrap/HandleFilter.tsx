@@ -33,7 +33,6 @@ export function handleFilter<T>(
             setInputDisabled(options[filterField].filter(row => row.id == filterOptions)[0]?.disabled)
     })
 
-    console.log(props.tableFilter?.field)
     /*
     |------------------------------------------
     | render() - Renderização do componente
