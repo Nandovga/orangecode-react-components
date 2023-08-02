@@ -75,6 +75,14 @@ function Bootstrap<T>(props: ITable<T>) {
     |------------------------------------------
     */
     return <>
+        {/*opções e filtro*/}
+        <div className="w-100 mb-2 d-flex flex-md-nowrap flex-wrap align-items-center">
+            {!props.tableFilterPosition || props.tableFilterPosition === "top"
+                ? handleFilter<T>(props, tableDTOOriginal) : null}
+            <div className={props.tableClassesOptions?.box}>{props.tableOptionsRender ? props.tableOptionsRender() : null}</div>
+        </div>
+
+        {/*tabela*/}
         <div className="w-100 table-responsive">
             <table className={tableConfig.classes}>
                 <thead>
@@ -117,7 +125,10 @@ function Bootstrap<T>(props: ITable<T>) {
                 {handlePagination<T>(props, setTableDTO, paginationRef)}
             </table>
         </div>
-        {handleFilter<T>(props, tableDTOOriginal)}
+
+        {/*filtro*/}
+        {!props.tableFilterPosition || props.tableFilterPosition === "bottom"
+            ? handleFilter<T>(props, tableDTOOriginal) : null}
     </>
 }
 

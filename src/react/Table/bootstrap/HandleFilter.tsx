@@ -33,13 +33,49 @@ export function handleFilter<T>(
             setInputDisabled(options[filterField].filter(row => row.id == filterOptions)[0]?.disabled)
     })
 
+    //Aplica o filtro
+    const handleFilter = () => {
+        if (props.tableOnFilter)
+            props.tableOnFilter(
+                props.tableFilterStyle === "all" ? "all" : filterField,
+                !props.tableFilter ? filterSearch : props.tableFilter.value,
+                setFilterLoad,
+                filterOptions);
+
+        if (props.setTableDTO !== undefined && props.tableFilterStyle !== "all") {
+            let result = tableDTOOriginal.filter(item => {
+                const regex = new RegExp(filterSearch, "i");
+                return regex.test(item[filterField])
+            })
+            props.setTableDTO(filterSearch.lenght === 0 ? tableDTOOriginal : result)
+        }
+
+        if (props.setTableDTO !== undefined && props.tableFilterStyle === "all") {
+            let result = tableDTOOriginal.filter(item => {
+                for (let i = 0; i < filter.length; i++){
+                        let valor = item[filter[i].id].toString()
+                            .normalize("NFD")
+                            .replace(/[\u0300-\u036f]/g, "")
+                            .toLowerCase()
+                        let pesquisa = filterSearch.toString()
+                            .normalize("NFD")
+                            .replace(/[\u0300-\u036f]/g, "")
+                            .toLowerCase()
+                        if(valor.includes(pesquisa))
+                            return item;
+                }
+            })
+            props.setTableDTO(filterSearch.lenght === 0 ? tableDTOOriginal : result)
+        }
+    }
+
     /*
     |------------------------------------------
     | render() - Renderização do componente
     |------------------------------------------
     */
-    return filter.length > 0 ?
-        <div className="w-100 d-flex flex-column flex-md-row m-0 mt-1 align-items-start align-items-md-end">
+    return filter.length > 0 && (!props.tableFilterStyle || props.tableFilterStyle === "field")
+        ? <div className="w-100 d-flex flex-column flex-md-row m-0 mt-1 align-items-start align-items-md-end">
             <Select data={filter.map(row => {
                 return {id: row.id, name: row.title}
             })}
@@ -71,19 +107,26 @@ export function handleFilter<T>(
                         legend="Filtrar"
                         classes="btn-sm mb-2 mt-2 mt-md-0"
                         load={filterLoad}
-                        onClick={() => {
-                            if (props.tableOnFilter)
-                                props.tableOnFilter(filterField, !props.tableFilter ? filterSearch : props.tableFilter.value, setFilterLoad, filterOptions);
-
-                            if (props.setTableDTO !== undefined) {
-                                let result = tableDTOOriginal.filter(item => {
-                                    const regex = new RegExp(filterSearch, "i");
-                                    return regex.test(item[filterField])
-                                })
-                                props.setTableDTO(filterSearch.lenght === 0 ? tableDTOOriginal : result)
-                            }
-                        }}
+                        onClick={handleFilter}
                         icon="funnel-fill"/>
             </div>
-        </div> : null
+        </div>
+        : filter.length && props.tableFilterStyle === "all"
+            ? <div className="d-flex align-items-center box-25 m-0">
+                <div className="position-relative box-100 m-0 p-0">
+                    <input placeholder="Busca rápida"
+                           value={filterSearch}
+                           onChange={event => setFilterSearch(event.target.value)}
+                           onKeyDown={event => {
+                               if(event.keyCode === 13)
+                                   handleFilter()
+                               if(event.keyCode === 27)
+                                   setFilterSearch("")
+                           }}
+                           className="form-control form-control-sm w-100"/>
+                    <a href="#"
+                       onClick={handleFilter}
+                       style={{position: "absolute", right: '8px', top: '3px'}}><i className="bi bi-search"/></a>
+                </div>
+            </div> : null
 }
