@@ -77,7 +77,7 @@ function Bootstrap<T>(props: ITable<T>) {
     return <>
         {/*opções e filtro*/}
         <div className="w-100 mb-2 d-flex flex-md-nowrap flex-wrap align-items-center">
-            {!props.tableFilterPosition || props.tableFilterPosition === "top"
+            {props.tableFilterPosition === "top"
                 ? handleFilter<T>(props, tableDTOOriginal) : null}
             <div className={props.tableClassesOptions?.box}>{props.tableOptionsRender ? props.tableOptionsRender() : null}</div>
         </div>

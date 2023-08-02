@@ -125,8 +125,12 @@ export function handleFilter<T>(
                            }}
                            className="form-control form-control-sm w-100"/>
                     <a href="#"
-                       onClick={handleFilter}
-                       style={{position: "absolute", right: '8px', top: '3px'}}><i className="bi bi-search"/></a>
+                       onClick={event => {
+                           event.preventDefault()
+                           handleFilter()
+                       }}
+                       className="d-flex align-items-center"
+                       style={{position: "absolute", right: '8px', top: '0', bottom: '0'}}><i className="bi bi-search"/></a>
                 </div>
             </div> : null
 }
