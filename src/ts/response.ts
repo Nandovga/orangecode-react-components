@@ -110,15 +110,15 @@ export const globalMessageFieldsClear = (form: string = ''): void => {
  * @param errors
  */
 export const globalTabViewActiveError = (form, errors): void => {
-    let TabView = $("#" + form).find("#TabView")
+    let TabView = $("body").find("#" + form)
     if (TabView.length === 0)
         return;
     let field = Object.keys(errors)[0]
-    TabView.find(".nav-link").each(function (value: any): void {
+    TabView.find(".nav-link").each(function (_, value: any): void {
         if (typeof value !== 'undefined') {
             // @ts-ignore
             let TabViewContent = $(value).attr("data-bs-target").replace("#", "");
-            if ($("body").find(".tab-pane[id=" + TabViewContent + "]").find("*[name=" + field + "]").length === 0) {
+            if ($("body").find(".tab-pane[id=" + TabViewContent + "]").find("*[id='" + field +"']").length === 0) {
                 $("body").find(".tab-pane[id=" + TabViewContent + "]").removeClass("show active")
                 $(value).removeClass("active");
             } else {
@@ -135,7 +135,7 @@ export const globalTabViewActiveError = (form, errors): void => {
  * @param form
  * @param type
  */
-const globalMessageFields = (data, form: string = "", type = 'is-invalid'): void => {
+const globalMessageFields = (data: any, form: string = "", type = 'is-invalid'): void => {
     let formulario = $("body").find("#" + form)
     globalTabViewActiveError(form, data)
 
