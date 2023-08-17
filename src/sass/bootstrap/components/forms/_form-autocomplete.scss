@@ -1,0 +1,70 @@
+:root {
+  @if variable-exists(oc-autocomplete) {
+    @each $nome in map-keys($oc-autocomplete) {
+      $value: map-get($oc-autocomplete, $nome);
+      --oc-autocomplete-#{$nome}: #{$value};
+    }
+  }
+}
+
+.autocomplete {
+
+  &-input {
+    width: 100%;
+    border: none;
+  }
+
+  &-input:focus {
+    outline: none;
+  }
+
+  &-load {
+    width: 22px;
+    height: 20px;
+    border-width: 2px;
+  }
+
+  &-element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 5px;
+    overflow-y: auto;
+    flex-direction: column;
+    display: flex;
+    max-height: var(--oc-autocomplete-max-height, 200px);
+    background: var(--oc-autocomplete-background, #fff);
+    font-size: var(--oc-autocomplete-font-size, 1em);
+    color: var(--oc-autocomplete-color, #000);
+
+    &-selected {
+      margin: 0;
+      cursor: pointer;
+      padding: var(--oc-autocomplete-padding, #{.5rem 1rem});
+    }
+
+    &-selected.disabled {
+      color: var(--oc-autocomplete-color-disabled, #ccc);
+    }
+
+    &-selected:not(.disabled):hover {
+      background: var(--oc-autocomplete-background-hover, #f3f3f3);
+    }
+  }
+
+  .closed {
+    display: none;
+  }
+
+  &-element::-webkit-scrollbar {
+    width: var(--oc-autocomplete-scroll-width, 8px);
+    background: var(--oc-autocomplete-scroll-background, #e5e5e5);
+  }
+
+  &-element::-webkit-scrollbar-thumb {
+    border-radius: var(--oc-autocomplete-scroll-thumb-border-radius, 5px);
+    background: var(--oc-autocomplete-scroll-thumb-background, #a1a1a1);
+    border: 2px solid var(--oc-autocomplete-scroll-background, #e5e5e5);
+  }
+}
