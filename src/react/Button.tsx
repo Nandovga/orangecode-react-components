@@ -7,6 +7,7 @@ import Loading from "./Loading";
 
 export interface IButton extends Omit<IInputBase, "box" | "boxClasses" | "fieldClasses" | "value" | "required" | "name" | "placeholder" | "onChange">, IIcon {
     colors: IColor
+    id?: string
     onClick?: () => void
     variant?: "roudend" | "initial"
     load?: boolean
@@ -47,10 +48,12 @@ const Button = ({frameworkStyle = "bootstrap", variant = "initial", ...props}: I
     return frameworkStyle === "bootstrap" ?
         !props.onClick
             ? <button type="submit"
+                      id={props.id}
                       title={props.legend}
                       style={style}
                       className={disabled + type + " " + props.classes}>{button()}</button>
             : <a href="#"
+                 id={props.id}
                  title={props.legend}
                  style={style}
                  className={disabled + type + " " + props.classes}

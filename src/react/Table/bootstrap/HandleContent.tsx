@@ -1,4 +1,3 @@
-import $ from "jquery"
 import React from "react";
 import {ITable, ITableDetail, ITableHeader} from "../types";
 import {handleContentEditor} from "./HandleContentEditor";
@@ -29,7 +28,6 @@ export function handleContent<T>(
     let select = !props.tableSelect ? false : props.tableSelect?.id === row.id
     let multiSelect = !props.tableMultiSelect ? false : props.tableMultiSelect.some(r => r.id === row.id)
 
-    let id = $("body").find("tr[data-id='" + row.parent + "'][data-open='true']").attr('data-id')
     const rowProps = {
         key: row.id,
         className: !props.tableDetail ? "" : (row.parent === undefined ? "" : tableDetailOpen ? "" : "table-row-closed"),

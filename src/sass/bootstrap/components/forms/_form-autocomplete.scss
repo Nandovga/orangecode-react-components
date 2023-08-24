@@ -37,6 +37,7 @@
     background: var(--oc-autocomplete-background, #fff);
     font-size: var(--oc-autocomplete-font-size, 1em);
     color: var(--oc-autocomplete-color, #000);
+    z-index: 1000;
 
     &-selected {
       margin: 0;
