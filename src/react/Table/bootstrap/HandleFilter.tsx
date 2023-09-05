@@ -35,17 +35,20 @@ export function handleFilter<T>(
 
     //Aplica o filtro
     const handleFilter = () => {
+        let field = !props.tableFilter?.setField ? filterField : props.tableFilter.field === "" ? filter[0].id :  props.tableFilter.field
+        let value = !props.tableFilter?.setValue ? filterSearch : props.tableFilter.value
+
         if (props.tableOnFilter)
             props.tableOnFilter(
-                props.tableFilterStyle === "all" ? "all" : filterField,
-                !props.tableFilter ? filterSearch : props.tableFilter.value,
+                props.tableFilterStyle === "all" ? "all" : field,
+                value,
                 setFilterLoad,
                 filterOptions);
 
         if (props.setTableDTO !== undefined && props.tableFilterStyle !== "all") {
             let result = tableDTOOriginal.filter(item => {
-                const regex = new RegExp(filterSearch, "i");
-                return regex.test(item[filterField])
+                const regex = new RegExp(value, "i");
+                return regex.test(item[field])
             })
             props.setTableDTO(filterSearch.lenght === 0 ? tableDTOOriginal : result)
         }
