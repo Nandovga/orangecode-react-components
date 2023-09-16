@@ -46,7 +46,7 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => 
                        disabled={props.disabled || row.disabled}
                        required={props.required}
                        name={props.name}
-                       value={row.value}
+                       value={props.value}
                        onChange={event => {
                            setChecked(event.target.value)
                            if (props.onChange)

@@ -70,13 +70,16 @@ export function handleMoney(valor: string, format: 'money' | 'decimal' = "decima
  * @param valor
  */
 export function handleHours(valor: string): string {
-    let v = valor.replace(/\D/g, '');
-    if (v.length > 2)
-        if (v.length < 5)
-            v = `${v.slice(0, 2)}:${v.slice(2)}`;
-        else {
-            let end = v.slice(v.length - 2)
-            v = `${v.slice(0, v.length - 2)}:${end}`;
-        }
-    return v;
+    let value = valor.replace(/[^\d.]/g, ''); // Remove todos os caracteres não numéricos, exceto pontos
+    const parts = value.split('.');
+
+    if (parts.length > 1)
+        parts[1] = parts[1].substring(0, 2);
+
+    value = parts.join('.');
+
+    if (value.length > 2)
+        value = value.substring(0, value.length - 2) + ':' + value.substring(value.length - 2);
+
+    return value
 }
