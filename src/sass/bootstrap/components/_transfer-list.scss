@@ -20,6 +20,16 @@
     max-width: 250px;
     max-height: 300px;
     overflow-x: auto;
+    position: relative;
+
+    .disabled{
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.1);
+    }
 
     .item {
       font-size: .9em;

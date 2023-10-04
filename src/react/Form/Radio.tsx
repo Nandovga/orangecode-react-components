@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {IIcon} from "../../@types/icon";
 import {GET_ICON} from "../../ts/system";
 import {IInputBase} from "../../@types/form";
@@ -24,7 +24,6 @@ export interface IRadio extends IInputBase, IIcon {
 const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => {
 
     //Configuração do componente
-    const [checked, setChecked] = useState(props.value)
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
 
@@ -46,13 +45,12 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => 
                        disabled={props.disabled || row.disabled}
                        required={props.required}
                        name={props.name}
-                       value={props.value}
+                       value={row.value}
                        onChange={event => {
-                           setChecked(event.target.value)
                            if (props.onChange)
                                props.onChange(event.target.value)
                        }}
-                       checked={checked === row.value ?? false}/>
+                       checked={props.value === row.value ?? false}/>
                 <label className="form-check-label">{row.legend}</label>
             </div>)}
         <div id="j_feedback" data-name={props.name}/>

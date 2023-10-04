@@ -10,6 +10,7 @@ type Props = {
     data: ITransferList[]
     active: ITransferList[]
     inative: ITransferList[]
+    disabled?: boolean
 }
 
 const TransferListContext = React.createContext<{ state: any, setState: React.Dispatch<any> }>({
@@ -44,6 +45,7 @@ const TransferListInative = () => {
     const inative = state.data.filter(row => !row.active)
 
     return <div className="transfer-list-box">
+        {state.disabled ? <div className="disabled"/> : null}
         {inative.map(row => {
             return <div className="form-check item" key={row.id}>
                 <input className="form-check-input"
@@ -78,6 +80,7 @@ const TransferListActive = () => {
     const active = state.data.filter(row => row.active)
 
     return <div className="transfer-list-box">
+        {state.disabled ? <div className="disabled"/> : null}
         {active.map(row => {
             return <div className="form-check item" key={row.id}>
                 <input className="form-check-input"
@@ -167,26 +170,26 @@ const TransferListOptions = () => {
     }
 
     return <div className="transfer-list-options d-flex justify-content-center flex-column align-items-center">
-        <a className={"options btn " + (inative.length === 0 ? "disabled" : "")}
+        <a className={"options btn " + (inative.length === 0 || state.disabled ? "disabled" : "")}
            onClick={event => {
                event.preventDefault();
                transferAll("inative")
            }}
            href="#"><i className="bi bi-chevron-double-right"/></a>
-        <a className={"options btn " + (state.inative.length === 0 ? "disabled" : "")}
+        <a className={"options btn " + (state.inative.length === 0 || state.disabled ? "disabled" : "")}
            onClick={event => {
                event.preventDefault();
                transferSelect("inative")
            }}
            href="#"><i className="bi bi-chevron-right"/></a>
 
-        <a className={"options btn " + (state.active.length === 0 ? "disabled" : "")}
+        <a className={"options btn " + (state.active.length === 0 || state.disabled ? "disabled" : "")}
            onClick={event => {
                event.preventDefault();
                transferSelect("active")
            }}
            href="#"><i className="bi bi-chevron-left"/></a>
-        <a className={"options btn " + (active.length === 0 ? "disabled" : "")}
+        <a className={"options btn " + (active.length === 0 || state.disabled ? "disabled" : "")}
            onClick={event => {
                event.preventDefault();
                transferAll("active")
@@ -202,10 +205,11 @@ const TransferListOptions = () => {
  */
 const TransferList = (props: {
     data: Array<ITransferList>
+    disabled?: boolean
     onChange(data: Array<ITransferList>): void
 }) => {
 
-    const initState: Props = {data: props.data, active: [], inative: []}
+    const initState: Props = {data: props.data, active: [], inative: [], disabled: props.disabled}
     const [init, setInit] = useState(false)
     const [state, setState] = useReducer(reducer, initState)
 
