@@ -40,29 +40,28 @@ function reducer(state: Props, action: STOREAction) {
  * @constructor
  */
 const TransferListInative = () => {
-
     const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext)
     const inative = state.data.filter(row => !row.active)
 
     return <div className="transfer-list-box">
-        {state.disabled ? <div className="disabled"/> : null}
         {inative.map(row => {
             return <div className="form-check item" key={row.id}>
-                <input className="form-check-input"
-                       type="checkbox"
-                       value={row.id}
-                       onChange={event => {
-                           if (event.target.checked)
-                               setState({
-                                   type: "setInative",
-                                   payload: [...state.inative, inative.filter(row => row.id === parseInt(event.target.value))[0]]
-                               })
-                           else
-                               setState({
-                                   type: "setInative",
-                                   payload: state.inative.filter(row => row?.id !== parseInt(event.target.value))
-                               })
-                       }}/>
+                {state.disabled ? null
+                    : <input className="form-check-input"
+                             type="checkbox"
+                             value={row.id}
+                             onChange={event => {
+                                 if (event.target.checked)
+                                     setState({
+                                         type: "setInative",
+                                         payload: [...state.inative, inative.filter(row => row.id === parseInt(event.target.value))[0]]
+                                     })
+                                 else
+                                     setState({
+                                         type: "setInative",
+                                         payload: state.inative.filter(row => row?.id !== parseInt(event.target.value))
+                                     })
+                             }}/>}
                 <label className="form-check-label">{row.label}</label>
             </div>
         })}
@@ -75,29 +74,28 @@ const TransferListInative = () => {
  * @constructor
  */
 const TransferListActive = () => {
-
     const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext)
     const active = state.data.filter(row => row.active)
 
     return <div className="transfer-list-box">
-        {state.disabled ? <div className="disabled"/> : null}
         {active.map(row => {
             return <div className="form-check item" key={row.id}>
-                <input className="form-check-input"
-                       type="checkbox"
-                       value={row.id}
-                       onChange={event => {
-                           if (event.target.checked)
-                               setState({
-                                   type: "setActive",
-                                   payload: [...state.active, active.filter(row => row.id === parseInt(event.target.value))[0]]
-                               })
-                           else
-                               setState({
-                                   type: "setActive",
-                                   payload: state.active.filter(row => row?.id !== parseInt(event.target.value))
-                               })
-                       }}/>
+                {state.disabled ? null
+                    : <input className="form-check-input"
+                             type="checkbox"
+                             value={row.id}
+                             onChange={event => {
+                                 if (event.target.checked)
+                                     setState({
+                                         type: "setActive",
+                                         payload: [...state.active, active.filter(row => row.id === parseInt(event.target.value))[0]]
+                                     })
+                                 else
+                                     setState({
+                                         type: "setActive",
+                                         payload: state.active.filter(row => row?.id !== parseInt(event.target.value))
+                                     })
+                             }}/>}
                 <label className="form-check-label">{row.label}</label>
             </div>
         })}
