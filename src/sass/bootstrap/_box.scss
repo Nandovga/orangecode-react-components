@@ -7,11 +7,12 @@
   }
 }
 
-@mixin box-margin($box, $marginX, $marginY: .5rem){
+@mixin box-margin($box, $marginX, $marginY: .5rem) {
   position: relative;
   width: calc(#{$box} - #{$marginX}) !important;
   margin: #{$marginY} calc(#{$marginX} / 2);
 }
+
 $marginX: var(--oc-box-marginX, 2%);
 $marginY: var(--oc-box-marginY, .5rem);
 
@@ -23,27 +24,35 @@ $marginY: var(--oc-box-marginY, .5rem);
   @include box-margin(75%, $marginX, $marginY);
 }
 
-.box-65{
+.box-65 {
   @include box-margin(65%, $marginX, $marginY);
+}
+
+.box-60 {
+  @include box-margin(60%, $marginX, $marginY);
+}
+
+.box-55 {
+  @include box-margin(55%, $marginX, $marginY);
 }
 
 .box-50 {
   @include box-margin(50%, $marginX, $marginY);
 }
 
-.box-40{
+.box-40 {
   @include box-margin(40%, $marginX, $marginY);
 }
 
-.box-35{
+.box-35 {
   @include box-margin(35%, $marginX, $marginY);
 }
 
-.box-33{
+.box-33 {
   @include box-margin(calc(100% / 3), $marginX, $marginY);
 }
 
-.box-30{
+.box-30 {
   @include box-margin(30%, $marginX, $marginY);
 }
 
@@ -51,24 +60,32 @@ $marginY: var(--oc-box-marginY, .5rem);
   @include box-margin(25%, $marginX, $marginY);
 }
 
+.box-22_5 {
+  @include box-margin(22.5%, $marginX, $marginY);
+}
+
 .box-20 {
   @include box-margin(20%, $marginX, $marginY);
 }
 
-.box-17_5{
+.box-17_5 {
   @include box-margin(17.5%, $marginX, $marginY);
 }
 
-.box-15{
+.box-15 {
   @include box-margin(15%, $marginX, $marginY);
 }
 
-.box-12_5{
+.box-12_5 {
   @include box-margin(12.5%, $marginX, $marginY);
 }
 
-.box-10{
+.box-10 {
   @include box-margin(10%, $marginX, $marginY);
+}
+
+.box-5 {
+  @include box-margin(5%, $marginX, $marginY);
 }
 
 //DESING RESPONSIVO
@@ -84,7 +101,7 @@ $marginY: var(--oc-box-marginY, .5rem);
   .box-25,
   .box-15,
   .box-12_5,
-  .box-10{
+  .box-10 {
     @include box-margin(50%, $marginX, $marginY);
   }
 
@@ -110,7 +127,7 @@ $marginY: var(--oc-box-marginY, .5rem);
   .box-17_5,
   .box-15,
   .box-12_5,
-  .box-10{
+  .box-10 {
     @include box-margin(100%, $marginX, $marginY);
   }
 }

@@ -83,3 +83,32 @@ export function handleHours(valor: string): string {
 
     return value
 }
+
+/**
+ * Realiza a formatação do HTML para exibir as imgs com a biblioteca lightbox2
+ * @param html
+ */
+export function handleLightBox(html: string): string {
+    const divTemp: HTMLDivElement = document.createElement('div');
+    divTemp.innerHTML = html;
+
+    const imgElements: HTMLCollectionOf<HTMLImageElement> = divTemp.getElementsByTagName('img');
+
+    for (let i = 0; i < imgElements.length; i++) {
+        const img: HTMLImageElement = imgElements[i];
+        const imgSrc: string | null = img.getAttribute('src');
+
+        if (!imgSrc)
+            continue;
+
+        const anchor: HTMLAnchorElement = document.createElement('a');
+        anchor.setAttribute('data-lightbox', 'gallery')
+        anchor.href = imgSrc;
+
+        if (img.parentNode)
+            img.parentNode.replaceChild(anchor, img);
+        anchor.appendChild(img);
+    }
+
+    return divTemp.innerHTML;
+}

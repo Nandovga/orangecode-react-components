@@ -7,7 +7,7 @@ export interface IInputBase{
     required?: boolean,
     disabled?: boolean,
     placeholder?: string
-    box?: '10' | '12_5' | '15' | '17_5' | '20' | '25' | '30' | '33' | '35' | '40' | '50' | '65' | '75' | '100'
+    box?: '5' | '10' | '12_5' | '15' | '17_5' | '20' | '22_5' | '25' | '30' | '33' | '35' | '40' | '50' | '55' | '60' | '65' | '75' | '100'
     boxClasses?: string
     fieldClasses?: string
     modeStyle?: "table"
