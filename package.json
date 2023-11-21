@@ -20,6 +20,7 @@
     "jquery": "^3.7.1",
     "lightbox2": "^2.11.4",
     "node-snackbar": "^0.1.16",
+    "primeicons": "^6.0.1",
     "primereact": "^10.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
