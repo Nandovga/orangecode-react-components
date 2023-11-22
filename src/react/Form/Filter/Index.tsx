@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {IInputBase} from "src/@types/form";
-import {IIcon} from "src/@types/icon";
 import Text from "./Text";
 import Date from "./Date";
+import {IIcon} from "../../../@types/icon";
+import {IInputBase} from "../../../@types/form";
 import Autocomplete, {IFilterAutocomplete} from "./Autocomplete";
 
 export interface IFilterOperationProps {
-    operation: '=' | '!=' | '<=' | '>=' | '<' | '>' | '{}'
-    legend: 'Igual a' | 'Diferente de' | 'Menor ou igual a' | 'Maior o igual a' | 'Menor do que' | 'Maior do que' | 'Intervalo'
+    operation: '=' | '!=' | '<=' | '>=' | '<' | '>' | '{}' | '%' | '!%'
+    legend: 'Igual a' | 'Diferente de' | 'Menor ou igual a' | 'Maior o igual a' | 'Menor do que' | 'Maior do que' | 'Intervalo' | 'Contém o que' | 'Não contém o que'
 }
 
 export type IFilterProps = IInputBase & IIcon & {
@@ -47,8 +47,11 @@ const Index = ({borderColor = '--bs-primary', type = 'text', ...props}: IFilterP
         } else if (props.onChange) {
             if (typeof field1 !== 'object')
                 props.onChange(`${field1}${operation}`)
-            else
-                props.onChange(`${field1.map(row => row.id.toString()).join(';')}${operation}`)
+            else {
+                let ids = field1.map(row => row.id.toString()).join(';')
+                ids = ids.toString().length === 0 ? "0" : ids
+                props.onChange(`${ids}${operation}`)
+            }
         }
     }
 
