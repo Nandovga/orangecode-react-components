@@ -41,7 +41,7 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => 
             <div key={row.value} className={"form-check " + (radioAlign === "row" ? "me-2" : "mb-2")}>
                 <input className={"form-check-input " + fieldClasses}
                        type="radio"
-                       id={props.name}
+                       id={props.name + "-" + row.value}
                        disabled={props.disabled || row.disabled}
                        required={props.required}
                        name={props.name}

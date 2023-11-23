@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import Text from "./Text";
 import Date from "./Date";
 import {IIcon} from "../../../@types/icon";
@@ -11,6 +11,8 @@ export interface IFilterOperationProps {
 }
 
 export type IFilterProps = IInputBase & IIcon & {
+    value: string | null
+    onChange(value: any): void
     operation: IFilterOperationProps[]
     type?: 'text' | 'date' | 'autocomplete'
     borderColor?: string
@@ -22,57 +24,56 @@ export type IFilterProps = IInputBase & IIcon & {
  * Exibe o componente de filtro
  * @param borderColor
  * @param type
+ * @param value
+ * @param onChange
  * @param props
  * @constructor
  */
-const Index = ({borderColor = '--bs-primary', type = 'text', ...props}: IFilterProps) => {
+const Index = ({borderColor = '--bs-primary', type = 'text', value, onChange, ...props}: IFilterProps) => {
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
 
-    //STATE ≥ Estado do componente
-    const [init, setInit] = useState(true);
-    const [field1, setField1] = useState<any>(getValue()[0])
-    const [field2, setField2] = useState<any>(getValue()[1])
-    const [operation, setOperation] = useState<any>(typeof props.value !== "string"
-        ? props.operation[0]?.operation
-        : props.operation.filter(item => {
-        let data: string[] = props.value.split(item.operation)
-        if (data.length > 1)
-            return item;
-    })[0]?.operation ?? props.operation[0]?.operation)
-
-    //Realizar a formatação do componente para valor
-    function setValue() {
-        if (operation === "{}" && props.onChange) {
-            props.onChange(`${field1}${operation}${field2}`)
-        } else if (props.onChange) {
-            if (typeof field1 !== 'object')
-                props.onChange(`${field1}${operation}`)
-            else {
-                let ids = field1.map(row => row.id.toString()).join(';')
-                ids = ids.toString().length === 0 ? "0" : ids
-                props.onChange(`${ids}${operation}`)
-            }
-        }
-    }
-
-    //Realizar a formatação do valor para componente
-    function getValue() {
-        let value: string[] = [];
-        props.operation.forEach(item => {
-            let data: string[] = typeof props.value !== "string"
+    //Retorna a operação de acordo com VALUE
+    function getOperation(value: string): string {
+        return props.operation.filter(item => {
+            let data: string[] = value === null
                 ? []
-                : props.value.split(item.operation)
+                : value.split(item.operation)
             if (data.length > 1)
-                value = data
-        })
-        return value.length > 1 ? value : ["", ""]
+                return item;
+        })[0]?.operation ?? props.operation[0]?.operation
     }
 
-    useEffect(() => {
-        if (!init)
-            setValue()
-        setInit(false)
-    }, [field1, field2, operation]);
+    //Retorna os dados do VALUE separado pela operação
+    function getValue(value: string): string[] {
+        let operation = getOperation(value)
+        return value === null || value.length === 0
+            ? ["", ""]
+            : value.split(operation);
+    }
+
+    //Atualiza o valor do VALUE
+    function setValue(dto: any, field: "1" | "2" = "1") {
+        let operation = getOperation(value)
+        let data = value === null
+            ? ["", ""]
+            : value.split(operation)
+
+        if (typeof dto === 'object') {
+            if (field === "1")
+                data[0] = dto.map(row => row.id.toString()).join(';')
+            else
+                data[1] = dto.map(row => row.id.toString()).join(';')
+        } else {
+            if (field === "1")
+                data[0] = dto;
+            else
+                data[1] = dto;
+        }
+
+        if (operation !== '{}')
+            data[1] = ""
+        onChange(`${data[0]}${operation}${data[1]}`)
+    }
 
     /*
     |------------------------------------------
@@ -87,8 +88,13 @@ const Index = ({borderColor = '--bs-primary', type = 'text', ...props}: IFilterP
         </label>
         <div className="w-100 d-flex align-items-start">
             <select className="form-select box-40 my-1"
-                    value={operation}
-                    onChange={event => setOperation(event.target.value)}>
+                    value={getOperation(value)}
+                    onChange={event => {
+                        let str = value === null ? "" : value.toString()
+                        if (str.indexOf(getOperation(value)) === -1)
+                            str += getOperation(value)
+                        onChange(str.replace(getOperation(value), event.target.value))
+                    }}>
                 {props.operation.map(item =>
                     <option key={item.operation}
                             value={item.operation}>{item.legend}</option>
@@ -97,19 +103,32 @@ const Index = ({borderColor = '--bs-primary', type = 'text', ...props}: IFilterP
             <div className="ms-2 box-60 my-1">
                 {type === 'text' ?
                     <>
-                        <Text value={field1} setValue={setField1}/>
-                        {operation === "{}" && <Text value={field2} setValue={setField2} className="mt-2"/>}
+                        <Text value={getValue(value)[0]}
+                              setValue={setValue}/>
+                        {getOperation(value) === "{}"
+                            && <Text value={getValue(value)[1]}
+                                     setValue={dto => setValue(dto, "2")}
+                                     className="mt-2"/>}
                     </>
                     : type === 'date'
                         ? <>
-                            <Date value={field1} setValue={setField1}/>
-                            {operation === "{}" && <Date value={field2} setValue={setField2} className="mt-2"/>}
+                            <Date value={getValue(value)[0]}
+                                  setValue={setValue}/>
+                            {getOperation(value) === "{}"
+                                && <Date value={getValue(value)[1]}
+                                         setValue={dto => setValue(dto, "2")}
+                                         className="mt-2"/>}
                         </>
                         : <>
-                            <Autocomplete value={field1}
-                                          setValue={setField1}
+                            <Autocomplete value={getValue(value)[0]}
+                                          setValue={setValue}
                                           data={props.autocompleteData === undefined ? [] : props.autocompleteData}
                                           onSearch={props.onAutocompleteSearch}/>
+                            {getOperation(value) === "{}"
+                                && <Autocomplete value={getValue(value)[1]}
+                                                 setValue={dto => setValue(dto, "2")}
+                                                 data={props.autocompleteData === undefined ? [] : props.autocompleteData}
+                                                 onSearch={props.onAutocompleteSearch}/>}
                         </>
                 }
             </div>
