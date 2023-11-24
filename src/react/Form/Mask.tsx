@@ -1,5 +1,5 @@
 import React from "react";
-import InputMask from "react-input-mask";
+import { InputMask } from 'primereact/inputmask';
 
 import {GET_ICON} from "../../ts/system";
 import {IIcon} from "../../@types/icon";
@@ -27,7 +27,8 @@ const InputBootstrapMask = ({...props}: IInput) => {
     |--------------------------------------
     */
     return <div className={"box-" + props.box + " " + boxClasses}>
-        <label htmlFor={props.name} className="form-label">
+        <label htmlFor={props.name}
+               className="form-label">
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>

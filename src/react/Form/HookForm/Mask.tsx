@@ -1,6 +1,6 @@
 import React from "react";
 import {Controller} from "react-hook-form";
-import InputMask from "react-input-mask";
+import { InputMask } from 'primereact/inputmask';
 
 import {GET_ICON} from "../../../ts/system";
 import {IIcon} from "../../../@types/icon";
