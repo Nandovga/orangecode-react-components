@@ -48,7 +48,7 @@ export type ITable<T> = {
     }
     tableOptionsDelete?(): void
     tableOptionsCreate?(): void
-    tableOptionsRender?(): JSX
+    tableOptionsRender?(): JSX.Element
 
     tableEditMode?: "single"
     tableOnEdit?(tableDTO: Array<T & { id: any }> | T & { id: any }): void
