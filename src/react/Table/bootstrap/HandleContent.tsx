@@ -27,11 +27,12 @@ export function handleContent<T>(
 ) {
     let select = !props.tableSelect ? false : props.tableSelect?.id === row.id
     let multiSelect = !props.tableMultiSelect ? false : props.tableMultiSelect.some(r => r.id === row.id)
+    let selectIndicator = props.tableSelectIndicatorClasse ?? "bg-light"
 
     const rowProps = {
         key: row.id,
         className: !props.tableDetail ? "" : (row.parent === undefined ? "" : tableDetailOpen ? "" : "table-row-closed"),
-        onClick: () => props.tableOnSelect ? props.tableOnSelect(row) : null,
+        onClick: () => props.tableOnSelect && (props.tableDetail && row.title === undefined) ? props.tableOnSelect(row) : null,
         onDoubleClick: () => props.tableOnDoubleClick ? props.tableOnDoubleClick() : null
     }
 
@@ -66,26 +67,27 @@ export function handleContent<T>(
 
     //Gestão do SELECT
     let renderSelect = () => {
-        if (!props.tableOnSelect || props.tableSelect === undefined)
+        if (!props.tableOnSelect || props.tableSelect === undefined || (row.title !== undefined && props.tableDetail))
             return null;
-        return <td className={"text-center bg-light " + (select ? "bg-light" : "")}
+        return <td className={selectIndicator + " text-center " + (select ? selectIndicator : "")}
                    style={{width: "0px"}}>{select ? <i className="bi bi-caret-right-fill"/> : ''}</td>
     }
 
     //Gestão do MultiSelect
     let renderMultiSelect = () => {
-        return props.tableMultiSelect ? <td className={"text-center" + (multiSelect ? " bg-light" : "")} style={{width: "0px"}}>
-            <input className="form-check-input" type="checkbox"
-                   checked={multiSelect}
-                   onChange={event => {
-                       if (props.tableOnMultiSelect && props.tableMultiSelect)
-                           if (event.target.checked)
-                               props.tableOnMultiSelect([...props.tableMultiSelect, row])
-                           else
-                               props.tableOnMultiSelect(props.tableMultiSelect.filter(r => r.id !== row.id))
-                   }}
-            />
-        </td> : <></>
+        return props.tableMultiSelect ?
+            <td className={"text-center" + (multiSelect ? " bg-light" : "")} style={{width: "0px"}}>
+                <input className="form-check-input" type="checkbox"
+                       checked={multiSelect}
+                       onChange={event => {
+                           if (props.tableOnMultiSelect && props.tableMultiSelect)
+                               if (event.target.checked)
+                                   props.tableOnMultiSelect([...props.tableMultiSelect, row])
+                               else
+                                   props.tableOnMultiSelect(props.tableMultiSelect.filter(r => r.id !== row.id))
+                       }}
+                />
+            </td> : <></>
     }
 
     //Exibe os dados normais
@@ -93,11 +95,11 @@ export function handleContent<T>(
         const {id, body, align, classes} = header
         const cellProps = {
             key: `${row.id}-${id}`,
-            className: `${!align ? "" : "text-" + align} ${select || multiSelect ? "fw-bold bg-light" : ""} ${!classes ? "" : classes}`,
+            className: `${!align ? "" : "text-" + align} ${select || multiSelect ? "fw-bold " + selectIndicator : ""} ${!classes ? "" : classes}`,
             style: {cursor: !props.tableOnSelect ? "initial" : "pointer", verticalAlign: "middle"}
         }
         return tableEdit.edit?.id === row.id && header.editor && tableEdit.editField === header.id
-            ? <td key={`${row.id}-${id}`} className={(select ? "bg-light" : "")}>{header.editor({
+            ? <td key={`${row.id}-${id}`} className={(select ? selectIndicator : "")}>{header.editor({
                 row: row,
                 value: row[tableEdit.editField],
                 setValue: value => handleContentEditor({data: tableDTO.data, setData: tableDTO.setData}, {
@@ -128,7 +130,12 @@ export function handleContent<T>(
             {renderSelect()}
             {renderMultiSelect()}
             {renderDetail()}
-            {props.tableHeader.map(header => renderCell(header))}
+            {(row.title === undefined || !props.tableDetail) && props.tableHeader.map(header => renderCell(header))}
+            {row.title !== undefined && props.tableDetail
+                && <td key={row.title}
+                       colSpan={props.tableHeader.length + 1}>
+                    {row.titleFormatter !== undefined ? row.titleFormatter(row.title) : row.title}
+                </td>}
         </tr>
         {props.tableDetail && row.children !== undefined
             ? row.children.map(r => handleContent(r, props, tableEdit, tableDTO, row.open === undefined || row.open)) : null}

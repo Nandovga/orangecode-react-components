@@ -23,6 +23,8 @@ export interface ITableDetail {
     parent?: number
     children?: Array<any & ITableDetail>
     open?: boolean
+    title?: string
+    titleFormatter?: (title: string) => React.JSX
 }
 
 export type ITable<T> = {
@@ -64,6 +66,7 @@ export type ITable<T> = {
     tableOnSelect?(state: T & { id: any } | null): void
     tableSelectAuto?: boolean
     tableSelectTimeOut?: number
+    tableSelectIndicatorClasse?: string
 
     tableMultiSelect?: Array<T & { id: any }>
     tableOnMultiSelect?(state: Array<T & { id: any }>): void
