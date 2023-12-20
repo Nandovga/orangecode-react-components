@@ -17,6 +17,7 @@ export type IFilterProps = IInputBase & IIcon & {
     type?: 'text' | 'date' | 'autocomplete'
     borderColor?: string
     autocompleteData?: IFilterAutocomplete[]
+    autocompleteDataOriginal?: IFilterAutocomplete[]
     onAutocompleteSearch?: (value: string) => void
 }
 
@@ -122,12 +123,14 @@ const Index = ({borderColor = '--bs-primary', type = 'text', value, onChange, ..
                         : <>
                             <Autocomplete value={getValue(value)[0]}
                                           setValue={setValue}
+                                          dataOriginal={props.autocompleteDataOriginal ?? []}
                                           data={props.autocompleteData === undefined ? [] : props.autocompleteData}
                                           onSearch={props.onAutocompleteSearch}/>
                             {getOperation(value) === "{}"
                                 && <Autocomplete value={getValue(value)[1]}
                                                  setValue={dto => setValue(dto, "2")}
                                                  data={props.autocompleteData === undefined ? [] : props.autocompleteData}
+                                                 dataOriginal={props.autocompleteDataOriginal ?? []}
                                                  onSearch={props.onAutocompleteSearch}/>}
                         </>
                 }

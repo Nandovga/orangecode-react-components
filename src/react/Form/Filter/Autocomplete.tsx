@@ -10,6 +10,7 @@ export interface IFilterAutocompleteProps {
     value: string
     setValue: React.Dispatch<string>
     data: IFilterAutocomplete[]
+    dataOriginal: IFilterAutocomplete[]
     onSearch?: (value: string) => void
 }
 
@@ -18,10 +19,11 @@ export interface IFilterAutocompleteProps {
  * @param value
  * @param setValue
  * @param data
+ * @param dataOriginal
  * @param onSearch
  * @constructor
  */
-const Autocomplete = ({value, setValue, data, onSearch}: IFilterAutocompleteProps) => {
+const Autocomplete = ({value, setValue, data, dataOriginal, onSearch}: IFilterAutocompleteProps) => {
     let filtered = typeof value !== 'object'
         ? value.split(';').map(item => parseInt(item))
         : value
@@ -36,11 +38,13 @@ const Autocomplete = ({value, setValue, data, onSearch}: IFilterAutocompleteProp
                       multiple
                       suggestions={data}
                       field="label"
-                      value={typeof value !== "object" ? data.filter(item => {
+                      value={typeof value !== "object" ? dataOriginal.filter(item => {
                           return filtered.includes(item.id)
                       }) : value}
                       completeMethod={e => {
-                          if (onSearch) onSearch(e.query)
+                          if (onSearch) {
+                              onSearch(e.query)
+                          }
                       }}
                       onChange={e => setValue(e.value)}/>
     </div>
