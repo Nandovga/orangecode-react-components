@@ -32,7 +32,7 @@ export function handleContent<T>(
     const rowProps = {
         key: row.id,
         className: !props.tableDetail ? "" : (row.parent === undefined ? "" : tableDetailOpen ? "" : "table-row-closed"),
-        onClick: () => props.tableOnSelect && (props.tableDetail && row.title === undefined) ? props.tableOnSelect(row) : null,
+        onClick: () => props.tableOnSelect && !(props.tableDetail === true && row.title !== undefined) ? props.tableOnSelect(row) : null,
         onDoubleClick: () => props.tableOnDoubleClick ? props.tableOnDoubleClick() : null
     }
 
@@ -41,33 +41,53 @@ export function handleContent<T>(
         if (!props.tableDetail)
             return null;
         return row.children === undefined ? <td/> : <td style={{width: "0px"}} className="text-center">
-            <a href="#" className="table-button-details" onClick={event => {
-                event.preventDefault();
-                let icon = event.currentTarget.children[0]
-                if (icon.classList.contains("bi-chevron-right")) {
-                    icon.classList.remove("bi-chevron-right")
-                    icon.classList.add("bi-chevron-down")
-                } else {
-                    icon.classList.add("bi-chevron-right")
-                    icon.classList.remove("bi-chevron-down")
-                }
+            <a href="#"
+               className="table-button-details"
+               onClick={event => {
+                   event.preventDefault();
+                   let icon = event.currentTarget.children[0]
+                   if (icon.classList.contains("bi-chevron-right")) {
+                       icon.classList.remove("bi-chevron-right")
+                       icon.classList.add("bi-chevron-down")
+                   } else {
+                       icon.classList.add("bi-chevron-right")
+                       icon.classList.remove("bi-chevron-down")
+                   }
 
-                let id = event.currentTarget.parentElement?.parentElement?.getAttribute("data-id")
-                let data = document.querySelectorAll("tr[data-parent='" + id + "']")
-                for (var i = 0; i < data.length; i++) {
-                    let el = data[i]
-                    let classes = "table-row-closed"
-                    if (el.classList.contains(classes)) el.classList.remove(classes)
-                    else el.classList.add(classes)
-                }
-            }}>{row.open || row.open === undefined ? <i className="bi bi-chevron-down"/> :
+                   function handleShowHide(id: string | null, show: boolean){
+                       let data = document.querySelectorAll("tr[data-parent='" + id + "']")
+                       for (var i = 0; i < data.length; i++) {
+                           let el = data[i]
+                           handleShowHide(el.getAttribute("data-id"), show)
+                           let classes = "table-row-closed"
+                           if (show) {
+                               el.classList.remove(classes)
+                           } else {
+                               el.classList.add(classes)
+                           }
+                       }
+                   }
+
+                   let id = event.currentTarget.parentElement?.parentElement?.getAttribute("data-id")
+                   let data = document.querySelectorAll("tr[data-parent='" + id + "']")
+                   for (var i = 0; i < data.length; i++) {
+                       let el = data[i]
+                       let classes = "table-row-closed"
+                       handleShowHide(el.getAttribute("data-id"), el.classList.contains(classes))
+                       if (el.classList.contains(classes)) {
+                           el.classList.remove(classes)
+                       } else {
+                           el.classList.add(classes)
+                       }
+                   }
+               }}>{row.open || row.open === undefined ? <i className="bi bi-chevron-down"/> :
                 <i className="bi bi-chevron-right"/>}</a>
         </td>
     }
 
     //Gestão do SELECT
     let renderSelect = () => {
-        if (!props.tableOnSelect || props.tableSelect === undefined || (row.title !== undefined && props.tableDetail))
+        if (!props.tableOnSelect || props.tableSelect === undefined || (props.tableDetail === true && row.title !== undefined))
             return null;
         return <td className={selectIndicator + " text-center " + (select ? selectIndicator : "")}
                    style={{width: "0px"}}>{select ? <i className="bi bi-caret-right-fill"/> : ''}</td>
@@ -130,7 +150,7 @@ export function handleContent<T>(
             {renderSelect()}
             {renderMultiSelect()}
             {renderDetail()}
-            {(row.title === undefined || !props.tableDetail) && props.tableHeader.map(header => renderCell(header))}
+            {(row.title === undefined || props.tableDetail === undefined) && props.tableHeader.map(header => renderCell(header))}
             {row.title !== undefined && props.tableDetail
                 && <td key={row.title}
                        colSpan={props.tableHeader.length + 1}>
