@@ -114,16 +114,17 @@ export const globalTabViewActiveError = (form, errors): void => {
     if (TabView.length === 0)
         return;
     let field = Object.keys(errors)[0]
-    TabView.find(".nav-link").each(function (_, value: any): void {
+
+    let TabViewSelected = TabView.find("*[id='" + field +"']").closest('.tab-pane');
+    let id = TabViewSelected.attr('id')
+    TabViewSelected.parent(".tab-content").children(".tab-pane").each(function (_, value) {
         if (typeof value !== 'undefined') {
-            // @ts-ignore
-            let TabViewContent = $(value).attr("data-bs-target").replace("#", "");
-            if ($("body").find(".tab-pane[id=" + TabViewContent + "]").find("*[id='" + field +"']").length === 0) {
-                $("body").find(".tab-pane[id=" + TabViewContent + "]").removeClass("show active")
-                $(value).removeClass("active");
+            if($(value).attr('id') === id){
+                $(value).addClass("show active");
+                $("body").find(".nav-item button[data-bs-target='#" + id + "']").addClass('active')
             } else {
-                $("body").find(".tab-pane[id=" + TabViewContent + "]").addClass("show active")
-                $(value).addClass("active");
+                $(value).removeClass("show active");
+                $("body").find(".nav-item button[data-bs-target='#" + $(value).attr('id')  + "']").removeClass('active')
             }
         }
     });
