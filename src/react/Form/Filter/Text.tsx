@@ -14,9 +14,9 @@ export interface IFilterTextProps {
  * @constructor
  */
 const Text = ({value, setValue, className}: IFilterTextProps) => {
-    return <input type="text"
+    return <input className={"form-control w-100 " + (className)}
+                  type="text"
                   value={value}
-                  onChange={event => setValue(event.target.value)}
-                  className={"form-control w-100 " + (className)}/>
-}
-export default Text
+                  onChange={event => setValue(event.target.value)}/>;
+};
+export default Text;

@@ -21,24 +21,24 @@
   }
 }
 
-.table{
+.table {
   vertical-align: var(--oc-table-vertical-align, #{$table-cell-vertical-align});
   border-color: var(--oc-table-border-color, #{$table-border-color});
   color: var(--oc-table-color, #{$table-color});
 
   > :not(caption) > * > * {
-    padding: var(--oc-table-padding, #{$table-cell-padding-y $table-cell-padding-x}) ;
+    padding: var(--oc-table-padding, #{$table-cell-padding-y $table-cell-padding-x});
     background-color: var(--oc-table-background, --#{$prefix}table-bg);
   }
 
   thead > * > * {
     vertical-align: var(--oc-table-vertical-align, #{$table-cell-vertical-align});
-    background: var(--oc-table-header-background,  var(--oc-table-background, --#{$prefix}table-bg));
+    background: var(--oc-table-header-background, var(--oc-table-background, --#{$prefix}table-bg));
     color: var(--oc-table-header-color, var(--oc-table-color, #{$table-color}));
     font-size: var(--oc-table-header-font-size, .9em);
     font-weight: var(--oc-table-header-font-weight, bold);
-    border-color: var(--oc-table-header-border-color,  var(--oc-table-border-color, #{$table-border-color}));
-    text-transform: var(--oc-table-header-text-transform,  initial);
+    border-color: var(--oc-table-header-border-color, var(--oc-table-border-color, #{$table-border-color}));
+    text-transform: var(--oc-table-header-text-transform, initial);
   }
 
   tbody > * > *:not(i) {
@@ -49,18 +49,18 @@
 
   tfoot > * > * {
     vertical-align: var(--oc-table-vertical-align, #{$table-cell-vertical-align});
-    background: var(--oc-table-footer-background,  var(--oc-table-background, --#{$prefix}table-bg));
+    background: var(--oc-table-footer-background, var(--oc-table-background, --#{$prefix}table-bg));
     color: var(--oc-table-footer-color, var(--oc-table-color, #{$table-color}));
     font-size: var(--oc-table-footer-font-size, .9em);
     font-weight: var(--oc-table-footer-font-weight, bold);
-    border-color: var(--oc-table-footer-border-color,  var(--oc-table-border-color, #{$table-border-color}));
+    border-color: var(--oc-table-footer-border-color, var(--oc-table-border-color, #{$table-border-color}));
   }
 
   .table-row-closed {
     display: none;
   }
 
-  .table-button-details{
+  .table-button-details {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,6 +74,6 @@
 
 .table-sm {
   > :not(caption) > * > * {
-    padding: var(--oc-table-padding-sm, #{$table-cell-padding-y-sm $table-cell-padding-x-sm}) ;
+    padding: var(--oc-table-padding-sm, #{$table-cell-padding-y-sm $table-cell-padding-x-sm});
   }
 }

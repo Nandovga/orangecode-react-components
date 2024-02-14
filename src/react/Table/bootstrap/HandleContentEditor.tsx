@@ -12,14 +12,16 @@ export function handleContentEditor<T>(
     value: string
 ): void {
     const array = [...DTO.data];
-    const element = array.find(item => item.id === DTOEdit.edit.id)
-    if (!element)
+    const element = array.find(item => item.id === DTOEdit.edit.id);
+    if (!element) {
         return;
+    }
 
-    const modify = {...element}
-    const indice = array.findIndex(item => item.id === DTOEdit.edit.id)
+    const modify = {...element};
+    const indice = array.findIndex(item => item.id === DTOEdit.edit.id);
     modify[DTOEdit.field] = value;
     array[indice] = modify;
-    if (DTO.setData)
+    if (DTO.setData) {
         DTO.setData(array);
+    }
 }

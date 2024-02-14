@@ -6,15 +6,15 @@ import {IInputBase} from "../../../@types/form";
 import Autocomplete, {IFilterAutocomplete} from "./Autocomplete";
 
 export interface IFilterOperationProps {
-    operation: '=' | '!=' | '<=' | '>=' | '<' | '>' | '{}' | '%' | '!%'
-    legend: 'Igual a' | 'Diferente de' | 'Menor ou igual a' | 'Maior o igual a' | 'Menor do que' | 'Maior do que' | 'Intervalo' | 'Contém o que' | 'Não contém o que'
+    operation: "=" | "!=" | "<=" | ">=" | "<" | ">" | "{}" | "%" | "!%"
+    legend: "Igual a" | "Diferente de" | "Menor ou igual a" | "Maior o igual a" | "Menor do que" | "Maior do que" | "Intervalo" | "Contém o que" | "Não contém o que"
 }
 
 export type IFilterProps = IInputBase & IIcon & {
     value: string | null
     onChange(value: any): void
     operation: IFilterOperationProps[]
-    type?: 'text' | 'date' | 'autocomplete'
+    type?: "text" | "date" | "autocomplete"
     borderColor?: string
     autocompleteData?: IFilterAutocomplete[]
     autocompleteDataOriginal?: IFilterAutocomplete[]
@@ -30,23 +30,24 @@ export type IFilterProps = IInputBase & IIcon & {
  * @param props
  * @constructor
  */
-const Index = ({borderColor = '--bs-primary', type = 'text', value, onChange, ...props}: IFilterProps) => {
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
+const Index = ({borderColor = "--bs-primary", type = "text", value, onChange, ...props}: IFilterProps) => {
+    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
 
     //Retorna a operação de acordo com VALUE
     function getOperation(value: string): string {
         return props.operation.filter(item => {
             let data: string[] = value === null
                 ? []
-                : value.split(item.operation)
-            if (data.length > 1)
+                : value.split(item.operation);
+            if (data.length > 1) {
                 return item;
-        })[0]?.operation ?? props.operation[0]?.operation
+            }
+        })[0]?.operation ?? props.operation[0]?.operation;
     }
 
     //Retorna os dados do VALUE separado pela operação
     function getValue(value: string): string[] {
-        let operation = getOperation(value)
+        let operation = getOperation(value);
         return value === null || value.length === 0
             ? ["", ""]
             : value.split(operation);
@@ -54,26 +55,29 @@ const Index = ({borderColor = '--bs-primary', type = 'text', value, onChange, ..
 
     //Atualiza o valor do VALUE
     function setValue(dto: any, field: "1" | "2" = "1") {
-        let operation = getOperation(value)
+        let operation = getOperation(value);
         let data = value === null
             ? ["", ""]
-            : value.split(operation)
+            : value.split(operation);
 
-        if (typeof dto === 'object') {
-            if (field === "1")
-                data[0] = dto.map(row => row.id.toString()).join(';')
-            else
-                data[1] = dto.map(row => row.id.toString()).join(';')
+        if (typeof dto === "object") {
+            if (field === "1") {
+                data[0] = dto.map(row => row.id.toString()).join(";");
+            } else {
+                data[1] = dto.map(row => row.id.toString()).join(";");
+            }
         } else {
-            if (field === "1")
+            if (field === "1") {
                 data[0] = dto;
-            else
+            } else {
                 data[1] = dto;
+            }
         }
 
-        if (operation !== '{}')
-            data[1] = ""
-        onChange(`${data[0]}${operation}${data[1]}`)
+        if (operation !== "{}") {
+            data[1] = "";
+        }
+        onChange(`${data[0]}${operation}${data[1]}`);
     }
 
     /*
@@ -91,10 +95,11 @@ const Index = ({borderColor = '--bs-primary', type = 'text', value, onChange, ..
             <select className="form-select box-40 my-1"
                     value={getOperation(value)}
                     onChange={event => {
-                        let str = value === null ? "" : value.toString()
-                        if (str.indexOf(getOperation(value)) === -1)
-                            str += getOperation(value)
-                        onChange(str.replace(getOperation(value), event.target.value))
+                        let str = value === null ? "" : value.toString();
+                        if (str.indexOf(getOperation(value)) === -1) {
+                            str += getOperation(value);
+                        }
+                        onChange(str.replace(getOperation(value), event.target.value));
                     }}>
                 {props.operation.map(item =>
                     <option key={item.operation}
@@ -102,40 +107,41 @@ const Index = ({borderColor = '--bs-primary', type = 'text', value, onChange, ..
                 )}
             </select>
             <div className="ms-2 box-60 my-1">
-                {type === 'text' ?
+                {type === "text" ?
                     <>
-                        <Text value={getValue(value)[0]}
-                              setValue={setValue}/>
+                        <Text setValue={setValue}
+                              value={getValue(value)[0]}/>
                         {getOperation(value) === "{}"
-                            && <Text value={getValue(value)[1]}
+                            && <Text className="mt-2"
                                      setValue={dto => setValue(dto, "2")}
-                                     className="mt-2"/>}
+                                     value={getValue(value)[1]}/>}
                     </>
-                    : type === 'date'
+                    : type === "date"
                         ? <>
-                            <Date value={getValue(value)[0]}
-                                  setValue={setValue}/>
+                            <Date setValue={setValue}
+                                  value={getValue(value)[0]}/>
                             {getOperation(value) === "{}"
-                                && <Date value={getValue(value)[1]}
+                                && <Date className="mt-2"
                                          setValue={dto => setValue(dto, "2")}
-                                         className="mt-2"/>}
+                                         value={getValue(value)[1]}/>}
                         </>
                         : <>
-                            <Autocomplete value={getValue(value)[0]}
-                                          setValue={setValue}
+                            <Autocomplete data={props.autocompleteData === undefined ? [] : props.autocompleteData}
                                           dataOriginal={props.autocompleteDataOriginal ?? []}
-                                          data={props.autocompleteData === undefined ? [] : props.autocompleteData}
+                                          setValue={setValue}
+                                          value={getValue(value)[0]}
                                           onSearch={props.onAutocompleteSearch}/>
                             {getOperation(value) === "{}"
-                                && <Autocomplete value={getValue(value)[1]}
-                                                 setValue={dto => setValue(dto, "2")}
-                                                 data={props.autocompleteData === undefined ? [] : props.autocompleteData}
-                                                 dataOriginal={props.autocompleteDataOriginal ?? []}
-                                                 onSearch={props.onAutocompleteSearch}/>}
+                                &&
+                                <Autocomplete data={props.autocompleteData === undefined ? [] : props.autocompleteData}
+                                              dataOriginal={props.autocompleteDataOriginal ?? []}
+                                              setValue={dto => setValue(dto, "2")}
+                                              value={getValue(value)[1]}
+                                              onSearch={props.onAutocompleteSearch}/>}
                         </>
                 }
             </div>
         </div>
-    </div>
-}
-export default Index
+    </div>;
+};
+export default Index;

@@ -33,8 +33,10 @@ function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>)
 
     //STATE ≥ Efeito de quando muda de página
     useEffect(() => {
-        if (props.paginationState) props.paginationState(currentItem)
-    }, [itemOffeset, props.pageCount, props.paginationDTO])
+        if (props.paginationState) {
+            props.paginationState(currentItem);
+        }
+    }, [itemOffeset, props.pageCount, props.paginationDTO]);
 
     //STATE ≥ Ação de paginação
     const handlePageClick = (event): void => {
@@ -50,20 +52,21 @@ function Pagination<T>({frameworkStyle = "bootstrap", ...props}: IPagination<T>)
     return <>
         {!props.paginationRender ? null : props.paginationRender(currentItem)}
         {itemPerPage > 1 ? <ReactPaginate {...props}
-                                          ref={props.paginationRef}
-                                          nextLabel={props.nextLabel ?? "Próximo"}
-                                          previousLabel={props.previousLabel ?? "Anterior"}
-                                          pageCount={itemPerPage}
-                                          onPageChange={handlePageClick}
-                                          className={classePage}
-                                          pageClassName={classePageItem}
-                                          nextClassName={classePageItem}
-                                          previousClassName={classePageItem}
-                                          disabledClassName="disabled"
                                           activeClassName="active"
-                                          pageLinkClassName={classePageLink}
+                                          className={classePage}
+                                          disabledClassName="disabled"
+                                          nextClassName={classePageItem}
+                                          nextLabel={props.nextLabel ?? "Próximo"}
                                           nextLinkClassName={classePageLink}
-                                          previousLinkClassName={classePageLink}/> : null}
-    </>
+                                          pageClassName={classePageItem}
+                                          pageCount={itemPerPage}
+                                          pageLinkClassName={classePageLink}
+                                          previousClassName={classePageItem}
+                                          previousLabel={props.previousLabel ?? "Anterior"}
+                                          previousLinkClassName={classePageLink}
+                                          ref={props.paginationRef}
+                                          onPageChange={handlePageClick}/> : null}
+    </>;
 }
-export default Pagination
+
+export default Pagination;

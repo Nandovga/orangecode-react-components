@@ -22,14 +22,24 @@ type Props = ILoading & {
  * @constructor
  */
 const LoadingBootstrapBox = ({loadingText = "Processando os dados...", ...props}: Props) => {
-    return <div className={"flex-column position-absolute justify-content-center align-items-center " + (props.loadingVisible ? "d-flex" : "d-none")}
-                style={{width: "100%", height: "100%", background: "rgba(0,0,0, " + (props.loadingOpacity ? props.loadingOpacity : 0.5) + ")", top: 0, left: 0, zIndex: 2000}}>
-        <div className={"spinner-" + (!props.loadingStyle ? "border" : props.loadingStyle) +  " text-" + props.loadingColor} role="status">
+    return <div
+        className={"flex-column position-absolute justify-content-center align-items-center " + (props.loadingVisible ? "d-flex" : "d-none")}
+        style={{
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0, " + (props.loadingOpacity ? props.loadingOpacity : 0.5) + ")",
+            top: 0,
+            left: 0,
+            zIndex: 2000
+        }}>
+        <div
+            className={"spinner-" + (!props.loadingStyle ? "border" : props.loadingStyle) + " text-" + props.loadingColor}
+            role="status">
             <span className="visually-hidden">Loading...</span>
         </div>
         <p className={"mt-2 text-" + props.loadingColor}>{loadingText}</p>
-    </div>
-}
+    </div>;
+};
 
 /**
  * Componente de Loading Button - Bootstrap5
@@ -38,8 +48,8 @@ const LoadingBootstrapBox = ({loadingText = "Processando os dados...", ...props}
  */
 const LoadingBootstrapButton = ({...props}: Props) => {
     return props.loadingVisible
-        ? <span className={"spinner-border spinner-border-sm text-" + props.loadingColor}/> : <></>
-}
+        ? <span className={"spinner-border spinner-border-sm text-" + props.loadingColor}/> : <></>;
+};
 
 /**
  * Loading
@@ -52,8 +62,10 @@ const LoadingBootstrapButton = ({...props}: Props) => {
 const Loading = ({frameworkStyle = "bootstrap", loadingType = "box", loadingColor = "white", ...props}: Props) => {
     return frameworkStyle === "bootstrap"
         ? loadingType === "box"
-            ? <LoadingBootstrapBox {...props} loadingColor={loadingColor}/>
-            : <LoadingBootstrapButton {...props} loadingColor={loadingColor}/>
-        : <></>
-}
-export default Loading
+            ? <LoadingBootstrapBox {...props}
+                                   loadingColor={loadingColor}/>
+            : <LoadingBootstrapButton {...props}
+                                      loadingColor={loadingColor}/>
+        : <></>;
+};
+export default Loading;

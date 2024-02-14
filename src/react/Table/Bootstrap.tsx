@@ -16,58 +16,64 @@ function Bootstrap<T>(props: ITable<T>) {
 
     //CONFIG ≥ Configuração do componente
     let tableSize = props.tableSize === "small" ? "table-sm" : props.tableSize === "large" ? "table-lg" : "";
-    let tableClasse = !props.tableClasses ? "" : props.tableClasses
-    let tableStyle = !props.tableStyle ? "" : "table-" + props.tableStyle
-    let tableEmptyValue = !props.tableEmptyValue ? "Não há informações disponíveis no momento!" : props.tableEmptyValue
+    let tableClasse = !props.tableClasses ? "" : props.tableClasses;
+    let tableStyle = !props.tableStyle ? "" : "table-" + props.tableStyle;
+    let tableEmptyValue = !props.tableEmptyValue ? "Não há informações disponíveis no momento!" : props.tableEmptyValue;
     let tableConfig = {
         classes: `table m-0 ${tableSize} ${tableClasse} ${tableStyle}`
-    }
+    };
 
     //STATE ≥ Estado do componente
-    const paginationRef = useRef<any>(null)
-    const [init, setInit] = useState(false)
-    const [tableDTO, setTableDTO] = useState<Array<T & { id: any }>>(props.tableDTO)
-    const [tableDTOOriginal, setTableDTOOriginal] = useState<Array<T & { id: any }>>([])
-    const [tablePageSelect, setTablePageSelect] = useState<number>(0)
+    const paginationRef = useRef<any>(null);
+    const [init, setInit] = useState(false);
+    const [tableDTO, setTableDTO] = useState<Array<T & { id: any }>>(props.tableDTO);
+    const [tableDTOOriginal, setTableDTOOriginal] = useState<Array<T & { id: any }>>([]);
+    const [tablePageSelect, setTablePageSelect] = useState<number>(0);
 
-    const [tableEdit, setTableEdit] = useState<null | T & { id: any }>(null)
-    const [tableEditField, setTableEditField] = useState<string>("")
+    const [tableEdit, setTableEdit] = useState<null | T & { id: any }>(null);
+    const [tableEditField, setTableEditField] = useState<string>("");
 
     //EFFECT ≥ Inicializa componente
     useEffect(() => {
-        if (!init || !props.tableInit)
-            setTableDTOOriginal(props.tableDTO)
-        setInit(true)
-        if (props.tableOnInit) props.tableOnInit(true)
-    }, [init, props.tableInit])
+        if (!init || !props.tableInit) {
+            setTableDTOOriginal(props.tableDTO);
+        }
+        setInit(true);
+        if (props.tableOnInit) {
+            props.tableOnInit(true);
+        }
+    }, [init, props.tableInit]);
 
     //EFFECT ≥ Gerencia a ação de select
     useEffect(() => {
-        if (props.tableSelect !== undefined && props.tableSelect !== null)
-            handleKeyPress(props, props.tablePagination === "auto" ? tableDTO : props.tableDTO, paginationRef)
-        else if (props.tableSelectAuto !== false && props.tableOnSelect && tableDTO.length > 0)
-            props.tableOnSelect((props.tablePagination === "auto" ? tableDTO[0] : props.tableDTO[0]))
-        setTableEditField("")
-    }, [props.tableSelect])
+        if (props.tableSelect !== undefined && props.tableSelect !== null) {
+            handleKeyPress(props, props.tablePagination === "auto" ? tableDTO : props.tableDTO, paginationRef);
+        } else if (props.tableSelectAuto !== false && props.tableOnSelect && tableDTO.length > 0) {
+            props.tableOnSelect((props.tablePagination === "auto" ? tableDTO[0] : props.tableDTO[0]));
+        }
+        setTableEditField("");
+    }, [props.tableSelect]);
 
     //EFFECT - Gerencia a ação de select e paginação
     useEffect(() => {
-        if (tableDTO.length > 0 && paginationRef.current !== null)
+        if (tableDTO.length > 0 && paginationRef.current !== null) {
             if (props.tableSelectAuto !== false && props.tableOnSelect && props.tablePagination === "auto" && paginationRef.current.state.selected !== tablePageSelect) {
-                props.tableOnSelect(tableDTO[0])
-                setTablePageSelect(paginationRef.current.state.selected)
+                props.tableOnSelect(tableDTO[0]);
+                setTablePageSelect(paginationRef.current.state.selected);
             }
-        if (paginationRef.current === null)
-            setTableDTO(props.tableDTO)
-    }, [tableDTO])
+        }
+        if (paginationRef.current === null) {
+            setTableDTO(props.tableDTO);
+        }
+    }, [tableDTO]);
 
     //EFFECT - Muda para 1.º pagina quando os dados originais são alterados
     useEffect(() => {
         if (paginationRef.current !== null && props.tablePagination === "auto") {
-            paginationRef.current.props.onPageChange({selected: 0})
-            paginationRef.current.setState({selected: 0})
+            paginationRef.current.props.onPageChange({selected: 0});
+            paginationRef.current.setState({selected: 0});
         }
-    }, [props.tableDTO])
+    }, [props.tableDTO]);
 
     /*
     |------------------------------------------
@@ -79,7 +85,8 @@ function Bootstrap<T>(props: ITable<T>) {
         <div className="w-100 d-flex flex-md-nowrap flex-wrap align-items-center">
             {props.tableFilterPosition === "top"
                 ? handleFilter<T>(props, tableDTOOriginal) : null}
-            <div className={props.tableClassesOptions?.box}>{props.tableOptionsRender ? props.tableOptionsRender() : null}</div>
+            <div
+                className={props.tableClassesOptions?.box}>{props.tableOptionsRender ? props.tableOptionsRender() : null}</div>
         </div>
 
         {/*tabela*/}
@@ -89,10 +96,13 @@ function Bootstrap<T>(props: ITable<T>) {
                 {props.tableOptions ? handleHeaderOptions(props, tableDTO) : null}
                 <tr>
                     {props.tableOnSelect ?
-                        <th className="text-center" style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
+                        <th className="text-center"
+                            style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
                     {props.tableMultiSelect ?
-                        <th className="text-center" style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
-                    {props.tableDetail ? <th className="text-center" style={{width: "0px"}}/> : null}
+                        <th className="text-center"
+                            style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
+                    {props.tableDetail ? <th className="text-center"
+                                             style={{width: "0px"}}/> : null}
                     {props.tableHeader.map(value => handleHeader<T>(value, props, setTableDTO, paginationRef))}
                 </tr>
                 </thead>
@@ -129,7 +139,7 @@ function Bootstrap<T>(props: ITable<T>) {
         {/*filtro*/}
         {!props.tableFilterPosition || props.tableFilterPosition === "bottom"
             ? handleFilter<T>(props, tableDTOOriginal) : null}
-    </>
+    </>;
 }
 
-export default Bootstrap
+export default Bootstrap;

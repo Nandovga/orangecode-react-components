@@ -18,11 +18,11 @@ const SelectBootstrap = ({...props}: Props) => {
 
     //Configuração do componente
     let init = !props.init ? null
-        : (typeof props.init === 'boolean'
+        : (typeof props.init === "boolean"
             ? <option value=''>Selecione {props.legend.toLowerCase()}</option>
-            : <option value=''>{props.init}</option>)
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
-    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+            : <option value=''>{props.init}</option>);
+    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
+    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses;
 
     /*
     |--------------------------------------
@@ -30,7 +30,8 @@ const SelectBootstrap = ({...props}: Props) => {
     |--------------------------------------
     */
     return <div className={"box-" + props.box + " " + boxClasses}>
-        <label className="form-label" htmlFor={props.name}>
+        <label className="form-label"
+               htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
@@ -44,12 +45,14 @@ const SelectBootstrap = ({...props}: Props) => {
                 })}>
             {init}
             {props.data.length > 0 ? props.data.map(row =>
-                <option key={row.id} value={row.id}>{row.name}</option>) : null}
+                <option key={row.id}
+                        value={row.id}>{row.name}</option>) : null}
         </select>
         <div className={(!props.errors[props.name] ? "" : "invalid-feedback is-invalid")}
-             id="j_feedback" data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
-    </div>
-}
+             data-name={props.name}
+             id="j_feedback">{!props.errors[props.name] ? "" : props.errors[props.name].message}</div>
+    </div>;
+};
 
 /**
  * Componente Select
@@ -60,6 +63,7 @@ const SelectBootstrap = ({...props}: Props) => {
  */
 const Select = ({frameworkStyle = "bootstrap", box = "100", ...props}: Props) => {
     return frameworkStyle === "bootstrap"
-        ? <SelectBootstrap {...props} box={box}/> : <></>
-}
-export default Select
+        ? <SelectBootstrap {...props}
+                           box={box}/> : <></>;
+};
+export default Select;

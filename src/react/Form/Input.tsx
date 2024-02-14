@@ -18,9 +18,9 @@ export interface IInput extends IInputBase, IIcon {
 const InputBootstrap = ({...props}: IInput) => {
 
     //Configuração do componente
-    const [type, setType] = useState(props.type)
-    let boxClasses: string = (!props.boxClasses ? "" : props.boxClasses) + (props.modeStyle === "table" ? "m-0 p-0" : "")
-    let fieldClasses: string = (!props.fieldClasses ? "" : props.fieldClasses) + " " + (props.modeStyle === "table" ? "form-control-sm" : "")
+    const [type, setType] = useState(props.type);
+    let boxClasses: string = (!props.boxClasses ? "" : props.boxClasses) + (props.modeStyle === "table" ? "m-0 p-0" : "");
+    let fieldClasses: string = (!props.fieldClasses ? "" : props.fieldClasses) + " " + (props.modeStyle === "table" ? "form-control-sm" : "");
 
     /*
     |--------------------------------------
@@ -29,29 +29,32 @@ const InputBootstrap = ({...props}: IInput) => {
     */
     return <div className={"box-" + props.box + " " + boxClasses}>
         {props.modeStyle !== "table"
-            ? <label htmlFor={props.name} className="form-label">
+            ? <label className="form-label"
+                     htmlFor={props.name}>
                 <i className={GET_ICON(props.iconType) + props.icon}/>
                 {props.legend}{props.required ? <span className="text-danger">*</span> : null}
             </label> : null}
         <div className="input-group">
             <input className={"form-control " + fieldClasses}
+                   disabled={props.disabled}
                    id={props.name}
                    name={props.name}
+                   placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
+                   required={props.required}
                    type={type}
                    value={props.value}
-                   required={props.required}
-                   disabled={props.disabled}
-                   placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
-                   onChange={event => !props.onChange ? null : props.onChange(event.target.value)}
-                   onBlur={event => !props.onBlur ? null : props.onBlur(event.target.value)}/>
+                   onBlur={event => !props.onBlur ? null : props.onBlur(event.target.value)}
+                   onChange={event => !props.onChange ? null : props.onChange(event.target.value)}/>
             {props.previewPass && props.type === "password"
-                ? <span className="input-group-text"><a href="#" className="form-control-view"
+                ? <span className="input-group-text"><a className="form-control-view"
+                                                        href="#"
                                                         onClick={() => setType(type === "password" ? "text" : "password")}>
-                        <i className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a></span> : null}
+                    <i className={"bi bi-" + (type === "password" ? "eye" : "eye-slash")}/></a></span> : null}
         </div>
-        <div id="j_feedback" data-name={props.name}/>
-    </div>
-}
+        <div data-name={props.name}
+             id="j_feedback"/>
+    </div>;
+};
 
 /**
  * Componente de Input
@@ -63,7 +66,9 @@ const InputBootstrap = ({...props}: IInput) => {
  */
 const Input = ({type = "text", box = "100", frameworkStyle = "bootstrap", ...props}: IInput) => {
     return frameworkStyle === "bootstrap"
-        ? <InputBootstrap {...props} box={box} type={type}/>
-        : <></>
-}
-export default Input
+        ? <InputBootstrap {...props}
+                          box={box}
+                          type={type}/>
+        : <></>;
+};
+export default Input;

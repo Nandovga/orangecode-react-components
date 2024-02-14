@@ -7,7 +7,7 @@
   }
 }
 
-.tooltip{
+.tooltip {
   @include font-size(var(--oc-tooltip-font-size, #{$tooltip-font-size}));
 }
 

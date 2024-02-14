@@ -1,5 +1,5 @@
 import React from "react";
-import $ from "jquery"
+import $ from "jquery";
 
 import {ITable} from "../types";
 import {GET_TYPE} from "../../../ts/system";
@@ -20,19 +20,20 @@ export function handleSort<T>(
     paginationRef: any
 ) {
     let sort = $("body").find("table thead th[name='" + field + "'] a[data-name='sort']");
-    if (sort.find("i").hasClass("bi-filter"))
-        sort.attr("data-sort", "asc")
-    else
-        sort.attr("data-sort", "desc")
+    if (sort.find("i").hasClass("bi-filter")) {
+        sort.attr("data-sort", "asc");
+    } else {
+        sort.attr("data-sort", "desc");
+    }
 
     if (modo === "auto") {
         if (paginationRef.current !== null) {
-            paginationRef.current.props.onPageChange({selected: 1})
-            paginationRef.current.setState({selected: 1})
+            paginationRef.current.props.onPageChange({selected: 1});
+            paginationRef.current.setState({selected: 1});
         }
-        let data = props.tableDTO
+        let data = props.tableDTO;
 
-        if (sort.find("i").hasClass("bi-filter"))
+        if (sort.find("i").hasClass("bi-filter")) {
             data.sort(function (a, b) {
                 if (a[field] < b[field]) {
                     return -1;
@@ -42,7 +43,7 @@ export function handleSort<T>(
                 }
                 return 0;
             });
-        else
+        } else {
             data.sort(function (a, b) {
                 if (a[field] > b[field]) {
                     return -1;
@@ -51,22 +52,25 @@ export function handleSort<T>(
                     return 1;
                 }
                 return 0;
-            })
+            });
+        }
 
-        if (paginationRef.current === null)
-            setDTO([])
+        if (paginationRef.current === null) {
+            setDTO([]);
+        }
         setTimeout(() => {
             if (paginationRef.current !== null) {
-                paginationRef.current.props.onPageChange({selected: 0})
-                paginationRef.current.setState({selected: 0})
+                paginationRef.current.props.onPageChange({selected: 0});
+                paginationRef.current.setState({selected: 0});
             }
-            handleSortIcon(sort)
-            setDTO(data)
-        })
+            handleSortIcon(sort);
+            setDTO(data);
+        });
     } else {
-        handleSortIcon(sort)
-        if (props.tableOnSort)
-            props.tableOnSort(field, GET_TYPE<"asc" | "desc">(sort.attr("data-sort")))
+        handleSortIcon(sort);
+        if (props.tableOnSort) {
+            props.tableOnSort(field, GET_TYPE<"asc" | "desc">(sort.attr("data-sort")));
+        }
     }
 }
 
@@ -76,12 +80,14 @@ export function handleSort<T>(
  */
 function handleSortIcon(sort) {
     $.each($("body").find("table thead th a"), function () {
-        $(this).removeClass("text-secondary")
-        $(this).find("i").addClass("bi-filter").removeClass("bi-sort-alpha-up").removeClass("bi-sort-alpha-down")
-    })
-    sort.addClass("text-secondary")
-    if (sort.attr("data-sort") === "desc")
+        $(this).removeClass("text-secondary");
+        $(this).find("i").addClass("bi-filter").removeClass("bi-sort-alpha-up").removeClass("bi-sort-alpha-down");
+    });
+    sort.addClass("text-secondary");
+    if (sort.attr("data-sort") === "desc") {
         sort.find("i").removeClass("bi-sort-alpha-down").addClass("bi-sort-alpha-up");
-    if (sort.attr("data-sort") === "asc")
+    }
+    if (sort.attr("data-sort") === "asc") {
         sort.find("i").removeClass("bi-filter").removeClass("bi-sort-alpha-up").addClass("bi-sort-alpha-down");
+    }
 }

@@ -15,7 +15,7 @@ type Props = {
 
 const TransferListContext = React.createContext<{ state: any, setState: React.Dispatch<any> }>({
     state: null, setState: () => null
-})
+});
 
 type STOREAction = { type: STOREType, payload: any }
 
@@ -24,13 +24,13 @@ type STOREType = "setData" | "setActive" | "setInative";
 function reducer(state: Props, action: STOREAction) {
     switch (action.type) {
         case "setData":
-            return {...state, data: action.payload}
+            return {...state, data: action.payload};
         case "setActive":
-            return {...state, active: action.payload}
+            return {...state, active: action.payload};
         case "setInative":
-            return {...state, inative: action.payload}
+            return {...state, inative: action.payload};
         default:
-            return {...state}
+            return {...state};
     }
 }
 
@@ -40,33 +40,35 @@ function reducer(state: Props, action: STOREAction) {
  * @constructor
  */
 const TransferListInative = () => {
-    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext)
-    const inative = state.data.filter(row => !row.active)
+    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext);
+    const inative = state.data.filter(row => !row.active);
 
     return <div className="transfer-list-box">
         {inative.map(row => {
-            return <div className="form-check item" key={row.id}>
+            return <div className="form-check item"
+                        key={row.id}>
                 {state.disabled ? null
                     : <input className="form-check-input"
                              type="checkbox"
                              value={row.id}
                              onChange={event => {
-                                 if (event.target.checked)
+                                 if (event.target.checked) {
                                      setState({
                                          type: "setInative",
                                          payload: [...state.inative, inative.filter(row => row.id === parseInt(event.target.value))[0]]
-                                     })
-                                 else
+                                     });
+                                 } else {
                                      setState({
                                          type: "setInative",
                                          payload: state.inative.filter(row => row?.id !== parseInt(event.target.value))
-                                     })
+                                     });
+                                 }
                              }}/>}
                 <label className="form-check-label">{row.label}</label>
-            </div>
+            </div>;
         })}
-    </div>
-}
+    </div>;
+};
 
 /**
  * Exibe os itens ATIVOS
@@ -74,33 +76,35 @@ const TransferListInative = () => {
  * @constructor
  */
 const TransferListActive = () => {
-    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext)
-    const active = state.data.filter(row => row.active)
+    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext);
+    const active = state.data.filter(row => row.active);
 
     return <div className="transfer-list-box">
         {active.map(row => {
-            return <div className="form-check item" key={row.id}>
+            return <div className="form-check item"
+                        key={row.id}>
                 {state.disabled ? null
                     : <input className="form-check-input"
                              type="checkbox"
                              value={row.id}
                              onChange={event => {
-                                 if (event.target.checked)
+                                 if (event.target.checked) {
                                      setState({
                                          type: "setActive",
                                          payload: [...state.active, active.filter(row => row.id === parseInt(event.target.value))[0]]
-                                     })
-                                 else
+                                     });
+                                 } else {
                                      setState({
                                          type: "setActive",
                                          payload: state.active.filter(row => row?.id !== parseInt(event.target.value))
-                                     })
+                                     });
+                                 }
                              }}/>}
                 <label className="form-check-label">{row.label}</label>
-            </div>
+            </div>;
         })}
-    </div>
-}
+    </div>;
+};
 
 /**
  * Exibe as opções da LISTA
@@ -116,9 +120,9 @@ const TransferListActive = () => {
  */
 const TransferListOptions = () => {
 
-    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext)
-    const active = state.data.filter(row => row.active)
-    const inative = state.data.filter(row => !row.active)
+    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext);
+    const active = state.data.filter(row => row.active);
+    const inative = state.data.filter(row => !row.active);
 
     const transferAll = (mode: "active" | "inative") => {
         var x: Array<ITransferList> = [];
@@ -127,74 +131,74 @@ const TransferListOptions = () => {
                 x[i] = inative[i];
                 x[i].active = true;
             }
-            setState({type: "setData", payload: [...active, ...x]})
-            setState({type: "setInative", payload: []})
+            setState({type: "setData", payload: [...active, ...x]});
+            setState({type: "setInative", payload: []});
         } else {
             for (let i = 0; i < active.length; i++) {
                 x[i] = active[i];
                 x[i].active = false;
             }
-            setState({type: "setData", payload: [...inative, ...x]})
-            setState({type: "setActive", payload: []})
+            setState({type: "setData", payload: [...inative, ...x]});
+            setState({type: "setActive", payload: []});
         }
-    }
+    };
 
     const transferSelect = (mode: "active" | "inative") => {
         if (mode === "inative") {
-            let x: Array<ITransferList> = []
-            let y: Array<ITransferList> = inative
+            let x: Array<ITransferList> = [];
+            let y: Array<ITransferList> = inative;
             for (let i = 0; i < state.inative.length; i++) {
                 if (state.inative[i] !== undefined) {
                     x[i] = state.inative[i];
                     x[i].active = true;
-                    y = y.filter(row => row.id !== x[i].id)
+                    y = y.filter(row => row.id !== x[i].id);
                 }
             }
-            setState({type: "setData", payload: [...active, ...x, ...y]})
-            setState({type: "setInative", payload: []})
+            setState({type: "setData", payload: [...active, ...x, ...y]});
+            setState({type: "setInative", payload: []});
         } else {
-            let x: Array<ITransferList> = []
-            let y: Array<ITransferList> = active
+            let x: Array<ITransferList> = [];
+            let y: Array<ITransferList> = active;
             for (let i = 0; i < state.active.length; i++) {
                 if (state.active[i] !== undefined) {
                     x[i] = state.active[i];
                     x[i].active = false;
-                    y = y.filter(row => row.id !== x[i].id)
+                    y = y.filter(row => row.id !== x[i].id);
                 }
             }
-            setState({type: "setData", payload: [...inative, ...x, ...y]})
-            setState({type: "setActive", payload: []})
+            setState({type: "setData", payload: [...inative, ...x, ...y]});
+            setState({type: "setActive", payload: []});
         }
-    }
+    };
 
     return <div className="transfer-list-options d-flex justify-content-center flex-column align-items-center">
         <a className={"options btn " + (inative.length === 0 || state.disabled ? "disabled" : "")}
+           href="#"
            onClick={event => {
                event.preventDefault();
-               transferAll("inative")
-           }}
-           href="#"><i className="bi bi-chevron-double-right"/></a>
+               transferAll("inative");
+           }}><i className="bi bi-chevron-double-right"/></a>
         <a className={"options btn " + (state.inative.length === 0 || state.disabled ? "disabled" : "")}
+           href="#"
            onClick={event => {
                event.preventDefault();
-               transferSelect("inative")
-           }}
-           href="#"><i className="bi bi-chevron-right"/></a>
+               transferSelect("inative");
+           }}><i className="bi bi-chevron-right"/></a>
 
         <a className={"options btn " + (state.active.length === 0 || state.disabled ? "disabled" : "")}
+           href="#"
            onClick={event => {
                event.preventDefault();
-               transferSelect("active")
-           }}
-           href="#"><i className="bi bi-chevron-left"/></a>
+               transferSelect("active");
+           }}><i className="bi bi-chevron-left"/></a>
         <a className={"options btn " + (active.length === 0 || state.disabled ? "disabled" : "")}
+           href="#"
            onClick={event => {
                event.preventDefault();
-               transferAll("active")
-           }}
-           href="#"><i className="bi bi-chevron-double-left"/></a>
-    </div>
-}
+               transferAll("active");
+           }}><i className="bi bi-chevron-double-left"/></a>
+    </div>;
+};
 
 /**
  * Transferência de dados
@@ -207,20 +211,22 @@ const TransferList = (props: {
     onChange(data: Array<ITransferList>): void
 }) => {
 
-    const initState: Props = {data: props.data, active: [], inative: [], disabled: props.disabled}
-    const [init, setInit] = useState(false)
-    const [state, setState] = useReducer(reducer, initState)
+    const initState: Props = {data: props.data, active: [], inative: [], disabled: props.disabled};
+    const [init, setInit] = useState(false);
+    const [state, setState] = useReducer(reducer, initState);
 
     //EFFECT ≥ Executa a ação de onChange
     useEffect(() => {
-        if (init) props.onChange(state.data)
-        setInit(true)
-    }, [state.data])
+        if (init) {
+            props.onChange(state.data);
+        }
+        setInit(true);
+    }, [state.data]);
 
     //EFFECT ≥ Executa a ação quando altera os dados
     useEffect(() => {
-        setState({type: "setData", payload: props.data})
-    }, [props.data])
+        setState({type: "setData", payload: props.data});
+    }, [props.data]);
 
     return <TransferListContext.Provider value={{state, setState}}>
         <div className="w-100 p-1 transfer-list d-flex">
@@ -228,6 +234,6 @@ const TransferList = (props: {
             <TransferListOptions/>
             <TransferListActive/>
         </div>
-    </TransferListContext.Provider>
-}
-export default TransferList
+    </TransferListContext.Provider>;
+};
+export default TransferList;

@@ -18,18 +18,20 @@ export function handlePagination<T>(
     const colspan = props.tableHeader.length
         + (props.tableOnSelect ? 1 : 0)
         + (props.tableDetail ? 1 : 0)
-        + (props.tableOnMultiSelect ? 1 : 0)
+        + (props.tableOnMultiSelect ? 1 : 0);
 
     const manual = () => {
-        let {elements, pageTotal, pageNumber} = GET_TYPE<ITablePagination>(props.tablePagination)
+        let {elements, pageTotal, pageNumber} = GET_TYPE<ITablePagination>(props.tablePagination);
         let pagerInit = (pageNumber - 3 < 1 ? 0 : pageNumber - 4);
         let pagerFinal = (pageNumber + 3 > pageTotal ? pageTotal : pageNumber + 3);
         let pager: any = [];
-        for (let i = pagerInit; i < pagerFinal; i++)
-            pager.push(i)
+        for (let i = pagerInit; i < pagerFinal; i++) {
+            pager.push(i);
+        }
 
         //Renderização
-        return pageTotal > 1 ? <td className="p-0" colSpan={colspan}>
+        return pageTotal > 1 ? <td className="p-0"
+                                   colSpan={colspan}>
             <div
                 className={"w-100 d-flex align-items-center justify-content-" + (!props.tablePaginationAlign ? "end" : props.tablePaginationAlign)}>
                 <p className="fs-7 mx-2 my-auto text-primary-300">Total de registro {elements}</p>
@@ -38,46 +40,53 @@ export function handlePagination<T>(
                         <a className="page-link"
                            href="#"
                            onClick={event => {
-                               event.preventDefault()
-                               if (props.tableOnPagination) props.tableOnPagination(1)
+                               event.preventDefault();
+                               if (props.tableOnPagination) {
+                                   props.tableOnPagination(1);
+                               }
                            }}>
                             <i className="bi bi-chevron-double-left"/></a>
                     </li>
                     {pager.map((row) => {
-                        return <li key={row}
-                                   className={"page-item " + (row + 1 === pageNumber ? "active fw-bold" : "")}>
+                        return <li className={"page-item " + (row + 1 === pageNumber ? "active fw-bold" : "")}
+                                   key={row}>
                             <a className="page-link"
                                href="#"
                                onClick={event => {
-                                   event.preventDefault()
-                                   if (props.tableOnPagination) props.tableOnPagination(row + 1)
+                                   event.preventDefault();
+                                   if (props.tableOnPagination) {
+                                       props.tableOnPagination(row + 1);
+                                   }
                                }}>{row + 1}</a>
-                        </li>
+                        </li>;
                     })}
                     <li className="page-item">
                         <a className="page-link"
                            href="#"
                            onClick={event => {
-                               event.preventDefault()
-                               if (props.tableOnPagination) props.tableOnPagination(pageTotal)
+                               event.preventDefault();
+                               if (props.tableOnPagination) {
+                                   props.tableOnPagination(pageTotal);
+                               }
                            }}><i className="bi bi-chevron-double-right"/></a>
                     </li>
                 </ul>
             </div>
-        </td> : null
-    }
+        </td> : null;
+    };
 
     const auto = () => {
-        const [row, setRow] = useState<number>(!props.tablePaginationRow ? 10 : props.tablePaginationRow)
+        const [row, setRow] = useState<number>(!props.tablePaginationRow ? 10 : props.tablePaginationRow);
 
         //Renderização
-        return <td className="p-1" colSpan={colspan}>
+        return <td className="p-1"
+                   colSpan={colspan}>
             <div
                 className={"w-100 d-flex align-items-center justify-content-" + (!props.tablePaginationAlign ? "end" : props.tablePaginationAlign)}>
                 <select className="form-select form-select-sm me-2"
+                        style={{maxWidth: "60px", padding: "1px 3px", fontSize: ".9em"}}
                         value={row}
-                        onChange={event => setRow(parseInt(event.target.value))}
-                        style={{maxWidth: "60px", padding: "1px 3px", fontSize: ".9em"}}>
+                        onChange={event => setRow(parseInt(event.target.value))}>
                     <option value={5}>5</option>
                     <option value={10}>10</option>
                     <option value={15}>15</option>
@@ -86,15 +95,15 @@ export function handlePagination<T>(
                     <option value={100}>100</option>
                 </select>
                 <p className='m-0 mx-2'>Total de {props.tableDTO.length} registro</p>
-                <Pagination<T> pageCount={row}
+                <Pagination<T> nextLabel={<i className="bi bi-chevron-double-right"/>}
+                               pageCount={row}
                                paginationDTO={props.tableDTO}
-                               paginationState={value => setDTO(value)}
                                paginationRef={paginationRef}
-                               nextLabel={<i className="bi bi-chevron-double-right"/>}
+                               paginationState={value => setDTO(value)}
                                previousLabel={<i className="bi bi-chevron-double-left"/>}/>
             </div>
-        </td>
-    }
+        </td>;
+    };
 
     /*
     |------------------------------------------
@@ -105,5 +114,5 @@ export function handlePagination<T>(
         ? <tfoot>
         <tr>{props.tablePagination === "auto" ? auto() : !props.tableOnPagination ? null : manual()}</tr>
         </tfoot>
-        : null
+        : null;
 }

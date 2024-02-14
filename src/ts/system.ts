@@ -1,4 +1,4 @@
-import $ from "jquery"
+import $ from "jquery";
 import {IBreakpoint} from "../@types/system";
 import {IIconType} from "../@types/icon";
 
@@ -28,9 +28,10 @@ export function GET_ICON(iconType: IIconType = "bootstrap"): string {
  */
 export function WINDOWS_RESIZE(breakpoint: IBreakpoint): string {
     let screen: number | undefined = $(window).width();
-    if (!screen)
+    if (!screen) {
         return breakpoint.default;
-    switch (true){
+    }
+    switch (true) {
         case screen <= 380:
             return breakpoint.xm === undefined ? breakpoint.default : breakpoint.xm;
         case screen <= 576:
@@ -44,6 +45,6 @@ export function WINDOWS_RESIZE(breakpoint: IBreakpoint): string {
         case screen <= 1400:
             return breakpoint.xxl === undefined ? breakpoint.default : breakpoint.xxl;
         default:
-            return breakpoint.default
+            return breakpoint.default;
     }
 }

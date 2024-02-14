@@ -35,7 +35,7 @@
   }
 }
 
-.tab-pane{
+.tab-pane {
   border: var(--oc-tabview-border-width, #{$nav-tabs-border-width}) solid var(--oc-tabview-border-color-active, #{$nav-tabs-link-active-border-color});
   border-top: var(--oc-tabview-border-width, #{$nav-tabs-border-width}) solid transparent;
 }

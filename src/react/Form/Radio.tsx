@@ -5,7 +5,7 @@ import {IInputBase} from "../../@types/form";
 
 export type IRadioValue = {
     value: string,
-    legend: string,
+    legend: string
     disabled?: boolean
 }
 
@@ -24,8 +24,8 @@ export interface IRadio extends IInputBase, IIcon {
 const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => {
 
     //Configuração do componente
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
-    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
+    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses;
 
     /*
     |------------------------------------------
@@ -33,29 +33,33 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => 
     |------------------------------------------
     */
     return <div className={"box-" + box + " " + boxClasses + " d-flex flex-wrap " + "flex-" + radioAlign}>
-        <label className="form-label w-100" htmlFor={props.name}>
+        <label className="form-label w-100"
+               htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         {props.radioValue.map(row =>
-            <div key={row.value} className={"form-check " + (radioAlign === "row" ? "me-2" : "mb-2")}>
-                <input className={"form-check-input " + fieldClasses}
-                       type="radio"
-                       id={props.name + "-" + row.value}
+            <div className={"form-check " + (radioAlign === "row" ? "me-2" : "mb-2")}
+                 key={row.value}>
+                <input checked={props.value === row.value ?? false}
+                       className={"form-check-input " + fieldClasses}
                        disabled={props.disabled || row.disabled}
-                       required={props.required}
+                       id={props.name + "-" + row.value}
                        name={props.name}
+                       required={props.required}
+                       type="radio"
                        value={row.value}
                        onChange={event => {
-                           if (props.onChange)
-                               props.onChange(event.target.value)
-                       }}
-                       checked={props.value === row.value ?? false}/>
+                           if (props.onChange) {
+                               props.onChange(event.target.value);
+                           }
+                       }}/>
                 <label className="form-check-label">{row.legend}</label>
             </div>)}
-        <div id="j_feedback" data-name={props.name}/>
-    </div>
-}
+        <div data-name={props.name}
+             id="j_feedback"/>
+    </div>;
+};
 
 /**
  * Componente Radio
@@ -65,6 +69,6 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => 
  */
 const Radio = ({frameworkStyle = "bootstrap", ...props}: IRadio) => {
     return frameworkStyle === "bootstrap"
-        ? <RadioBootstrap {...props}/> : <></>
-}
-export default Radio
+        ? <RadioBootstrap {...props}/> : <></>;
+};
+export default Radio;

@@ -1,6 +1,6 @@
 import React from "react";
 import {Controller} from "react-hook-form";
-import { InputMask } from 'primereact/inputmask';
+import {InputMask} from "primereact/inputmask";
 
 import {GET_ICON} from "../../../ts/system";
 import {IIcon} from "../../../@types/icon";
@@ -20,8 +20,8 @@ interface Props extends IInputBase, IIcon {
 const InputBootstrapMask = ({...props}: Props) => {
 
     //Configuração do componente
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
-    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
+    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses;
 
     /*
     |--------------------------------------
@@ -29,35 +29,38 @@ const InputBootstrapMask = ({...props}: Props) => {
     |--------------------------------------
     */
     return <div className={"box-" + props.box + " " + boxClasses}>
-        <label htmlFor={props.name} className="form-label">
+        <label className="form-label"
+               htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <Controller
-            control={props.control}
-            name={props.name}
             render={({field: {onChange, value}, formState: {errors}}) => {
-                let message = !errors[props.name] ? '' : errors[props.name]?.message
+                let message = !errors[props.name] ? "" : errors[props.name]?.message;
                 return <>
-                    <InputMask mask={props.mask}
-                               id={props.name}
-                               type="text"
+                    <InputMask className={"form-control " + fieldClasses + (!errors[props.name] ? "" : "is-invalid")}
                                disabled={props.disabled}
+                               id={props.name}
+                               mask={props.mask}
                                placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
-                               className={"form-control " + fieldClasses + (!errors[props.name] ? "" : "is-invalid")}
-                               value={value === undefined || value === null ? "" : value}
                                required={props.required}
-                               onChange={(e) => onChange(e.target.value)}
+                               type="text"
+                               value={value === undefined || value === null ? "" : value}
                                onBlur={event => {
-                                   if (props.onBlur) props.onBlur(event.target.value)
-                               }}/>
-                    <div id="j_feedback"
-                         className={(!errors[props.name] ? "" : "invalid-feedback is-invalid")}
-                         data-name={props.name}>{typeof message === "string" ? message : ""}</div>
-                </>
-            }}/>
-    </div>
-}
+                                   if (props.onBlur) {
+                                       props.onBlur(event.target.value);
+                                   }
+                               }}
+                               onChange={(e) => onChange(e.target.value)}/>
+                    <div className={(!errors[props.name] ? "" : "invalid-feedback is-invalid")}
+                         data-name={props.name}
+                         id="j_feedback">{typeof message === "string" ? message : ""}</div>
+                </>;
+            }}
+            control={props.control}
+            name={props.name}/>
+    </div>;
+};
 
 /**
  * Componente Input HookForm
@@ -69,7 +72,8 @@ const InputBootstrapMask = ({...props}: Props) => {
  */
 const Mask = ({frameworkStyle = "bootstrap", box = "100", ...props}: Props) => {
     return frameworkStyle === "bootstrap"
-        ? <InputBootstrapMask box={box} {...props} />
-        : <></>
-}
-export default Mask
+        ? <InputBootstrapMask box={box}
+                              {...props}/>
+        : <></>;
+};
+export default Mask;

@@ -19,8 +19,8 @@ interface Props extends IInputBase, IHookForm, IIcon {
 const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: Props) => {
 
     //Configuração do componente
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
-    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
+    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses;
 
     /*
     |------------------------------------------
@@ -28,16 +28,19 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: Props) => {
     |------------------------------------------
     */
     return <div className={"box-" + box + " " + boxClasses + " d-flex flex-wrap " + "flex-" + radioAlign}>
-        <label className="form-label w-100" htmlFor={props.name}>
+        <label className="form-label w-100"
+               htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         {props.radioValue.map(row =>
-            <div key={row.value} className={"form-check " + (radioAlign === "row" ? "me-2" : "mb-2") + (!props.errors[props.name] ? "" : " is-invalid")}>
+            <div
+                className={"form-check " + (radioAlign === "row" ? "me-2" : "mb-2") + (!props.errors[props.name] ? "" : " is-invalid")}
+                key={row.value}>
                 <input className={"form-check-input " + fieldClasses + (!props.errors[props.name] ? "" : "is-invalid")}
+                       disabled={props.disabled || row.disabled}
                        id={props.name}
                        type="radio"
-                       disabled={props.disabled || row.disabled}
                        value={row.value}
                        {...props.register(props.name, {
                            required: !props.required ? false : "Campo obrigatório"
@@ -45,9 +48,10 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: Props) => {
                 <label className="form-check-label">{row.legend}</label>
             </div>)}
         <div className={(!props.errors[props.name] ? "" : "invalid-feedback is-invalid")}
-             id="j_feedback" data-name={props.name}>{!props.errors[props.name] ? '' : props.errors[props.name].message}</div>
-    </div>
-}
+             data-name={props.name}
+             id="j_feedback">{!props.errors[props.name] ? "" : props.errors[props.name].message}</div>
+    </div>;
+};
 
 /**
  * Componente Radio
@@ -57,6 +61,6 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: Props) => {
  */
 const Radio = ({frameworkStyle = "bootstrap", ...props}: Props) => {
     return frameworkStyle === "bootstrap"
-        ? <RadioBootstrap {...props}/> : <></>
-}
-export default Radio
+        ? <RadioBootstrap {...props}/> : <></>;
+};
+export default Radio;

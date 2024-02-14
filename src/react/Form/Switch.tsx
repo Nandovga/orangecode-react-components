@@ -16,8 +16,8 @@ export interface ISwitch extends IInputBase, IIcon {
  */
 const SwitchBootstrap = ({box = "50", ...props}: ISwitch) => {
     //Configuração do componente
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
-    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
+    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses;
 
     /*
     |--------------------------------------
@@ -25,26 +25,29 @@ const SwitchBootstrap = ({box = "50", ...props}: ISwitch) => {
     |--------------------------------------
     */
     return <div className={"box-" + box + " " + boxClasses}>
-        <label className="form-label" htmlFor={props.name}>
+        <label className="form-label"
+               htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <div className="form-check form-switch">
-            <input className={"form-check-input " + fieldClasses}
-                   type="checkbox"
-                   id={props.name}
+            <input checked={props.value}
+                   className={"form-check-input " + fieldClasses}
                    disabled={props.disabled}
-                   required={props.required}
-                   checked={props.value}
+                   id={props.name}
                    name={props.name}
+                   required={props.required}
+                   type="checkbox"
                    onChange={event => {
-                       if (props.onChange)
-                           props.onChange(event.target.checked)
+                       if (props.onChange) {
+                           props.onChange(event.target.checked);
+                       }
                    }}/>
-            <label className="form-check-label" htmlFor={props.name}>{props.label}</label>
+            <label className="form-check-label"
+                   htmlFor={props.name}>{props.label}</label>
         </div>
-    </div>
-}
+    </div>;
+};
 
 /**
  * Componente Switch
@@ -53,6 +56,6 @@ const SwitchBootstrap = ({box = "50", ...props}: ISwitch) => {
  * @constructor
  */
 const Switch = ({frameworkStyle = "bootstrap", ...props}: ISwitch) => {
-    return frameworkStyle === "bootstrap" ? <SwitchBootstrap {...props}/> : <></>
-}
-export default Switch
+    return frameworkStyle === "bootstrap" ? <SwitchBootstrap {...props}/> : <></>;
+};
+export default Switch;

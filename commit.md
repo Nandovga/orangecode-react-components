@@ -1,5 +1,7 @@
 ### ⚒️ Github - Commit
+
 1 - Remover as "devDependencies" do arquvio packge.json, para realizar commit;
+
 ```json
   {
   "devDependencies": {

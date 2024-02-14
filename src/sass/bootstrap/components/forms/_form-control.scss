@@ -62,17 +62,17 @@
 }
 
 @each $state, $data in $form-validation-states {
-  .#{$state}-feedback{
+  .#{$state}-feedback {
     font-size: var(--oc-form-control-font-size-feedback, #{$form-feedback-font-size});
   }
 }
 
 .invalid-feedback.is-invalid,
-.invalid-feedback.is-valid{
+.invalid-feedback.is-valid {
   display: block !important;
 }
 
-.form-control-view{
+.form-control-view {
   color: var(--oc-form-view-color, #{$input-group-addon-color});
 }
 
@@ -81,5 +81,5 @@
   padding: var(--oc-form-view-padding, #{$input-group-addon-padding-y $input-group-addon-padding-x});
   background-color: var(--oc-form-view-bg, #{$input-group-addon-bg});
   border: var(--oc-form-view-border, #{$input-border-width solid $input-group-addon-border-color});
-  font-size: var(--oc-form-view-font-size,  #{$input-font-size});
+  font-size: var(--oc-form-view-font-size, #{$input-font-size});
 }

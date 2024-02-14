@@ -24,9 +24,9 @@ export interface IFilterAutocompleteProps {
  * @constructor
  */
 const Autocomplete = ({value, setValue, data, dataOriginal, onSearch}: IFilterAutocompleteProps) => {
-    let filtered = typeof value !== 'object'
-        ? value.split(';').map(item => parseInt(item))
-        : value
+    let filtered = typeof value !== "object"
+        ? value.split(";").map(item => parseInt(item))
+        : value;
 
     /*
     |------------------------------------------
@@ -34,19 +34,19 @@ const Autocomplete = ({value, setValue, data, dataOriginal, onSearch}: IFilterAu
     |------------------------------------------
     */
     return <div className="d-flex flex-column w-100">
-        <AutoComplete inputClassName="w-100 fs-7"
-                      multiple
-                      suggestions={data}
-                      field="label"
-                      value={typeof value !== "object" ? dataOriginal.filter(item => {
-                          return filtered.includes(item.id)
-                      }) : value}
+        <AutoComplete multiple
                       completeMethod={e => {
                           if (onSearch) {
-                              onSearch(e.query)
+                              onSearch(e.query);
                           }
                       }}
+                      value={typeof value !== "object" ? dataOriginal.filter(item => {
+                          return filtered.includes(item.id);
+                      }) : value}
+                      field="label"
+                      inputClassName="w-100 fs-7"
+                      suggestions={data}
                       onChange={e => setValue(e.value)}/>
-    </div>
-}
-export default Autocomplete
+    </div>;
+};
+export default Autocomplete;

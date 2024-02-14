@@ -35,18 +35,18 @@ body::-webkit-scrollbar-thumb {
   border: 2px solid var(--oc-reboot-scroll-background, #e5e5e5);
 }
 
-.debug{
+.debug {
   border: 1px solid red;
 }
 
-#j_feedback.is-invalid{
+#j_feedback.is-invalid {
   font-size: var(--oc-reboot-feedback-font-size, .9em);
   color: var(--oc-reboot-feedback-invalid, var(--bs-danger));
 }
 
-#j_feedback.is-valid{
+#j_feedback.is-valid {
   font-size: var(--oc-reboot-feedback-font-size, .9em);
-  color:var(--oc-reboot-feedback-valid, var(--bs-success));
+  color: var(--oc-reboot-feedback-valid, var(--bs-success));
 }
 
 //Desing Responsivo - Breakpoints

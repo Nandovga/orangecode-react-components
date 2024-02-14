@@ -16,8 +16,8 @@ export interface IInput extends IInputBase, IIcon {
 const TextAreaBootstrap = ({...props}: IInput) => {
 
     //Configuração do componente
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
-    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
+    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses;
 
     /*
     |--------------------------------------
@@ -25,23 +25,25 @@ const TextAreaBootstrap = ({...props}: IInput) => {
     |--------------------------------------
     */
     return <div className={"box-" + props.box + " " + boxClasses}>
-        <label htmlFor={props.name} className="form-label">
+        <label className="form-label"
+               htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <textarea className={"form-control " + fieldClasses}
-                  rows={!props.rows ? 3 : props.rows}
+                  disabled={props.disabled}
                   id={props.name}
                   name={props.name}
-                  value={props.value}
-                  required={props.required}
-                  disabled={props.disabled}
                   placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
-                  onChange={event => !props.onChange ? null : props.onChange(event.target.value)}
-                  onBlur={event => !props.onBlur ? null : props.onBlur(event.target.value)}/>
-        <div id="j_feedback" data-name={props.name}/>
-    </div>
-}
+                  required={props.required}
+                  rows={!props.rows ? 3 : props.rows}
+                  value={props.value}
+                  onBlur={event => !props.onBlur ? null : props.onBlur(event.target.value)}
+                  onChange={event => !props.onChange ? null : props.onChange(event.target.value)}/>
+        <div data-name={props.name}
+             id="j_feedback"/>
+    </div>;
+};
 
 /**
  * Componente de Input
@@ -53,7 +55,8 @@ const TextAreaBootstrap = ({...props}: IInput) => {
  */
 const TextArea = ({box = "100", frameworkStyle = "bootstrap", ...props}: IInput) => {
     return frameworkStyle === "bootstrap"
-        ? <TextAreaBootstrap {...props} box={box}/>
-        : <></>
-}
-export default TextArea
+        ? <TextAreaBootstrap {...props}
+                             box={box}/>
+        : <></>;
+};
+export default TextArea;

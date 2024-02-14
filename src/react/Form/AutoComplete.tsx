@@ -30,59 +30,64 @@ export interface IAutoComplete extends IInputBase, IIcon {
 const AutoCompleteBootstrap = (props: IAutoComplete) => {
 
     //Configuração do componente
-    let boxClasses: string = (!props.boxClasses ? "" : props.boxClasses) + (props.modeStyle === "table" ? "m-0 p-0" : "")
-    let fieldClasses: string = (!props.fieldClasses ? "" : props.fieldClasses) + " " + (props.modeStyle === "table" ? "form-control-sm" : "")
+    let boxClasses: string = (!props.boxClasses ? "" : props.boxClasses) + (props.modeStyle === "table" ? "m-0 p-0" : "");
+    let fieldClasses: string = (!props.fieldClasses ? "" : props.fieldClasses) + " " + (props.modeStyle === "table" ? "form-control-sm" : "");
 
     //STATE ≥ Estado do componente
-    const [DTO, setDTO] = useState<IAutoCompleteData[]>([])
-    const [isFocus, setIsFocus] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    const [DTO, setDTO] = useState<IAutoCompleteData[]>([]);
+    const [isFocus, setIsFocus] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     //DATA - Realiza a pesquisa do autocomplete dentro dos dados
     const handleFilterAutoComplete = (value: string): Array<IAutoCompleteData> => {
-        if (typeof props.autoCompleteValue !== "string")
+        if (typeof props.autoCompleteValue !== "string") {
             return [];
+        }
         return props.autoCompleteData.filter(item => {
             let valor = item.value.toString()
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "")
-                .toLowerCase()
+                .toLowerCase();
             let pesquisa = value.toString()
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "")
-                .toLowerCase()
-            if (valor.includes(pesquisa))
+                .toLowerCase();
+            if (valor.includes(pesquisa)) {
                 return item;
-        })
-    }
+            }
+        });
+    };
 
     //DATA - Retorna os itens da Lista de seleção
     const handleItem = (item: IAutoCompleteData) => {
-        return <div key={item.id}
-                    className={"autocomplete-element-selected " + (item.selected === false ? "disabled" : "")}
+        return <div className={"autocomplete-element-selected " + (item.selected === false ? "disabled" : "")}
+                    key={item.id}
                     onClick={event => {
-                        event.preventDefault()
+                        event.preventDefault();
                         if (item.selected !== false) {
-                            props.onAutoCompleteValue(item)
-                            setIsFocus(false)
+                            props.onAutoCompleteValue(item);
+                            setIsFocus(false);
                         }
-                    }}>{!item.element ? item.value : item.element}</div>
-    }
+                    }}>{!item.element ? item.value : item.element}</div>;
+    };
 
     //STATE ≥ Loading
     useEffect(() => {
-        if (typeof props.autoCompleteValue === "string")
-            setIsLoading(true)
-        else setIsLoading(false)
-    }, [props.autoCompleteValue])
+        if (typeof props.autoCompleteValue === "string") {
+            setIsLoading(true);
+        } else {
+            setIsLoading(false);
+        }
+    }, [props.autoCompleteValue]);
 
     //STATE ≥ Loading
     useEffect(() => {
-        if (isLoading)
+        if (isLoading) {
             setTimeout(() => {
-                setIsLoading(false)
-            }, 500)
-    }, [isLoading])
+                setIsLoading(false);
+            }, 500);
+        }
+    }, [isLoading]);
 
     /*
     |------------------------------------------
@@ -91,29 +96,32 @@ const AutoCompleteBootstrap = (props: IAutoComplete) => {
     */
     return <div className={"autocomplete box-" + props.box + " " + boxClasses}>
         {props.modeStyle !== "table" ?
-            <label htmlFor={props.name} className="form-label">
+            <label className="form-label"
+                   htmlFor={props.name}>
                 <i className={GET_ICON(props.iconType) + props.icon}/>
                 {props.legend}{props.required ? <span className="text-danger">*</span> : null}
             </label> : null}
-        <div className={"d-flex align-items-center form-control " + (props.disabled ? "disabled" : "") + " " +  fieldClasses}>
+        <div
+            className={"d-flex align-items-center form-control " + (props.disabled ? "disabled" : "") + " " + fieldClasses}>
             <i className="bi bi-search me-2"/>
-            <input type="text"
-                   className="autocomplete-input"
-                   required={props.required}
+            <input className="autocomplete-input"
                    disabled={props.disabled}
                    placeholder={props.placeholder === undefined ? "Digite " + props.name : props.placeholder}
+                   required={props.required}
+                   type="text"
                    value={typeof props.autoCompleteValue === "string" ? props.autoCompleteValue : props.autoCompleteValue?.value}
-                   onFocus={() => setIsFocus(true)}
                    onBlur={() => {
                        setTimeout(() => {
-                           setIsFocus(false)
-                       }, 100)
+                           setIsFocus(false);
+                       }, 100);
                    }}
                    onChange={event => {
-                       props.onAutoCompleteValue(event.target.value)
-                       if (props.onAutoCompleteData)
-                           props.onAutoCompleteData(event.target.value, setDTO)
-                   }}/>
+                       props.onAutoCompleteValue(event.target.value);
+                       if (props.onAutoCompleteData) {
+                           props.onAutoCompleteData(event.target.value, setDTO);
+                       }
+                   }}
+                   onFocus={() => setIsFocus(true)}/>
             {props.autoCompleteLaod || isLoading
                 ? <div className={"autocomplete-load spinner-border text-" + props.autoCompleteLoadColors}>
                     <span className="visually-hidden">Loading...</span>
@@ -129,8 +137,8 @@ const AutoCompleteBootstrap = (props: IAutoComplete) => {
                     : null}
             </div>
         </div>
-    </div>
-}
+    </div>;
+};
 
 /**
  * Componente de Autocomplete
@@ -140,6 +148,6 @@ const AutoCompleteBootstrap = (props: IAutoComplete) => {
  */
 const AutoComplete = ({frameworkStyle = "bootstrap", ...props}: IAutoComplete) => {
     return frameworkStyle === "bootstrap"
-        ? <AutoCompleteBootstrap {...props}/> : null
-}
-export default AutoComplete
+        ? <AutoCompleteBootstrap {...props}/> : null;
+};
+export default AutoComplete;

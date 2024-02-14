@@ -6,8 +6,10 @@ tsconfig.json
 package-lock.json
 vite.config.ts
 index.html
+.eslintrc.json
 
 src/App.tsx
 src/Example.tsx
 src/index.html
 src/assets
+.eslintrc.json

@@ -73,7 +73,7 @@ export type ITable<T> = {
 
     tablePagination?: "auto" | ITablePagination
     tablePaginationAlign?: "end" | "center" | "start"
-    tablePaginationRow?: 5 | 10 | 15 |  25 | 50 | 100
+    tablePaginationRow?: 5 | 10 | 15 | 25 | 50 | 100
     tableOnPagination?: (pageNumber: number) => void
 
     frameworkStyle?: IFrameworkStyle

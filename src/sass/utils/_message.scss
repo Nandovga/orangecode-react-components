@@ -1,49 +1,49 @@
 :root {
-    @if variable-exists(oc-message) {
-        @each $nome in map-keys($oc-message) {
-            $value: map-get($oc-message, $nome);
-            --oc-message-#{$nome}: #{$value};
-        }
+  @if variable-exists(oc-message) {
+    @each $nome in map-keys($oc-message) {
+      $value: map-get($oc-message, $nome);
+      --oc-message-#{$nome}: #{$value};
     }
+  }
 }
 
 //warning
-.snackbar-container.warning{
-    background: var(--oc-message-warning-background, map-get($theme-colors, 'warning')) !important;
+.snackbar-container.warning {
+  background: var(--oc-message-warning-background, map-get($theme-colors, 'warning')) !important;
 
-    p, .action{
-        color: var(--oc-message-warning-color, map-get($theme-colors, 'primary')) !important
-    }
+  p, .action {
+    color: var(--oc-message-warning-color, map-get($theme-colors, 'primary')) !important
+  }
 }
 
 //error
-.snackbar-container.error{
-    background: var(--oc-message-error-background, map-get($theme-colors, 'danger')) !important;
+.snackbar-container.error {
+  background: var(--oc-message-error-background, map-get($theme-colors, 'danger')) !important;
 
-    p, .action{
-        color: var(--oc-message-error-color, map-get($theme-colors, 'white')) !important
-    }
+  p, .action {
+    color: var(--oc-message-error-color, map-get($theme-colors, 'white')) !important
+  }
 }
 
 //success
-.snackbar-container.success{
-    background: var(--oc-message-success-background, map-get($theme-colors, 'success')) !important;
+.snackbar-container.success {
+  background: var(--oc-message-success-background, map-get($theme-colors, 'success')) !important;
 
-    p, .action{
-        color: var(--oc-message-success-color, map-get($theme-colors, 'white')) !important
-    }
+  p, .action {
+    color: var(--oc-message-success-color, map-get($theme-colors, 'white')) !important
+  }
 }
 
 //info
-.snackbar-container.info{
-    background: var(--oc-message-info-background, map-get($theme-colors, 'info')) !important;
+.snackbar-container.info {
+  background: var(--oc-message-info-background, map-get($theme-colors, 'info')) !important;
 
-    p, .action{
-        color: var(--oc-message-info-color, map-get($theme-colors, 'white')) !important
-    }
+  p, .action {
+    color: var(--oc-message-info-color, map-get($theme-colors, 'white')) !important
+  }
 }
 
 //Detalhes da mensagem
-.snackbar-container .details{
-    display: none;
+.snackbar-container .details {
+  display: none;
 }

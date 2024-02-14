@@ -23,22 +23,23 @@ export interface IButton extends Omit<IInputBase, "box" | "boxClasses" | "fieldC
  */
 const Button = ({frameworkStyle = "bootstrap", variant = "initial", ...props}: IButton) => {
     //Configuração do componente
-    let disabled: string = !!props.load || props.disabled ? "disabled " : ""
+    let disabled: string = !!props.load || props.disabled ? "disabled " : "";
     let type: string = variant === "initial"
         ? "btn btn-" + props.colors
-        : "rounded-pill badge justify-content-center align-items-center d-flex bg-" + props.colors
+        : "rounded-pill badge justify-content-center align-items-center d-flex bg-" + props.colors;
     let style = variant === "roudend"
-        ? {width: '30px', height: '30px', opacity: disabled ? '0.5' : '', border: "none"}
-        : {opacity: disabled ? '0.5' : ''}
+        ? {width: "30px", height: "30px", opacity: disabled ? "0.5" : "", border: "none"}
+        : {opacity: disabled ? "0.5" : ""};
     let button = () => {
         return <>
-            <Loading loadingVisible={!!props.load} loadingType="button"/>
+            <Loading loadingType="button"
+                     loadingVisible={!!props.load}/>
             {!!props.load
                 ? null
                 : <i className={(variant === "roudend" ? "fs-6" : "") + " -" + GET_ICON(props.iconType) + props.icon}/>}
             <span className={variant === "initial" ? "ms-1" : ""}>{variant === "initial" ? props.legend : ""}</span>
-        </>
-    }
+        </>;
+    };
 
     /*
     |------------------------------------------
@@ -47,20 +48,22 @@ const Button = ({frameworkStyle = "bootstrap", variant = "initial", ...props}: I
     */
     return frameworkStyle === "bootstrap" ?
         !props.onClick
-            ? <button type="submit"
+            ? <button className={disabled + type + " " + props.classes}
                       id={props.id}
-                      title={props.legend}
                       style={style}
-                      className={disabled + type + " " + props.classes}>{button()}</button>
-            : <a href="#"
+                      title={props.legend}
+                      type="submit">{button()}</button>
+            : <a className={disabled + type + " " + props.classes}
+                 href="#"
                  id={props.id}
-                 title={props.legend}
                  style={style}
-                 className={disabled + type + " " + props.classes}
+                 title={props.legend}
                  onClick={event => {
                      event.preventDefault();
-                     if (!props.disabled && props.onClick) props.onClick()
+                     if (!props.disabled && props.onClick) {
+                         props.onClick();
+                     }
                  }}>{button()}</a>
-        : null
-}
-export default Button
+        : null;
+};
+export default Button;

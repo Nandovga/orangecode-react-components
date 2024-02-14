@@ -16,8 +16,8 @@ interface Props extends IInputBase, IHookForm, IIcon {
 const SwitchBootstrap = ({box = "50", ...props}: Props) => {
 
     //Configuração do componente
-    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses
-    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses
+    let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
+    let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses;
 
     /*
     |--------------------------------------
@@ -25,20 +25,22 @@ const SwitchBootstrap = ({box = "50", ...props}: Props) => {
     |--------------------------------------
     */
     return <div className={"box-" + box + " " + boxClasses}>
-        <label className="form-label" htmlFor={props.name}>
+        <label className="form-label"
+               htmlFor={props.name}>
             <i className={GET_ICON(props.iconType) + props.icon}/>
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <div className="form-check form-switch ms-3">
             <input className={"form-check-input " + fieldClasses}
+                   disabled={props.disabled}
                    id={props.name}
                    type="checkbox"
-                   disabled={props.disabled}
                    {...props.register(props.name, {})}/>
-            <label className="form-check-label" htmlFor={props.name}>{props.label}</label>
+            <label className="form-check-label"
+                   htmlFor={props.name}>{props.label}</label>
         </div>
-    </div>
-}
+    </div>;
+};
 
 /**
  * Componente Switch
@@ -48,6 +50,6 @@ const SwitchBootstrap = ({box = "50", ...props}: Props) => {
  */
 const Switch = ({frameworkStyle = "bootstrap", ...props}: Props) => {
     return frameworkStyle === "bootstrap"
-        ? <SwitchBootstrap {...props}/> : <></>
-}
-export default Switch
+        ? <SwitchBootstrap {...props}/> : <></>;
+};
+export default Switch;
