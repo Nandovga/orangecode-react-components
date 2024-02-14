@@ -7,11 +7,11 @@ import Select from "../../Form/Select";
 /**
  * ACTION ≥ Realiza a filtragem dos dados da TABELA
  * @param props
- * @param tableDTOOriginal
+ * @param setDTO
  */
 export function handleFilter<T>(
     props: ITable<T>,
-    tableDTOOriginal: Array<T & { id: any }>
+    setDTO: React.Dispatch<Array<T & { id: any }>>
 ) {
 
     //Configurações do componente
@@ -47,16 +47,16 @@ export function handleFilter<T>(
                 filterOptions);
         }
 
-        if (props.setTableDTO !== undefined && props.tableFilterStyle !== "all") {
-            let result = tableDTOOriginal.filter(item => {
+        if (props.tableFilterStyle !== "all") {
+            let result = props.tableDTO.filter(item => {
                 const regex = new RegExp(value, "i");
                 return regex.test(item[field]);
             });
-            props.setTableDTO(filterSearch.lenght === 0 ? tableDTOOriginal : result);
+            setDTO(filterSearch.lenght === 0 ? props.tableDTO : result);
         }
 
-        if (props.setTableDTO !== undefined && props.tableFilterStyle === "all") {
-            let result = tableDTOOriginal.filter(item => {
+        if (props.tableFilterStyle === "all") {
+            let result = props.tableDTO.filter(item => {
                 for (let i = 0; i < filter.length; i++) {
                     let valor = item[filter[i].id].toString()
                         .normalize("NFD")
@@ -71,7 +71,7 @@ export function handleFilter<T>(
                     }
                 }
             });
-            props.setTableDTO(filterSearch.lenght === 0 ? tableDTOOriginal : result);
+            setDTO(filterSearch.lenght === 0 ? props.tableDTO : result);
         }
     };
 

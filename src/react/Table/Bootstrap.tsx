@@ -27,7 +27,6 @@ function Bootstrap<T>(props: ITable<T>) {
     const paginationRef = useRef<any>(null);
     const [init, setInit] = useState(false);
     const [tableDTO, setTableDTO] = useState<Array<T & { id: any }>>(props.tableDTO);
-    const [tableDTOOriginal, setTableDTOOriginal] = useState<Array<T & { id: any }>>([]);
     const [tablePageSelect, setTablePageSelect] = useState<number>(0);
 
     const [tableEdit, setTableEdit] = useState<null | T & { id: any }>(null);
@@ -35,9 +34,6 @@ function Bootstrap<T>(props: ITable<T>) {
 
     //EFFECT ≥ Inicializa componente
     useEffect(() => {
-        if (!init || !props.tableInit) {
-            setTableDTOOriginal(props.tableDTO);
-        }
         setInit(true);
         if (props.tableOnInit) {
             props.tableOnInit(true);
@@ -84,7 +80,7 @@ function Bootstrap<T>(props: ITable<T>) {
         {/*opções e filtro*/}
         <div className="w-100 d-flex flex-md-nowrap flex-wrap align-items-center">
             {props.tableFilterPosition === "top"
-                ? handleFilter<T>(props, tableDTOOriginal) : null}
+                ? handleFilter<T>(props, setTableDTO) : null}
             <div
                 className={props.tableClassesOptions?.box}>{props.tableOptionsRender ? props.tableOptionsRender() : null}</div>
         </div>
@@ -138,7 +134,7 @@ function Bootstrap<T>(props: ITable<T>) {
 
         {/*filtro*/}
         {!props.tableFilterPosition || props.tableFilterPosition === "bottom"
-            ? handleFilter<T>(props, tableDTOOriginal) : null}
+            ? handleFilter<T>(props, setTableDTO) : null}
     </>;
 }
 
