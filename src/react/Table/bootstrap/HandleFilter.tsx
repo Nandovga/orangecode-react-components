@@ -38,6 +38,11 @@ export function handleFilter<T>(
     const handleFilter = () => {
         let field = !props.tableFilter?.setField ? filterField : props.tableFilter.field === "" ? filter[0].id : props.tableFilter.field;
         let value = !props.tableFilter?.setValue ? filterSearch : props.tableFilter.value;
+        let original = props.tablePagination === "auto" ? props.tableDTO.filter((item, index) => {
+            if (index < (props.tablePaginationRow === undefined ? 10 : props.tablePaginationRow)) {
+                return item;
+            }
+        }) : props.tableDTO
 
         if (props.tableOnFilter) {
             props.tableOnFilter(
@@ -52,7 +57,7 @@ export function handleFilter<T>(
                 const regex = new RegExp(value, "i");
                 return regex.test(item[field]);
             });
-            setDTO(filterSearch.lenght === 0 ? props.tableDTO : result);
+            setDTO(filterSearch.length === 0 ? original : result);
         }
 
         if (props.tableFilterStyle === "all") {
@@ -71,7 +76,7 @@ export function handleFilter<T>(
                     }
                 }
             });
-            setDTO(filterSearch.lenght === 0 ? props.tableDTO : result);
+            setDTO(filterSearch.length === 0 ? original : result);
         }
     };
 

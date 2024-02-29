@@ -58,9 +58,6 @@ function Bootstrap<T>(props: ITable<T>) {
                 setTablePageSelect(paginationRef.current.state.selected);
             }
         }
-        if (paginationRef.current === null) {
-            setTableDTO(props.tableDTO);
-        }
     }, [tableDTO]);
 
     //EFFECT - Muda para 1.º pagina quando os dados originais são alterados
