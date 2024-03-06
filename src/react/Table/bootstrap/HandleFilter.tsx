@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {ITable} from "../types";
+import React, { useEffect, useState } from "react";
+import { ITable } from "../types";
 import Button from "../../Button";
 import Input from "../../Form/Input";
 import Select from "../../Form/Select";
@@ -42,7 +42,7 @@ export function handleFilter<T>(
             if (index < (props.tablePaginationRow === undefined ? 10 : props.tablePaginationRow)) {
                 return item;
             }
-        }) : props.tableDTO
+        }) : props.tableDTO;
 
         if (props.tableOnFilter) {
             props.tableOnFilter(
@@ -88,7 +88,7 @@ export function handleFilter<T>(
     return filter.length > 0 && (!props.tableFilterStyle || props.tableFilterStyle === "field")
         ? <div className="w-100 d-flex flex-column flex-md-row m-0 mt-1 align-items-start align-items-md-end">
             <Select data={filter.map(row => {
-                return {id: row.id, name: row.title};
+                return { id: row.id, name: row.title };
             })}
                     box="25"
                     boxClasses="mx-1"
@@ -127,7 +127,7 @@ export function handleFilter<T>(
                            props.tableFilter.setValue(value);
                        }
                    }}/>
-            <div style={{minWidth: "100px"}}>
+            <div style={{ minWidth: "100px" }}>
                 <Button classes="btn-sm mb-2 mt-2 mt-md-0"
                         colors="secondary"
                         icon="funnel-fill"
@@ -153,7 +153,7 @@ export function handleFilter<T>(
                            onChange={event => setFilterSearch(event.target.value)}/>
                     <a className="d-flex align-items-center"
                        href="#"
-                       style={{position: "absolute", right: "8px", top: "0", bottom: "0"}}
+                       style={{ position: "absolute", right: "8px", top: "0", bottom: "0" }}
                        onClick={event => {
                            event.preventDefault();
                            handleFilter();

@@ -1,7 +1,7 @@
 import React from "react";
-import {IInputBase} from "../../@types/form";
-import {GET_ICON} from "../../ts/system";
-import {IIcon} from "../../@types/icon";
+import { IInputBase } from "../../@types/form";
+import { GET_ICON } from "../../ts/system";
+import { IIcon } from "../../@types/icon";
 
 export interface ISwitch extends IInputBase, IIcon {
     value: boolean
@@ -14,7 +14,7 @@ export interface ISwitch extends IInputBase, IIcon {
  * @param props
  * @constructor
  */
-const SwitchBootstrap = ({box = "50", ...props}: ISwitch) => {
+const SwitchBootstrap = ({ box = "50", ...props }: ISwitch) => {
     //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses;
@@ -55,7 +55,7 @@ const SwitchBootstrap = ({box = "50", ...props}: ISwitch) => {
  * @param props
  * @constructor
  */
-const Switch = ({frameworkStyle = "bootstrap", ...props}: ISwitch) => {
+const Switch = ({ frameworkStyle = "bootstrap", ...props }: ISwitch) => {
     return frameworkStyle === "bootstrap" ? <SwitchBootstrap {...props}/> : <></>;
 };
 export default Switch;

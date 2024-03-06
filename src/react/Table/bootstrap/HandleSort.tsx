@@ -1,8 +1,8 @@
 import React from "react";
 import $ from "jquery";
 
-import {ITable} from "../types";
-import {GET_TYPE} from "../../../ts/system";
+import { ITable } from "../types";
+import { GET_TYPE } from "../../../ts/system";
 
 /**
  * Executa a ação de ordenação
@@ -28,8 +28,8 @@ export function handleSort<T>(
 
     if (modo === "auto") {
         if (paginationRef.current !== null) {
-            paginationRef.current.props.onPageChange({selected: 1});
-            paginationRef.current.setState({selected: 1});
+            paginationRef.current.props.onPageChange({ selected: 1 });
+            paginationRef.current.setState({ selected: 1 });
         }
         let data = props.tableDTO;
 
@@ -60,8 +60,8 @@ export function handleSort<T>(
         }
         setTimeout(() => {
             if (paginationRef.current !== null) {
-                paginationRef.current.props.onPageChange({selected: 0});
-                paginationRef.current.setState({selected: 0});
+                paginationRef.current.props.onPageChange({ selected: 0 });
+                paginationRef.current.setState({ selected: 0 });
             }
             handleSortIcon(sort);
             setDTO(data);

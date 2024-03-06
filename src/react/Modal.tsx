@@ -1,9 +1,9 @@
 import $ from "jquery";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
-import {IIcon} from "../@types/icon";
-import {GET_ICON} from "../ts/system";
-import {IFrameworkStyle} from "../@types/style";
+import { IIcon } from "../@types/icon";
+import { GET_ICON } from "../ts/system";
+import { IFrameworkStyle } from "../@types/style";
 
 export type IModalVisible = "open" | "closed"
 
@@ -33,7 +33,7 @@ type Props = IModal & {
  * @param props
  * @constructor
  */
-const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) => {
+const ModalBootstrap: React.FC<Props> = ({ modalCenter = true, ...props }: Props) => {
 
     //STATE ≥ Estado do componente
     const modalId: string = !props.modalId
@@ -103,7 +103,7 @@ const ModalBootstrap: React.FC<Props> = ({modalCenter = true, ...props}: Props) 
  * @param props
  * @constructor
  */
-const Modal: React.FC<Props> = ({frameworkStyle = "bootstrap", ...props}: Props) => {
+const Modal: React.FC<Props> = ({ frameworkStyle = "bootstrap", ...props }: Props) => {
     return frameworkStyle === "bootstrap"
         ? <ModalBootstrap {...props}>{props.children}</ModalBootstrap> : <></>;
 };

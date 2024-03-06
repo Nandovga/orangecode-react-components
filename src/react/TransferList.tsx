@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useReducer, useState} from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 
 export interface ITransferList {
     id: number
@@ -24,13 +24,13 @@ type STOREType = "setData" | "setActive" | "setInative";
 function reducer(state: Props, action: STOREAction) {
     switch (action.type) {
         case "setData":
-            return {...state, data: action.payload};
+            return { ...state, data: action.payload };
         case "setActive":
-            return {...state, active: action.payload};
+            return { ...state, active: action.payload };
         case "setInative":
-            return {...state, inative: action.payload};
+            return { ...state, inative: action.payload };
         default:
-            return {...state};
+            return { ...state };
     }
 }
 
@@ -40,7 +40,7 @@ function reducer(state: Props, action: STOREAction) {
  * @constructor
  */
 const TransferListInative = () => {
-    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext);
+    const { state, setState } = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext);
     const inative = state.data.filter(row => !row.active);
 
     return <div className="transfer-list-box">
@@ -76,7 +76,7 @@ const TransferListInative = () => {
  * @constructor
  */
 const TransferListActive = () => {
-    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext);
+    const { state, setState } = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext);
     const active = state.data.filter(row => row.active);
 
     return <div className="transfer-list-box">
@@ -120,7 +120,7 @@ const TransferListActive = () => {
  */
 const TransferListOptions = () => {
 
-    const {state, setState} = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext);
+    const { state, setState } = useContext<{ state: Props, setState: React.Dispatch<STOREAction> }>(TransferListContext);
     const active = state.data.filter(row => row.active);
     const inative = state.data.filter(row => !row.active);
 
@@ -131,15 +131,15 @@ const TransferListOptions = () => {
                 x[i] = inative[i];
                 x[i].active = true;
             }
-            setState({type: "setData", payload: [...active, ...x]});
-            setState({type: "setInative", payload: []});
+            setState({ type: "setData", payload: [...active, ...x] });
+            setState({ type: "setInative", payload: [] });
         } else {
             for (let i = 0; i < active.length; i++) {
                 x[i] = active[i];
                 x[i].active = false;
             }
-            setState({type: "setData", payload: [...inative, ...x]});
-            setState({type: "setActive", payload: []});
+            setState({ type: "setData", payload: [...inative, ...x] });
+            setState({ type: "setActive", payload: [] });
         }
     };
 
@@ -154,8 +154,8 @@ const TransferListOptions = () => {
                     y = y.filter(row => row.id !== x[i].id);
                 }
             }
-            setState({type: "setData", payload: [...active, ...x, ...y]});
-            setState({type: "setInative", payload: []});
+            setState({ type: "setData", payload: [...active, ...x, ...y] });
+            setState({ type: "setInative", payload: [] });
         } else {
             let x: Array<ITransferList> = [];
             let y: Array<ITransferList> = active;
@@ -166,8 +166,8 @@ const TransferListOptions = () => {
                     y = y.filter(row => row.id !== x[i].id);
                 }
             }
-            setState({type: "setData", payload: [...inative, ...x, ...y]});
-            setState({type: "setActive", payload: []});
+            setState({ type: "setData", payload: [...inative, ...x, ...y] });
+            setState({ type: "setActive", payload: [] });
         }
     };
 
@@ -211,7 +211,7 @@ const TransferList = (props: {
     onChange(data: Array<ITransferList>): void
 }) => {
 
-    const initState: Props = {data: props.data, active: [], inative: [], disabled: props.disabled};
+    const initState: Props = { data: props.data, active: [], inative: [], disabled: props.disabled };
     const [init, setInit] = useState(false);
     const [state, setState] = useReducer(reducer, initState);
 
@@ -225,10 +225,10 @@ const TransferList = (props: {
 
     //EFFECT ≥ Executa a ação quando altera os dados
     useEffect(() => {
-        setState({type: "setData", payload: props.data});
+        setState({ type: "setData", payload: props.data });
     }, [props.data]);
 
-    return <TransferListContext.Provider value={{state, setState}}>
+    return <TransferListContext.Provider value={{ state, setState }}>
         <div className="w-100 p-1 transfer-list d-flex">
             <TransferListInative/>
             <TransferListOptions/>

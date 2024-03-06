@@ -1,7 +1,7 @@
 import React from "react";
-import {GET_ICON} from "../ts/system";
-import {IIconType} from "../@types/icon";
-import {IFrameworkStyle} from "../@types/style";
+import { GET_ICON } from "../ts/system";
+import { IIconType } from "../@types/icon";
+import { IFrameworkStyle } from "../@types/style";
 
 export interface ITabView {
     tab: string
@@ -24,7 +24,7 @@ type Props = {
  * @param iconType
  * @constructor
  */
-const TabViewBootstrap = ({tabs, iconType = "bootstrap"}: Props) => {
+const TabViewBootstrap = ({ tabs, iconType = "bootstrap" }: Props) => {
     let icon: string = GET_ICON(iconType);
     return <>
         <ul className="nav nav-tabs w-100">
@@ -53,7 +53,7 @@ const TabViewBootstrap = ({tabs, iconType = "bootstrap"}: Props) => {
  * @param frameworkStyle
  * @constructor
  */
-const TabView = ({tabs, iconType = "bootstrap", frameworkStyle = "bootstrap"}: Props) => {
+const TabView = ({ tabs, iconType = "bootstrap", frameworkStyle = "bootstrap" }: Props) => {
     return (frameworkStyle === "bootstrap" ? <TabViewBootstrap iconType={iconType}
                                                                tabs={tabs}/> : <></>);
 };

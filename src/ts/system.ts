@@ -1,6 +1,6 @@
 import $ from "jquery";
-import {IBreakpoint} from "../@types/system";
-import {IIconType} from "../@types/icon";
+import { IIconType } from "../@types/icon";
+import { IBreakpoint } from "../@types/system";
 
 /**
  * Função responsável por acessar o retorno

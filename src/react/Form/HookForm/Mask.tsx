@@ -1,10 +1,10 @@
 import React from "react";
-import {Controller} from "react-hook-form";
-import {InputMask} from "primereact/inputmask";
+import { Controller } from "react-hook-form";
+import { InputMask } from "primereact/inputmask";
 
-import {GET_ICON} from "../../../ts/system";
-import {IIcon} from "../../../@types/icon";
-import {IInputBase} from "../../../@types/form";
+import { GET_ICON } from "../../../ts/system";
+import { IIcon } from "../../../@types/icon";
+import { IInputBase } from "../../../@types/form";
 
 interface Props extends IInputBase, IIcon {
     mask: string
@@ -17,7 +17,7 @@ interface Props extends IInputBase, IIcon {
  * @param props
  * @constructor
  */
-const InputBootstrapMask = ({...props}: Props) => {
+const InputBootstrapMask = ({ ...props }: Props) => {
 
     //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
@@ -35,7 +35,7 @@ const InputBootstrapMask = ({...props}: Props) => {
             {props.legend}{props.required ? <span className="text-danger">*</span> : null}
         </label>
         <Controller
-            render={({field: {onChange, value}, formState: {errors}}) => {
+            render={({ field: { onChange, value }, formState: { errors } }) => {
                 let message = !errors[props.name] ? "" : errors[props.name]?.message;
                 return <>
                     <InputMask className={"form-control " + fieldClasses + (!errors[props.name] ? "" : "is-invalid")}
@@ -70,7 +70,7 @@ const InputBootstrapMask = ({...props}: Props) => {
  * @param props
  * @constructor
  */
-const Mask = ({frameworkStyle = "bootstrap", box = "100", ...props}: Props) => {
+const Mask = ({ frameworkStyle = "bootstrap", box = "100", ...props }: Props) => {
     return frameworkStyle === "bootstrap"
         ? <InputBootstrapMask box={box}
                               {...props}/>

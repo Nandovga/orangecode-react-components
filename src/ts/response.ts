@@ -1,6 +1,6 @@
 import $ from "jquery";
 import Snackbar from "node-snackbar/dist/snackbar";
-import {IResponseType} from "../@types/response";
+import { IResponseType } from "../@types/response";
 
 /**
  * Realzia a gestão resposta da aplicação

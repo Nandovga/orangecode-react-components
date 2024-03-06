@@ -13,7 +13,7 @@ export interface IFilterDateProps {
  * @param className
  * @constructor
  */
-const Date = ({value, setValue, className}: IFilterDateProps) => {
+const Date = ({ value, setValue, className }: IFilterDateProps) => {
     let date = value.split("/");
     date = date.map((item, index) => {
         if (item === "undefined" || item.length == 0) {
@@ -24,7 +24,7 @@ const Date = ({value, setValue, className}: IFilterDateProps) => {
 
     return <div className={"d-flex " + (className)}>
         <input className="form-control me-1"
-               style={{flex: 1}}
+               style={{ flex: 1 }}
                type="text"
                value={isNaN(parseInt(date[0])) || date[0] == "00" ? "" : date[0]}
                onChange={event => {
@@ -37,7 +37,7 @@ const Date = ({value, setValue, className}: IFilterDateProps) => {
                    }
                }}/>
         <input className="form-control me-1"
-               style={{flex: 1}}
+               style={{ flex: 1 }}
                type="text"
                value={isNaN(parseInt(date[1])) || date[1] == "00" ? "" : date[1]}
                onChange={event => {
@@ -50,7 +50,7 @@ const Date = ({value, setValue, className}: IFilterDateProps) => {
                    }
                }}/>
         <input className="form-control me-1"
-               style={{flex: 2}}
+               style={{ flex: 2 }}
                type="text"
                value={isNaN(parseInt(date[2])) || date[2] == "0000" ? "" : date[2]}
                onChange={event => {

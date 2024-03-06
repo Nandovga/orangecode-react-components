@@ -13,7 +13,7 @@ export interface IFilterTextProps {
  * @param className
  * @constructor
  */
-const Text = ({value, setValue, className}: IFilterTextProps) => {
+const Text = ({ value, setValue, className }: IFilterTextProps) => {
     return <input className={"form-control w-100 " + (className)}
                   type="text"
                   value={value}

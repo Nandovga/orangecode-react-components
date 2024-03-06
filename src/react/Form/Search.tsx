@@ -1,7 +1,7 @@
 import React from "react";
-import {IIcon} from "../../@types/icon";
-import {GET_ICON} from "../../ts/system";
-import {IInputBase} from "../../@types/form";
+import { IIcon } from "../../@types/icon";
+import { GET_ICON } from "../../ts/system";
+import { IInputBase } from "../../@types/form";
 
 export interface ISearchData {
     name: string
@@ -96,7 +96,7 @@ function SearchBootstrap<T>(props: ISearch<T>) {
  * @param props
  * @constructor
  */
-function Search<T>({frameworkStyle = "bootstrap", ...props}: ISearch<T>) {
+function Search<T>({ frameworkStyle = "bootstrap", ...props }: ISearch<T>) {
     return frameworkStyle === "bootstrap" ? <SearchBootstrap {...props}/> : <></>;
 }
 

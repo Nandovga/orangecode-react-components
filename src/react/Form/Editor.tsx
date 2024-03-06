@@ -2,9 +2,9 @@ import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import {IIcon} from "../../@types/icon";
-import {GET_ICON} from "../../ts/system";
-import {IInputBase} from "../../@types/form";
+import { IIcon } from "../../@types/icon";
+import { GET_ICON } from "../../ts/system";
+import { IInputBase } from "../../@types/form";
 
 export interface IEditorProps extends IInputBase, IIcon {
     module?: "basic" | "complete"
@@ -16,23 +16,23 @@ export interface IEditorProps extends IInputBase, IIcon {
  * @param props
  * @constructor
  */
-const EditorQuill = ({module = "basic", ...props}: IEditorProps) => {
+const EditorQuill = ({ module = "basic", ...props }: IEditorProps) => {
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
     let editorModules = {
         toolbar: module === "complete"
             ? [
-                [{"font": []}, {"size": ["small", false, "large", "huge"]}, {"header": [1, 2, 3, 4, 5, 6, false]}],
-                [{"color": []}, {"background": []}],
-                [{"list": "ordered"}, {"list": "bullet"}, {"indent": "-1"}, {"indent": "+1"}],
+                [{ "font": [] }, { "size": ["small", false, "large", "huge"] }, { "header": [1, 2, 3, 4, 5, 6, false] }],
+                [{ "color": [] }, { "background": [] }],
+                [{ "list": "ordered" }, { "list": "bullet" }, { "indent": "-1" }, { "indent": "+1" }],
                 ["bold", "italic", "underline", "strike", "blockquote", "code"],
-                [{"direction": "rtl"}],
+                [{ "direction": "rtl" }],
                 ["link", "image", "video"],
                 ["clean"]
             ]
             : [
-                [{"font": []}, {"size": ["small", false, "large", "huge"]}],
-                [{"color": []}],
-                [{"list": "ordered"}, {"list": "bullet"}],
+                [{ "font": [] }, { "size": ["small", false, "large", "huge"] }],
+                [{ "color": [] }],
+                [{ "list": "ordered" }, { "list": "bullet" }],
                 ["bold", "italic", "underline", "code"],
                 ["link", "image"]
             ]
@@ -66,7 +66,7 @@ const EditorQuill = ({module = "basic", ...props}: IEditorProps) => {
  * @param props
  * @constructor
  */
-const Editor = ({...props}: IEditorProps) => {
+const Editor = ({ ...props }: IEditorProps) => {
     return !props.frameworkStyle ? <EditorQuill {...props}/> : <></>;
 };
 export default Editor;

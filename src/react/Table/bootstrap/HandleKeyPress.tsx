@@ -1,5 +1,5 @@
 import $ from "jquery";
-import {ITable} from "../types";
+import { ITable } from "../types";
 
 /**
  * EVENT ≥ Aplica o evento de keypress na TABELA
@@ -40,8 +40,8 @@ export function handleKeyPress<T>(props: ITable<T>, DTO: Array<T & { id: any }>,
                 }
                 break;
         }
-        paginationRef.current.props.onPageChange({selected: pager});
-        paginationRef.current.setState({selected: pager});
+        paginationRef.current.props.onPageChange({ selected: pager });
+        paginationRef.current.setState({ selected: pager });
     };
 
     //EVENT ≥ KeyDown

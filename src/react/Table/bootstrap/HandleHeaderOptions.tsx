@@ -1,5 +1,5 @@
 import React from "react";
-import {ITable} from "../types";
+import { ITable } from "../types";
 import Tooltip from "../../Tooltip";
 
 /**

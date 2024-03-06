@@ -1,5 +1,5 @@
 import React from "react";
-import {AutoComplete} from "primereact/autocomplete";
+import { AutoComplete } from "primereact/autocomplete";
 
 export interface IFilterAutocomplete {
     id: any
@@ -23,7 +23,7 @@ export interface IFilterAutocompleteProps {
  * @param onSearch
  * @constructor
  */
-const Autocomplete = ({value, setValue, data, dataOriginal, onSearch}: IFilterAutocompleteProps) => {
+const Autocomplete = ({ value, setValue, data, dataOriginal, onSearch }: IFilterAutocompleteProps) => {
     let filtered = typeof value !== "object"
         ? value.split(";").map(item => parseInt(item))
         : value;

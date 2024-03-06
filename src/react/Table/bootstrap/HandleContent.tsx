@@ -1,6 +1,6 @@
 import React from "react";
-import {ITable, ITableDetail, ITableHeader} from "../types";
-import {handleContentEditor} from "./HandleContentEditor";
+import { handleContentEditor } from "./HandleContentEditor";
+import { ITable, ITableDetail, ITableHeader } from "../types";
 
 /**
  * ACTION ≥ Monta o conteúdo da TABELA
@@ -42,7 +42,7 @@ export function handleContent<T>(
             return null;
         }
         return row.children === undefined ? <td/> : <td className="text-center"
-                                                        style={{width: "0px"}}>
+                                                        style={{ width: "0px" }}>
             <a className="table-button-details"
                href="#"
                onClick={event => {
@@ -83,7 +83,7 @@ export function handleContent<T>(
                        }
                    }
                }}>{row.open || row.open === undefined ? <i className="bi bi-chevron-down"/> :
-                <i className="bi bi-chevron-right"/>}</a>
+               <i className="bi bi-chevron-right"/>}</a>
         </td>;
     };
 
@@ -93,14 +93,14 @@ export function handleContent<T>(
             return null;
         }
         return <td className={selectIndicator + " text-center " + (select ? selectIndicator : "")}
-                   style={{width: "0px"}}>{select ? <i className="bi bi-caret-right-fill"/> : ""}</td>;
+        style={{ width: "0px" }}>{select ? <i className="bi bi-caret-right-fill"/> : ""}</td>;
     };
 
     //Gestão do MultiSelect
     let renderMultiSelect = () => {
         return props.tableMultiSelect ?
             <td className={"text-center" + (multiSelect ? " bg-light" : "")}
-                style={{width: "0px"}}>
+                style={{ width: "0px" }}>
                 <input checked={multiSelect}
                        className="form-check-input"
                        type="checkbox"
@@ -118,18 +118,18 @@ export function handleContent<T>(
 
     //Exibe os dados normais
     let renderCell = (header: ITableHeader<T>) => {
-        const {id, body, align, classes} = header;
+        const { id, body, align, classes } = header;
         const cellProps = {
             key: `${row.id}-${id}`,
             className: `${!align ? "" : "text-" + align} ${select || multiSelect ? "fw-bold " + selectIndicator : ""} ${!classes ? "" : classes}`,
-            style: {cursor: !props.tableOnSelect ? "initial" : "pointer", verticalAlign: "middle"}
+            style: { cursor: !props.tableOnSelect ? "initial" : "pointer", verticalAlign: "middle" }
         };
         return tableEdit.edit?.id === row.id && header.editor && tableEdit.editField === header.id
             ? <td className={(select ? selectIndicator : "")}
                   key={`${row.id}-${id}`}>{header.editor({
                 row: row,
                 value: row[tableEdit.editField],
-                setValue: value => handleContentEditor({data: tableDTO.data, setData: tableDTO.setData}, {
+                setValue: value => handleContentEditor({ data: tableDTO.data, setData: tableDTO.setData }, {
                     edit: row,
                     field: tableEdit.editField
                 }, value),
@@ -152,7 +152,7 @@ export function handleContent<T>(
                   }}>
                 {body ? body(row, id) : row[id]}
                 {header.editor && select ? <i className="me-2 ms-1 bi bi-pencil"
-                                              style={{fontSize: ".8em"}}/> : null}
+                                              style={{ fontSize: ".8em" }}/> : null}
             </td>;
     };
 

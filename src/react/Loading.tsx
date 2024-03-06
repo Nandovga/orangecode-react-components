@@ -1,6 +1,6 @@
 import React from "react";
-import {IColor} from "../@types/color";
-import {IFrameworkStyle} from "../@types/style";
+import { IColor } from "../@types/color";
+import { IFrameworkStyle } from "../@types/style";
 
 export interface ILoading {
     loadingVisible: boolean
@@ -21,9 +21,8 @@ type Props = ILoading & {
  * @param props
  * @constructor
  */
-const LoadingBootstrapBox = ({loadingText = "Processando os dados...", ...props}: Props) => {
+const LoadingBootstrapBox = ({ loadingText = "Processando os dados...", ...props }: Props) => {
     return <div
-        className={"flex-column position-absolute justify-content-center align-items-center " + (props.loadingVisible ? "d-flex" : "d-none")}
         style={{
             width: "100%",
             height: "100%",
@@ -31,7 +30,8 @@ const LoadingBootstrapBox = ({loadingText = "Processando os dados...", ...props}
             top: 0,
             left: 0,
             zIndex: 2000
-        }}>
+        }}
+        className={"flex-column position-absolute justify-content-center align-items-center " + (props.loadingVisible ? "d-flex" : "d-none")}>
         <div
             className={"spinner-" + (!props.loadingStyle ? "border" : props.loadingStyle) + " text-" + props.loadingColor}
             role="status">
@@ -46,7 +46,7 @@ const LoadingBootstrapBox = ({loadingText = "Processando os dados...", ...props}
  * @param props
  * @constructor
  */
-const LoadingBootstrapButton = ({...props}: Props) => {
+const LoadingBootstrapButton = ({ ...props }: Props) => {
     return props.loadingVisible
         ? <span className={"spinner-border spinner-border-sm text-" + props.loadingColor}/> : <></>;
 };
@@ -59,7 +59,7 @@ const LoadingBootstrapButton = ({...props}: Props) => {
  * @param props
  * @constructor
  */
-const Loading = ({frameworkStyle = "bootstrap", loadingType = "box", loadingColor = "white", ...props}: Props) => {
+const Loading = ({ frameworkStyle = "bootstrap", loadingType = "box", loadingColor = "white", ...props }: Props) => {
     return frameworkStyle === "bootstrap"
         ? loadingType === "box"
             ? <LoadingBootstrapBox {...props}

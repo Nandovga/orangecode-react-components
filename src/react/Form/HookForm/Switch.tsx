@@ -1,7 +1,7 @@
 import React from "react";
-import {IIcon} from "../../../@types/icon";
-import {GET_ICON} from "../../../ts/system";
-import {IHookForm, IInputBase} from "../../../@types/form";
+import { IIcon } from "../../../@types/icon";
+import { GET_ICON } from "../../../ts/system";
+import { IHookForm, IInputBase } from "../../../@types/form";
 
 interface Props extends IInputBase, IHookForm, IIcon {
     label: string
@@ -13,7 +13,7 @@ interface Props extends IInputBase, IHookForm, IIcon {
  * @param props
  * @constructor
  */
-const SwitchBootstrap = ({box = "50", ...props}: Props) => {
+const SwitchBootstrap = ({ box = "50", ...props }: Props) => {
 
     //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
@@ -48,7 +48,7 @@ const SwitchBootstrap = ({box = "50", ...props}: Props) => {
  * @param props
  * @constructor
  */
-const Switch = ({frameworkStyle = "bootstrap", ...props}: Props) => {
+const Switch = ({ frameworkStyle = "bootstrap", ...props }: Props) => {
     return frameworkStyle === "bootstrap"
         ? <SwitchBootstrap {...props}/> : <></>;
 };

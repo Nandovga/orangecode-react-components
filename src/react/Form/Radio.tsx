@@ -1,7 +1,7 @@
 import React from "react";
-import {IIcon} from "../../@types/icon";
-import {GET_ICON} from "../../ts/system";
-import {IInputBase} from "../../@types/form";
+import { IIcon } from "../../@types/icon";
+import { GET_ICON } from "../../ts/system";
+import { IInputBase } from "../../@types/form";
 
 export type IRadioValue = {
     value: string,
@@ -21,12 +21,12 @@ export interface IRadio extends IInputBase, IIcon {
  * @param props
  * @constructor
  */
-const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => {
+const RadioBootstrap = ({ box = "100", radioAlign = "row", ...props }: IRadio) => {
 
     //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses;
-
+    
     /*
     |------------------------------------------
     | render() - Renderização do componente
@@ -67,7 +67,7 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: IRadio) => 
  * @param props
  * @constructor
  */
-const Radio = ({frameworkStyle = "bootstrap", ...props}: IRadio) => {
+const Radio = ({ frameworkStyle = "bootstrap", ...props }: IRadio) => {
     return frameworkStyle === "bootstrap"
         ? <RadioBootstrap {...props}/> : <></>;
 };

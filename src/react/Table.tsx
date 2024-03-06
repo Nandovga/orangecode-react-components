@@ -1,5 +1,5 @@
 import React from "react";
-import {ITable} from "./Table/types";
+import { ITable } from "./Table/types";
 import Bootstrap from "./Table/Bootstrap";
 
 /**
@@ -9,7 +9,7 @@ import Bootstrap from "./Table/Bootstrap";
  * @param props
  * @constructor
  */
-function Table<T>({frameworkStyle = "bootstrap", ...props}: ITable<T>) {
+function Table<T>({ frameworkStyle = "bootstrap", ...props }: ITable<T>) {
     return frameworkStyle === "bootstrap" ? <Bootstrap<T> {...props}/> : <></>;
 }
 

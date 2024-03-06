@@ -1,8 +1,8 @@
 import React from "react";
-import {ISelectData} from "../Select";
-import {IIcon} from "../../../@types/icon";
-import {GET_ICON} from "../../../ts/system";
-import {IHookForm, IInputBase} from "../../../@types/form";
+import { ISelectData } from "../Select";
+import { IIcon } from "../../../@types/icon";
+import { GET_ICON } from "../../../ts/system";
+import { IHookForm, IInputBase } from "../../../@types/form";
 
 interface Props extends IInputBase, IHookForm, IIcon {
     data: Array<ISelectData>
@@ -14,7 +14,7 @@ interface Props extends IInputBase, IHookForm, IIcon {
  * @param props
  * @constructor
  */
-const SelectBootstrap = ({...props}: Props) => {
+const SelectBootstrap = ({ ...props }: Props) => {
 
     //Configuração do componente
     let init = !props.init ? null
@@ -61,7 +61,7 @@ const SelectBootstrap = ({...props}: Props) => {
  * @param props
  * @constructor
  */
-const Select = ({frameworkStyle = "bootstrap", box = "100", ...props}: Props) => {
+const Select = ({ frameworkStyle = "bootstrap", box = "100", ...props }: Props) => {
     return frameworkStyle === "bootstrap"
         ? <SelectBootstrap {...props}
                            box={box}/> : <></>;

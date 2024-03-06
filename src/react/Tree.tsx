@@ -1,9 +1,10 @@
 import $ from "jquery";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+
 import Input from "./Form/Input";
-import {GET_TYPE} from "../ts/system";
-import {IColor} from "../@types/color";
-import {IFrameworkStyle} from "../@types/style";
+import { GET_TYPE } from "../ts/system";
+import { IColor } from "../@types/color";
+import { IFrameworkStyle } from "../@types/style";
 
 export type ITreeData = {
     id: number
@@ -170,7 +171,7 @@ function TreeBootstrap<T>(props: ITree<T>) {
                 return;
             }
             let margin = parseInt($(this).parent().parent(".tree-line[data-id='" + parent + "']").css("margin-left"));
-            $(this).css({"margin-left": (margin === 0 ? 22 : margin) + "px"});
+            $(this).css({ "margin-left": (margin === 0 ? 22 : margin) + "px" });
         });
     });
 
@@ -229,7 +230,7 @@ function TreeBootstrap<T>(props: ITree<T>) {
  * @param props
  * @constructor
  */
-function Tree<T>({frameworkStyle = "bootstrap", ...props}: ITree<T>) {
+function Tree<T>({ frameworkStyle = "bootstrap", ...props }: ITree<T>) {
     return frameworkStyle === "bootstrap" ? <TreeBootstrap<T> {...props}/> : <></>;
 }
 

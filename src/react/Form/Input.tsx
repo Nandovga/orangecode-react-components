@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-import {GET_ICON} from "../../ts/system";
-import {IIcon} from "../../@types/icon";
-import {IInputBase, IInputType} from "../../@types/form";
+import { IIcon } from "../../@types/icon";
+import { GET_ICON } from "../../ts/system";
+import { IInputBase, IInputType } from "../../@types/form";
 
 export interface IInput extends IInputBase, IIcon {
     type?: IInputType
@@ -15,7 +15,7 @@ export interface IInput extends IInputBase, IIcon {
  * @param props
  * @constructor
  */
-const InputBootstrap = ({...props}: IInput) => {
+const InputBootstrap = ({ ...props }: IInput) => {
 
     //Configuração do componente
     const [type, setType] = useState(props.type);
@@ -64,7 +64,7 @@ const InputBootstrap = ({...props}: IInput) => {
  * @param props
  * @constructor
  */
-const Input = ({type = "text", box = "100", frameworkStyle = "bootstrap", ...props}: IInput) => {
+const Input = ({ type = "text", box = "100", frameworkStyle = "bootstrap", ...props }: IInput) => {
     return frameworkStyle === "bootstrap"
         ? <InputBootstrap {...props}
                           box={box}

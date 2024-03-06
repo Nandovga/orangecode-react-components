@@ -1,9 +1,9 @@
 import React from "react";
 import Text from "./Text";
 import Date from "./Date";
-import {IIcon} from "../../../@types/icon";
-import {IInputBase} from "../../../@types/form";
-import Autocomplete, {IFilterAutocomplete} from "./Autocomplete";
+import { IIcon } from "../../../@types/icon";
+import { IInputBase } from "../../../@types/form";
+import Autocomplete, { IFilterAutocomplete } from "./Autocomplete";
 
 export interface IFilterOperationProps {
     operation: "=" | "!=" | "<=" | ">=" | "<" | ">" | "{}" | "%" | "!%"
@@ -30,7 +30,7 @@ export type IFilterProps = IInputBase & IIcon & {
  * @param props
  * @constructor
  */
-const Index = ({borderColor = "--bs-primary", type = "text", value, onChange, ...props}: IFilterProps) => {
+const Index = ({ borderColor = "--bs-primary", type = "text", value, onChange, ...props }: IFilterProps) => {
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
 
     //Retorna a operação de acordo com VALUE
@@ -86,7 +86,7 @@ const Index = ({borderColor = "--bs-primary", type = "text", value, onChange, ..
     |------------------------------------------
     */
     return <div className={"rounded p-1 px-2 box-" + props.box + " " + boxClasses}
-                style={{border: "1px dashed var(" + borderColor + ")"}}>
+                style={{ border: "1px dashed var(" + borderColor + ")" }}>
         <label className="form-label">
             <i className={"bi me-1 bi-" + props.icon}/>{props.legend}
             {props.required ? <span className="text-danger">*</span> : null}

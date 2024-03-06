@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_TYPE} from "./system";
+import { GET_TYPE } from "./system";
 
 /**
  * Pesquisa o cep de acordo com value

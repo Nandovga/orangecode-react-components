@@ -1,9 +1,9 @@
-import React, {JSX, useEffect, useState} from "react";
+import React, { JSX, useEffect, useState } from "react";
 
-import {GET_ICON} from "../../ts/system";
-import {IIcon} from "../../@types/icon";
-import {IColor} from "../../@types/color";
-import {IInputBase} from "../../@types/form";
+import { GET_ICON } from "../../ts/system";
+import { IIcon } from "../../@types/icon";
+import { IColor } from "../../@types/color";
+import { IInputBase } from "../../@types/form";
 
 export type IAutoCompleteData = {
     id: any,
@@ -146,7 +146,7 @@ const AutoCompleteBootstrap = (props: IAutoComplete) => {
  * @param props
  * @constructor
  */
-const AutoComplete = ({frameworkStyle = "bootstrap", ...props}: IAutoComplete) => {
+const AutoComplete = ({ frameworkStyle = "bootstrap", ...props }: IAutoComplete) => {
     return frameworkStyle === "bootstrap"
         ? <AutoCompleteBootstrap {...props}/> : null;
 };

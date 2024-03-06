@@ -1,9 +1,9 @@
 import React from "react";
-import {InputMask} from "primereact/inputmask";
+import { InputMask } from "primereact/inputmask";
 
-import {GET_ICON} from "../../ts/system";
-import {IIcon} from "../../@types/icon";
-import {IInputBase} from "../../@types/form";
+import { GET_ICON } from "../../ts/system";
+import { IIcon } from "../../@types/icon";
+import { IInputBase } from "../../@types/form";
 
 export interface IInput extends IInputBase, IIcon {
     mask: string
@@ -15,12 +15,12 @@ export interface IInput extends IInputBase, IIcon {
  * @param props
  * @constructor
  */
-const InputBootstrapMask = ({...props}: IInput) => {
+const InputBootstrapMask = ({ ...props }: IInput) => {
 
     //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
     let fieldClasses: string = !props.fieldClasses ? "" : props.fieldClasses;
-
+    
     /*
     |--------------------------------------
     | render() - Renderização do componente
@@ -56,7 +56,7 @@ const InputBootstrapMask = ({...props}: IInput) => {
  * @param props
  * @constructor
  */
-const Mask = ({box = "100", frameworkStyle = "bootstrap", ...props}: IInput) => {
+const Mask = ({ box = "100", frameworkStyle = "bootstrap", ...props }: IInput) => {
     return frameworkStyle === "bootstrap"
         ? <InputBootstrapMask {...props}
                               box={box}/>

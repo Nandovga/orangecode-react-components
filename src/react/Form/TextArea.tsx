@@ -1,7 +1,7 @@
 import React from "react";
-import {GET_ICON} from "../../ts/system";
-import {IIcon} from "../../@types/icon";
-import {IInputBase} from "../../@types/form";
+import { IIcon } from "../../@types/icon";
+import { GET_ICON } from "../../ts/system";
+import { IInputBase } from "../../@types/form";
 
 export interface IInput extends IInputBase, IIcon {
     rows?: number
@@ -13,7 +13,7 @@ export interface IInput extends IInputBase, IIcon {
  * @param props
  * @constructor
  */
-const TextAreaBootstrap = ({...props}: IInput) => {
+const TextAreaBootstrap = ({ ...props }: IInput) => {
 
     //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
@@ -53,7 +53,7 @@ const TextAreaBootstrap = ({...props}: IInput) => {
  * @param props
  * @constructor
  */
-const TextArea = ({box = "100", frameworkStyle = "bootstrap", ...props}: IInput) => {
+const TextArea = ({ box = "100", frameworkStyle = "bootstrap", ...props }: IInput) => {
     return frameworkStyle === "bootstrap"
         ? <TextAreaBootstrap {...props}
                              box={box}/>

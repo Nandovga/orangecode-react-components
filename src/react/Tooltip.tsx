@@ -1,7 +1,7 @@
 import React from "react";
-import * as Tippy from "react-tippy";
 import "react-tippy/dist/tippy.css";
-import {IFrameworkStyle} from "../@types/style";
+import * as Tippy from "react-tippy";
+import { IFrameworkStyle } from "../@types/style";
 
 export interface ITooltip extends Tippy.TooltipProps {
     children: React.ReactNode
@@ -14,7 +14,7 @@ export interface ITooltip extends Tippy.TooltipProps {
  * @param props
  * @constructor
  */
-function Tooltip({frameworkStyle = "bootstrap", ...props}: ITooltip) {
+function Tooltip({ frameworkStyle = "bootstrap", ...props }: ITooltip) {
     return frameworkStyle === "bootstrap" ? <Tippy.Tooltip {...props}>{props.children}</Tippy.Tooltip> : <></>;
 }
 

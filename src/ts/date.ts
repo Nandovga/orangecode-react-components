@@ -1,4 +1,4 @@
-import {format, formatISO} from "date-fns";
+import { format, formatISO } from "date-fns";
 import pt from "date-fns/locale/pt";
 
 /**
@@ -20,9 +20,9 @@ export function format_date(date: string = "", formatDate: string = "dd/MM/yyyy"
         let d = new Date(date);
         d.setDate(d.getDate() + 1);
         if (formatDate === "yyyy-MM-dd") {
-            return formatISO(d, {representation: "date"});
+            return formatISO(d, { representation: "date" });
         } else {
-            return format(d, formatDate, {locale: pt});
+            return format(d, formatDate, { locale: pt });
         }
     }
     let d = new Date();

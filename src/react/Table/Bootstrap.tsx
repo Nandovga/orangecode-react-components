@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState} from "react";
-import {ITable} from "./types";
-import {handleFilter} from "./bootstrap/HandleFilter";
-import {handleHeader} from "./bootstrap/HandleHeader";
-import {handleContent} from "./bootstrap/HandleContent";
-import {handleKeyPress} from "./bootstrap/HandleKeyPress";
-import {handlePagination} from "./bootstrap/HandlePagination";
-import {handleHeaderOptions} from "./bootstrap/HandleHeaderOptions";
+import React, { useEffect, useRef, useState } from "react";
+import { ITable } from "./types";
+import { handleFilter } from "./bootstrap/HandleFilter";
+import { handleHeader } from "./bootstrap/HandleHeader";
+import { handleContent } from "./bootstrap/HandleContent";
+import { handleKeyPress } from "./bootstrap/HandleKeyPress";
+import { handlePagination } from "./bootstrap/HandlePagination";
+import { handleHeaderOptions } from "./bootstrap/HandleHeaderOptions";
 
 /**
  * Componente de TABELA - Bootstrap5
@@ -63,8 +63,8 @@ function Bootstrap<T>(props: ITable<T>) {
     //EFFECT - Muda para 1.º pagina quando os dados originais são alterados
     useEffect(() => {
         if (paginationRef.current !== null && props.tablePagination === "auto") {
-            paginationRef.current.props.onPageChange({selected: 0});
-            paginationRef.current.setState({selected: 0});
+            paginationRef.current.props.onPageChange({ selected: 0 });
+            paginationRef.current.setState({ selected: 0 });
         }
     }, [props.tableDTO]);
 
@@ -86,40 +86,40 @@ function Bootstrap<T>(props: ITable<T>) {
         <div className="w-100 table-responsive">
             <table className={tableConfig.classes}>
                 <thead>
-                {props.tableOptions ? handleHeaderOptions(props, tableDTO) : null}
-                <tr>
-                    {props.tableOnSelect ?
-                        <th className="text-center"
-                            style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
-                    {props.tableMultiSelect ?
-                        <th className="text-center"
-                            style={{width: "0px"}}><i className="bi bi-filter"/></th> : null}
-                    {props.tableDetail ? <th className="text-center"
-                                             style={{width: "0px"}}/> : null}
-                    {props.tableHeader.map(value => handleHeader<T>(value, props, setTableDTO, paginationRef))}
-                </tr>
+                    {props.tableOptions ? handleHeaderOptions(props, tableDTO) : null}
+                    <tr>
+                        {props.tableOnSelect ?
+                            <th className="text-center"
+                            style={{ width: "0px" }}><i className="bi bi-filter"/></th> : null}
+                        {props.tableMultiSelect ?
+                            <th className="text-center"
+                            style={{ width: "0px" }}><i className="bi bi-filter"/></th> : null}
+                        {props.tableDetail ? <th className="text-center"
+                                             style={{ width: "0px" }}/> : null}
+                        {props.tableHeader.map(value => handleHeader<T>(value, props, setTableDTO, paginationRef))}
+                    </tr>
                 </thead>
                 <tbody>
-                {props.tablePagination === "auto" ?
+                    {props.tablePagination === "auto" ?
                     tableDTO.length > 0
                         ? tableDTO.map(value => handleContent<T>(value, props, {
                             edit: tableEdit,
                             editField: tableEditField,
                             setEdit: setTableEdit,
                             setEditField: setTableEditField
-                        }, {data: tableDTO, setData: setTableDTO}))
+                        }, { data: tableDTO, setData: setTableDTO }))
                         : <tr>
                             <td className="text-center"
                                 colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0) + (props.tableDetail ? 1 : 0)}>{tableEmptyValue}</td>
                         </tr> : null}
-                {props.tablePagination !== "auto"
+                    {props.tablePagination !== "auto"
                     ? props.tableDTO.length > 0
                         ? props.tableDTO.map(value => handleContent<T>(value, props, {
                             edit: tableEdit,
                             editField: tableEditField,
                             setEdit: setTableEdit,
                             setEditField: setTableEditField
-                        }, {data: props.tableDTO, setData: props.setTableDTO}))
+                        }, { data: props.tableDTO, setData: props.setTableDTO }))
                         : <tr>
                             <td className="text-center"
                                 colSpan={props.tableHeader.length + (props.tableOnSelect ? 1 : 0) + (props.tableDetail ? 1 : 0)}>{tableEmptyValue}</td>

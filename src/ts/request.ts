@@ -1,6 +1,6 @@
 import axios from "axios";
-import {BASE, TOKEN} from "./config";
-import {globalMessageFieldsClear, globalResponse} from "./response";
+import { BASE, TOKEN } from "./config";
+import { globalMessageFieldsClear, globalResponse } from "./response";
 
 /**
  * Realiza o POST no servidor
@@ -23,7 +23,7 @@ export const POST = (
         axios({
             method: "post",
             url: url,
-            headers: {"X-CSRF-TOKEN": TOKEN},
+            headers: { "X-CSRF-TOKEN": TOKEN },
             data: !body ? {} : body,
         }).then(response => {
             if (response?.data !== undefined) {

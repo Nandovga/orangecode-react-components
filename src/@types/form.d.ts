@@ -1,4 +1,4 @@
-import {IFrameworkStyle} from "../@types/style";
+import { IFrameworkStyle } from "../@types/style";
 
 export interface IInputBase {
     legend: string,

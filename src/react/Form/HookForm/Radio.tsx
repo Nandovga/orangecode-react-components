@@ -1,8 +1,8 @@
 import React from "react";
-import {IRadioValue} from "../Radio";
-import {IIcon} from "../../../@types/icon";
-import {GET_ICON} from "../../../ts/system";
-import {IHookForm, IInputBase} from "../../../@types/form";
+import { IRadioValue } from "../Radio";
+import { IIcon } from "../../../@types/icon";
+import { GET_ICON } from "../../../ts/system";
+import { IHookForm, IInputBase } from "../../../@types/form";
 
 interface Props extends IInputBase, IHookForm, IIcon {
     radioValue: Array<IRadioValue>
@@ -16,7 +16,7 @@ interface Props extends IInputBase, IHookForm, IIcon {
  * @param props
  * @constructor
  */
-const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: Props) => {
+const RadioBootstrap = ({ box = "100", radioAlign = "row", ...props }: Props) => {
 
     //Configuração do componente
     let boxClasses: string = !props.boxClasses ? "" : props.boxClasses;
@@ -59,7 +59,7 @@ const RadioBootstrap = ({box = "100", radioAlign = "row", ...props}: Props) => {
  * @param props
  * @constructor
  */
-const Radio = ({frameworkStyle = "bootstrap", ...props}: Props) => {
+const Radio = ({ frameworkStyle = "bootstrap", ...props }: Props) => {
     return frameworkStyle === "bootstrap"
         ? <RadioBootstrap {...props}/> : <></>;
 };

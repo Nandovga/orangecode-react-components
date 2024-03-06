@@ -1,7 +1,7 @@
 import React from "react";
 import Hashids from "hashids";
-import Modal, {IModal} from "./Modal";
-import {IFrameworkStyle} from "../@types/style";
+import Modal, { IModal } from "./Modal";
+import { IFrameworkStyle } from "../@types/style";
 
 interface Props extends Omit<IModal, "modalTitle"> {
     modalMessage: string
@@ -64,11 +64,11 @@ const Message = (
                    href="#"
                    onClick={props.onModalAccept}>
                     {props.modalLoadAccept ? <>
-                            <div className="spinner-border"
-                                 style={{width: "20px", height: "20px"}}>
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                            <span className="ms-1">Processando...</span></>
+                        <div className="spinner-border"
+                                 style={{ width: "20px", height: "20px" }}>
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                        <span className="ms-1">Processando...</span></>
                         : <><i className="bi bi-check-lg me-1"/>{modalAcceptLabel}</>}</a>
             </div>
         </Modal> : <></>;

@@ -1,7 +1,7 @@
 import React from "react";
-import {handleSort} from "./HandleSort";
-import {GET_ICON} from "../../../ts/system";
-import {ITable, ITableHeader} from "../types";
+import { handleSort } from "./HandleSort";
+import { GET_ICON } from "../../../ts/system";
+import { ITable, ITableHeader } from "../types";
 
 /**
  * ACTION ≥ Monta o cabeçalho da TABELA

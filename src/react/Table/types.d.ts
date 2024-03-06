@@ -1,7 +1,7 @@
 import React from "react";
-import {IIcon} from "../../@types/icon";
-import {IFrameworkStyle} from "../../@types/style";
-import {ISelectData} from "../Form/Select";
+import { IIcon } from "../../@types/icon";
+import { IFrameworkStyle } from "../../@types/style";
+import { ISelectData } from "../Form/Select";
 
 export interface ITableHeader<T> extends IIcon {
     id: string
@@ -73,8 +73,8 @@ export type ITable<T> = {
 
     tablePagination?: "auto" | ITablePagination
     tablePaginationAlign?: "end" | "center" | "start"
-    tablePaginationRow?: 5 | 10 | 15 | 25 | 50 | 100
-    tableOnPagination?: (pageNumber: number) => void
+    tablePaginationRow?: 0 | 5 | 10 | 15 | 20 | 25 | 50 | 100
+    tableOnPagination?: (pageNumber: number, pageElements?: number) => void
 
     frameworkStyle?: IFrameworkStyle
 }

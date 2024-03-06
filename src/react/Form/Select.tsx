@@ -1,7 +1,7 @@
 import React from "react";
-import {IIcon} from "../../@types/icon";
-import {GET_ICON} from "../../ts/system";
-import {IInputBase} from "../../@types/form";
+import { IIcon } from "../../@types/icon";
+import { GET_ICON } from "../../ts/system";
+import { IInputBase } from "../../@types/form";
 
 export type ISelectData = {
     id: any,
@@ -18,7 +18,7 @@ export interface ISelect extends IInputBase, IIcon {
  * @param props
  * @constructor
  */
-const SelectBootstrap = ({...props}: ISelect) => {
+const SelectBootstrap = ({ ...props }: ISelect) => {
 
     //Configuração do componente
     let init = !props.init ? null
@@ -65,7 +65,7 @@ const SelectBootstrap = ({...props}: ISelect) => {
  * @param props
  * @constructor
  */
-const Select = ({frameworkStyle = "bootstrap", box = "100", ...props}: ISelect) => {
+const Select = ({ frameworkStyle = "bootstrap", box = "100", ...props }: ISelect) => {
     return frameworkStyle === "bootstrap"
         ? <SelectBootstrap {...props}
                            box={box}/> : <></>;
