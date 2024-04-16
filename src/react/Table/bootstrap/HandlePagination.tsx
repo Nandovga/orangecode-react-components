@@ -15,13 +15,14 @@ export function handlePagination<T>(
     setDTO: React.Dispatch<Array<T & { id: any }>>,
     paginationRef: React.MutableRefObject<any>
 ) {
+    const [pageElements, setPageElements] = useState<number>(!props.tablePaginationRow ? 10 : props.tablePaginationRow);
     const colspan = props.tableHeader.length
         + (props.tableOnSelect ? 1 : 0)
         + (props.tableDetail ? 1 : 0)
         + (props.tableOnMultiSelect ? 1 : 0);
 
     const manual = () => {
-        const [pageElements, setPageElements] = useState<number>(!props.tablePaginationRow ? 10 : props.tablePaginationRow);
+        console.log(props.tablePagination);
         let { elements, pageTotal, pageNumber } = GET_TYPE<ITablePagination>(props.tablePagination);
         let pagerInit = (pageNumber - 3 < 1 ? 0 : pageNumber - 4);
         let pagerFinal = (pageNumber + 3 > pageTotal ? pageTotal : pageNumber + 3);
@@ -36,6 +37,7 @@ export function handlePagination<T>(
                    colSpan={colspan}>
                 <div
                     className={"w-100 d-flex align-items-center justify-content-" + (!props.tablePaginationAlign ? "end" : props.tablePaginationAlign)}>
+                    {props.tableLegend && props.tableLegend()}
                     <select className="form-select form-select-sm me-2"
                             style={{ maxWidth: "60px", padding: "1px 3px", fontSize: ".9em" }}
                             value={pageElements}
@@ -103,6 +105,7 @@ export function handlePagination<T>(
                    colSpan={colspan}>
             <div
                 className={"w-100 d-flex align-items-center justify-content-" + (!props.tablePaginationAlign ? "end" : props.tablePaginationAlign)}>
+                {props.tableLegend && props.tableLegend()}
                 <select className="form-select form-select-sm me-2"
                         style={{ maxWidth: "60px", padding: "1px 3px", fontSize: ".9em" }}
                         value={row}
@@ -131,9 +134,10 @@ export function handlePagination<T>(
     | render() - Renderização do componente
     |------------------------------------------
     */
-    return !!props.tablePagination
-        ? <tfoot>
-            <tr>{props.tablePagination === "auto" ? auto() : !props.tableOnPagination ? null : manual()}</tr>
-        </tfoot>
-        : null;
+    return props.tablePagination === undefined || props.tablePagination === null
+        ? null : <tfoot>
+            <tr>{props.tablePagination === "auto"
+            ? auto()
+            : !props.tableOnPagination ? null : manual()}</tr>
+        </tfoot>;
 }

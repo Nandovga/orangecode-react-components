@@ -48,9 +48,10 @@ export type ITable<T> = {
         edit?: string
         delete?: string
     }
+    tableLegend?(): React.ReactNode
     tableOptionsDelete?(): void
     tableOptionsCreate?(): void
-    tableOptionsRender?(): JSX.Element
+    tableOptionsRender?(): React.ReactNode
 
     tableEditMode?: "single"
     tableOnEdit?(tableDTO: Array<T & { id: any }> | T & { id: any }): void
