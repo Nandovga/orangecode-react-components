@@ -15,6 +15,7 @@ export interface IModal {
     modalTitle: string
     modalVisible: IModalVisible
     modalId?: string
+
     onModalVisible(state: IModalVisible): void
 }
 
@@ -44,16 +45,28 @@ const ModalBootstrap: React.FC<Props> = ({ modalCenter = true, ...props }: Props
 
     //CORE ≥ Aplica a regra de visibilidade das modal
     function bsModalVisible(modalVisible: IModalVisible, onModalVisible: (state: IModalVisible) => void, modalId: string): void {
-        let myModal = document.getElementById(modalId);
+        let myModal = document.getElementById(modalId) ?? window.frameElement?.ownerDocument.body?.querySelector("#" + modalId);
         if (myModal && modalVisible === "open") {
             let openModal = $("body").find("#openModal[data-bs-target='#" + modalId + "']");
-            openModal.trigger("click");
+            if (openModal.length === 0) {
+                // @ts-ignore
+                openModal = $(window.frameElement).parents("body").find("#openModal[data-bs-target='#" + modalId + "']");
+                openModal.trigger("click");
+            } else {
+                openModal.trigger("click");
+            }
         } else if (myModal && modalVisible === "closed") {
             myModal.addEventListener("hidden.bs.modal", function () {
                 onModalVisible("closed");
             });
             let closed = $("body").find("#" + modalId + " .btn-close");
-            closed.trigger("click");
+            if (closed.length === 0) {
+                // @ts-ignore
+                closed = $(window.frameElement).parents("body").find("#" + modalId + " .btn-close");
+                closed.trigger("click");
+            } else {
+                closed.trigger("click");
+            }
         }
     }
 

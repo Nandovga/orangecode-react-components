@@ -22,7 +22,6 @@ export function handlePagination<T>(
         + (props.tableOnMultiSelect ? 1 : 0);
 
     const manual = () => {
-        console.log(props.tablePagination);
         let { elements, pageTotal, pageNumber } = GET_TYPE<ITablePagination>(props.tablePagination);
         let pagerInit = (pageNumber - 3 < 1 ? 0 : pageNumber - 4);
         let pagerFinal = (pageNumber + 3 > pageTotal ? pageTotal : pageNumber + 3);
