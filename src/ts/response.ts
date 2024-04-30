@@ -44,7 +44,9 @@ export const globalResponse = (response: IResponseType, form: string = ""): void
  * @param form
  */
 export const globalMessageFieldsClear = (form: string = ""): void => {
-    let formulario = $("body").find("#" + (form === "" ? null : form));
+    // @ts-ignore
+    let body = window.self === window.top ? $("body") : $(window.frameElement).parents("body");
+    let formulario = body.find("#" + (form === "" ? null : form));
 
     //INPUT
     $.each(formulario.find("input"), function () {
@@ -116,7 +118,9 @@ export const globalMessageFieldsClear = (form: string = ""): void => {
  * @param errors
  */
 export const globalTabViewActiveError = (form, errors): void => {
-    let TabView = $("body").find("#" + form);
+    // @ts-ignore
+    let body = window.self === window.top ? $("body") : $(window.frameElement).parents("body");
+    let TabView = body.find("#" + form);
     if (TabView.length === 0) {
         return;
     }
@@ -128,10 +132,10 @@ export const globalTabViewActiveError = (form, errors): void => {
         if (typeof value !== "undefined") {
             if ($(value).attr("id") === id) {
                 $(value).addClass("show active");
-                $("body").find(".nav-item button[data-bs-target='#" + id + "']").addClass("active");
+                body.find(".nav-item button[data-bs-target='#" + id + "']").addClass("active");
             } else {
                 $(value).removeClass("show active");
-                $("body").find(".nav-item button[data-bs-target='#" + $(value).attr("id") + "']").removeClass("active");
+                body.find(".nav-item button[data-bs-target='#" + $(value).attr("id") + "']").removeClass("active");
             }
         }
     });
@@ -144,7 +148,9 @@ export const globalTabViewActiveError = (form, errors): void => {
  * @param type
  */
 const globalMessageFields = (data: any, form: string = "", type = "is-invalid"): void => {
-    let formulario = $("body").find("#" + form);
+    // @ts-ignore
+    let body = window.self === window.top ? $("body") : $(window.frameElement).parents("body");
+    let formulario = body.find("#" + form);
     globalTabViewActiveError(form, data);
 
     $.each(data, (key: any, value: any) => {

@@ -14,6 +14,7 @@ interface Props extends Omit<IModal, "modalTitle"> {
     modalRejectColor?: string
     modalOptionsPosition?: "center" | "start" | "end"
     frameworkStyle?: IFrameworkStyle
+
     onModalAccept(): void
 }
 
@@ -39,6 +40,7 @@ const Message = (
     const rejectColor = !props.modalRejectColor ? "btn-danger text-white" : props.modalRejectColor;
     const acceptColor = !props.modalAcceptColor ? "btn-info text-white" : props.modalAcceptColor;
     const modalId = new Hashids(props.modalMessage).encode([1, 2, 3]);
+
     /*
     |--------------------------------------
     | render() - Renderização do componente
@@ -48,7 +50,7 @@ const Message = (
         ? <Modal frameworkStyle="bootstrap"
                  icon="cone-striped fs-4"
                  modalBackdrop={true}
-                 modalId={modalTitle + "-" + modalId}
+                 modalId={props.modalId ?? (modalTitle + "-" + modalId)}
                  modalTitle={modalTitle}
                  modalVisible={props.modalVisible}
                  onModalVisible={props.onModalVisible}>

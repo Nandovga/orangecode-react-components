@@ -1,6 +1,6 @@
 {
   "name": "orangecode-react-components",
-  "version": "1.7.3-x4",
+  "version": "1.7.3-x7",
   "description": "Pacote de componentes react estilizados pelos principais framework de mercado como Bootstrap5, Tailwind e Primeflex",
   "scripts": {
     "dev": "vite",
@@ -23,9 +23,9 @@
     "lightbox2": "^2.11.4",
     "node-snackbar": "^0.1.16",
     "primeicons": "^7.0.0",
-    "primereact": "^10.6.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "primereact": "^10.6.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.3",
     "react-paginate": "^8.2.0",
     "react-quill": "^2.0.0",
