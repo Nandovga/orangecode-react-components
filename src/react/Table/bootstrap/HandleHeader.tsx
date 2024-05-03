@@ -17,7 +17,6 @@ export function handleHeader<T>(
     paginationRef: any
 ) {
     const cellProps = {
-        key: row.id,
         className: `${row.align ? `text-${row.align}` : ""} ${row.classes ? `${row.classes}` : ""}`,
         style: row.style,
         name: row.id
@@ -27,7 +26,8 @@ export function handleHeader<T>(
     | render() - Renderização do componente
     |------------------------------------------
     */
-    return <th {...cellProps}>
+    return <th key={row.id}
+               {...cellProps}>
         <i className={GET_ICON(row.iconType) + row.icon}/>{row.title}
         {row.sort ? <a className="ms-1 fs-6"
                        data-name="sort"

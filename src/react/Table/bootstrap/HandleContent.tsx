@@ -30,7 +30,6 @@ export function handleContent<T>(
     let selectIndicator = props.tableSelectIndicatorClasse ?? "bg-light";
 
     const rowProps = {
-        key: row.id,
         className: !props.tableDetail ? "" : (row.parent === undefined ? "" : tableDetailOpen ? "" : "table-row-closed"),
         onClick: () => props.tableOnSelect && !(props.tableDetail === true && row.title !== undefined) ? props.tableOnSelect(row) : null,
         onDoubleClick: () => props.tableOnDoubleClick ? props.tableOnDoubleClick() : null
@@ -41,50 +40,51 @@ export function handleContent<T>(
         if (!props.tableDetail) {
             return null;
         }
-        return row.children === undefined ? <td/> : <td className="text-center"
-                                                        style={{ width: "0px" }}>
-            <a className="table-button-details"
-               href="#"
-               onClick={event => {
-                   event.preventDefault();
-                   let icon = event.currentTarget.children[0];
-                   if (icon.classList.contains("bi-chevron-right")) {
-                       icon.classList.remove("bi-chevron-right");
-                       icon.classList.add("bi-chevron-down");
-                   } else {
-                       icon.classList.add("bi-chevron-right");
-                       icon.classList.remove("bi-chevron-down");
-                   }
+        return row.children === undefined ? <td/>
+            : <td className="text-center"
+                  style={{ width: "0px" }}>
+                <a className="table-button-details"
+                   href="#"
+                   onClick={event => {
+                       event.preventDefault();
+                       let icon = event.currentTarget.children[0];
+                       if (icon.classList.contains("bi-chevron-right")) {
+                           icon.classList.remove("bi-chevron-right");
+                           icon.classList.add("bi-chevron-down");
+                       } else {
+                           icon.classList.add("bi-chevron-right");
+                           icon.classList.remove("bi-chevron-down");
+                       }
 
-                   function handleShowHide(id: string | null, show: boolean) {
+                       function handleShowHide(id: string | null, show: boolean) {
+                           let data = document.querySelectorAll("tr[data-parent='" + id + "']");
+                           for (var i = 0; i < data.length; i++) {
+                               let el = data[i];
+                               handleShowHide(el.getAttribute("data-id"), show);
+                               let classes = "table-row-closed";
+                               if (show) {
+                                   el.classList.remove(classes);
+                               } else {
+                                   el.classList.add(classes);
+                               }
+                           }
+                       }
+
+                       let id = event.currentTarget.parentElement?.parentElement?.getAttribute("data-id");
                        let data = document.querySelectorAll("tr[data-parent='" + id + "']");
                        for (var i = 0; i < data.length; i++) {
                            let el = data[i];
-                           handleShowHide(el.getAttribute("data-id"), show);
                            let classes = "table-row-closed";
-                           if (show) {
+                           handleShowHide(el.getAttribute("data-id"), el.classList.contains(classes));
+                           if (el.classList.contains(classes)) {
                                el.classList.remove(classes);
                            } else {
                                el.classList.add(classes);
                            }
                        }
-                   }
-
-                   let id = event.currentTarget.parentElement?.parentElement?.getAttribute("data-id");
-                   let data = document.querySelectorAll("tr[data-parent='" + id + "']");
-                   for (var i = 0; i < data.length; i++) {
-                       let el = data[i];
-                       let classes = "table-row-closed";
-                       handleShowHide(el.getAttribute("data-id"), el.classList.contains(classes));
-                       if (el.classList.contains(classes)) {
-                           el.classList.remove(classes);
-                       } else {
-                           el.classList.add(classes);
-                       }
-                   }
-               }}>{row.open || row.open === undefined ? <i className="bi bi-chevron-down"/> :
-               <i className="bi bi-chevron-right"/>}</a>
-        </td>;
+                   }}>{row.open || row.open === undefined ? <i className="bi bi-chevron-down"/> :
+                   <i className="bi bi-chevron-right"/>}</a>
+            </td>;
     };
 
     //Gestão do SELECT
@@ -120,7 +120,6 @@ export function handleContent<T>(
     let renderCell = (header: ITableHeader<T>) => {
         const { id, body, align, classes } = header;
         const cellProps = {
-            key: `${row.id}-${id}`,
             className: `${!align ? "" : "text-" + align} ${select || multiSelect ? "fw-bold " + selectIndicator : ""} ${!classes ? "" : classes}`,
             style: { cursor: !props.tableOnSelect ? "initial" : "pointer", verticalAlign: "middle" }
         };
@@ -143,6 +142,7 @@ export function handleContent<T>(
                 }
             })}</td>
             : <td {...cellProps}
+                  key={`${row.id}-${id}`}
                   onClick={() => {
                       if (!header.editor || !select) {
                           return;
@@ -160,14 +160,15 @@ export function handleContent<T>(
         <tr {...rowProps}
             data-id={row.id}
             data-open={row.open}
-            data-parent={row.parent}>
+            data-parent={row.parent}
+            key={row.id}>
             {renderSelect()}
             {renderMultiSelect()}
             {renderDetail()}
             {(row.title === undefined || props.tableDetail === undefined) && props.tableHeader.map(header => renderCell(header))}
             {row.title !== undefined && props.tableDetail
                 && <td colSpan={props.tableHeader.length + 1}
-                       key={row.title}>
+                       key={row.id}>
                     {row.titleFormatter !== undefined ? row.titleFormatter(row.title) : row.title}
                 </td>}
         </tr>
