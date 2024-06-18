@@ -43,6 +43,7 @@ const Autocomplete = ({ value, setValue, data, dataOriginal, onSearch }: IFilter
                       value={typeof value !== "object" ? dataOriginal.filter(item => {
                           return filtered.includes(item.id);
                       }) : value}
+                      appendTo="self"
                       field="label"
                       inputClassName="w-100 fs-7"
                       suggestions={data}
