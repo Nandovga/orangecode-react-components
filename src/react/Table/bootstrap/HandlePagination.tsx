@@ -31,7 +31,7 @@ export function handlePagination<T>(
         }
 
         //Renderização
-        return pageTotal > 1
+        return pageTotal >= 1
             && <td className="p-0"
                    colSpan={colspan}>
                 <div
