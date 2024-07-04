@@ -15,6 +15,7 @@ export interface IModal {
     modalTitle: string
     modalVisible: IModalVisible
     modalId?: string
+    modalClasses?: string
 
     onModalVisible(state: IModalVisible): void
 }
@@ -42,6 +43,7 @@ const ModalBootstrap: React.FC<Props> = ({ modalCenter = true, ...props }: Props
         : props.modalId.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
     const modalSize: string = (!props.modalSize ? "" : "modal-" + props.modalSize);
     const modalFullScreen: string = (!props.modalFullScreen ? "" : "modal-fullscreen-" + props.modalFullScreen + "-down");
+    const modalClasses: string = props.modalClasses ?? "";
 
     //CORE ≥ Aplica a regra de visibilidade das modal
     function bsModalVisible(modalVisible: IModalVisible, onModalVisible: (state: IModalVisible) => void, modalId: string): void {
@@ -91,7 +93,8 @@ const ModalBootstrap: React.FC<Props> = ({ modalCenter = true, ...props }: Props
             <div
                 className={"modal-dialog "
                     + modalSize + " "
-                    + modalFullScreen
+                    + modalFullScreen + " "
+                    + modalClasses
                     + (modalCenter ? " modal-dialog-centered" : "")}>
                 <div className="modal-content">
                     <div className="modal-header">

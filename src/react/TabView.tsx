@@ -14,6 +14,7 @@ export interface ITabView {
 
 type Props = {
     tabs: Array<ITabView>
+    identify?: string
     iconType?: IIconType
     frameworkStyle?: IFrameworkStyle
 }
@@ -21,12 +22,14 @@ type Props = {
 /**
  * TabView Bootstrap5
  * @param tabs
+ * @param identify
  * @param iconType
  * @constructor
  */
-const TabViewBootstrap = ({ tabs, iconType = "bootstrap" }: Props) => {
+const TabViewBootstrap = ({ tabs, identify, iconType = "bootstrap" }: Props) => {
     let icon: string = GET_ICON(iconType);
-    return <>
+    return <div className="w-100"
+                id={identify ?? ""}>
         <ul className="nav nav-tabs w-100">
             {tabs.map(row => <li className="nav-item"
                                  key={row.tab}>
@@ -43,7 +46,7 @@ const TabViewBootstrap = ({ tabs, iconType = "bootstrap" }: Props) => {
                             key={(row.identify === undefined ? row.tab : row.identify)}>{row.content}</div>;
             })}
         </div>
-    </>;
+    </div>;
 };
 
 /**
@@ -53,8 +56,9 @@ const TabViewBootstrap = ({ tabs, iconType = "bootstrap" }: Props) => {
  * @param frameworkStyle
  * @constructor
  */
-const TabView = ({ tabs, iconType = "bootstrap", frameworkStyle = "bootstrap" }: Props) => {
+const TabView = ({ tabs, identify, iconType = "bootstrap", frameworkStyle = "bootstrap" }: Props) => {
     return (frameworkStyle === "bootstrap" ? <TabViewBootstrap iconType={iconType}
+                                                               identify={identify}
                                                                tabs={tabs}/> : <></>);
 };
 export default TabView;
