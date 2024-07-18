@@ -45,26 +45,42 @@ export function handleKeyPress<T>(props: ITable<T>, DTO: Array<T & { id: any }>,
     };
 
     //EVENT ≥ KeyDown
-    $(document).stop().one("keydown", ev => {
+    $(document).stop(false, true).one("keydown", ev => {
         setTimeout(() => {
             if (ev.code === "ArrowUp" && props.tableSelect) {
-                if (index > 0 && props.tableOnSelect) {
-                    props.tableOnSelect(DTO[index - 1]);
-                } else if (paginationRef.current !== null && index === 0) {
+                if (paginationRef.current === null) {
+                    if (index > 0 && props.tableOnSelect) {
+                        props.tableOnSelect(DTO[index - 1]);
+                    }
+                    if (index == 0 && props.tableOnSelect) {
+                        props.tableOnSelect(DTO[0]);
+                    }
+                } else {
                     handlePagination(paginationRef.current.state.selected, "up");
                 }
             } else if (ev.code === "ArrowDown" && props.tableSelect) {
-                if (index < DTO.length - 1 && props.tableOnSelect) {
-                    props.tableOnSelect(DTO[index + 1]);
-                } else if (paginationRef.current !== null) {
+                if (paginationRef.current === null) {
+                    if (index < DTO.length - 1 && props.tableOnSelect) {
+                        props.tableOnSelect(DTO[index + 1]);
+                    }
+                    if (index == DTO.length - 1 && props.tableOnSelect) {
+                        props.tableOnSelect(DTO[index]);
+                    }
+                } else {
                     handlePagination(paginationRef.current.state.selected, "down");
                 }
             } else if (ev.code === "ArrowRight") {
+                if (paginationRef.current === null && props.tableOnSelect) {
+                    props.tableOnSelect(DTO[index]);
+                }
                 if (paginationRef.current === null) {
                     return;
                 }
                 handlePagination(paginationRef.current.state.selected + 1, "right");
             } else if (ev.code === "ArrowLeft") {
+                if (paginationRef.current === null && props.tableOnSelect) {
+                    props.tableOnSelect(DTO[index]);
+                }
                 if (paginationRef.current === null) {
                     return;
                 }
